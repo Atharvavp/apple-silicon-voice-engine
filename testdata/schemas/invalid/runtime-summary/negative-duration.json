@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "run_id": "example-run",
+  "conversion": {
+    "policy": "apple_normal_max_half_up_v1",
+    "source_frames": 441000,
+    "source_rate_hz": 44100,
+    "target_rate_hz": 16000,
+    "intended_frames": 160000,
+    "native_frames": 160000,
+    "trimmed_tail_frames": 0,
+    "zero_extended_tail_frames": 0,
+    "converted_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+    "algorithm": "normal",
+    "quality": "max",
+    "prime_method": "normal",
+    "bypassed": false
+  },
+  "clock": {
+    "minimum_resolution_ns": 1,
+    "replay_anchor_ns": 5000000
+  },
+  "phases": [
+    {
+      "phase": "replay",
+      "start_ns": 5000000,
+      "end_ns": 12005000000
+    }
+  ],
+  "events_prefix": {
+    "path": "events.jsonl",
+    "byte_count": 12345,
+    "line_count": 40,
+    "sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+  },
+  "telemetry": {
+    "path": "telemetry.jsonl",
+    "line_count": 13,
+    "sha256": "fedcba9876543210fedcba9876543210fedcba9876543210fedcba9876543210"
+  },
+  "coverage": {
+    "produced_samples": 192000,
+    "admitted_samples": 192000,
+    "consumed_samples": 192000,
+    "dropped_samples": 0,
+    "dropped_ranges": []
+  },
+  "recorder": {
+    "batches": 10,
+    "bytes": 12345,
+    "total_write_ns": 900000,
+    "max_write_ns": 200000
+  },
+  "queues": {
+    "audio_max_depth": 1,
+    "event_max_depth": 3,
+    "telemetry_max_depth": 1
+  },
+  "durations_ns": {
+    "decode": -5
+  },
+  "shutdown": {
+    "asr": "ok"
+  }
+}

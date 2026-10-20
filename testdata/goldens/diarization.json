@@ -1,0 +1,427 @@
+{
+  "description": "Hand-derived DER/JER expectations (plan E2). Seconds shown; fixtures use 16 kHz samples. UEM [0,12) and reference A[0,4) B[4,8) unless stated. Ratios compare at abs tol 1e-9. Derived by hand, never from the scorer.",
+  "rate": 16000,
+  "default_uem": [
+    [
+      0,
+      192000
+    ]
+  ],
+  "default_reference": [
+    [
+      "A",
+      0,
+      64000
+    ],
+    [
+      "B",
+      64000,
+      128000
+    ]
+  ],
+  "cases": [
+    {
+      "id": "perfect",
+      "hypothesis": [
+        [
+          "X",
+          0,
+          64000
+        ],
+        [
+          "Y",
+          64000,
+          128000
+        ]
+      ],
+      "der": 0.0,
+      "jer": 0.0,
+      "components": {
+        "missed": 0,
+        "false_alarm": 0,
+        "confusion": 0,
+        "total": 8
+      }
+    },
+    {
+      "id": "label-permutation",
+      "hypothesis": [
+        [
+          "Y",
+          0,
+          64000
+        ],
+        [
+          "X",
+          64000,
+          128000
+        ]
+      ],
+      "der": 0.0,
+      "jer": 0.0,
+      "components": {
+        "missed": 0,
+        "false_alarm": 0,
+        "confusion": 0,
+        "total": 8
+      }
+    },
+    {
+      "id": "miss",
+      "hypothesis": [
+        [
+          "X",
+          0,
+          64000
+        ],
+        [
+          "Y",
+          96000,
+          128000
+        ]
+      ],
+      "der": 0.25,
+      "jer": 0.25,
+      "components": {
+        "missed": 2,
+        "false_alarm": 0,
+        "confusion": 0,
+        "total": 8
+      },
+      "derivation": "JER (0 + 2/4)/2"
+    },
+    {
+      "id": "false-alarm",
+      "hypothesis": [
+        [
+          "X",
+          0,
+          64000
+        ],
+        [
+          "X",
+          128000,
+          160000
+        ],
+        [
+          "Y",
+          64000,
+          128000
+        ]
+      ],
+      "der": 0.25,
+      "jer": 0.16666666666666666,
+      "components": {
+        "missed": 0,
+        "false_alarm": 2,
+        "confusion": 0,
+        "total": 8
+      },
+      "derivation": "A<->X: union 6, error 2 -> 1/3; B<->Y 0; mean 1/6"
+    },
+    {
+      "id": "confusion",
+      "hypothesis": [
+        [
+          "X",
+          0,
+          96000
+        ],
+        [
+          "Y",
+          96000,
+          128000
+        ]
+      ],
+      "der": 0.25,
+      "jer": 0.4166666666666667,
+      "components": {
+        "missed": 0,
+        "false_alarm": 0,
+        "confusion": 2,
+        "total": 8
+      },
+      "derivation": "A<->X 1/3, B<->Y (2 missed)/4 = 1/2"
+    },
+    {
+      "id": "empty-hypothesis",
+      "hypothesis": [],
+      "der": 1.0,
+      "jer": 1.0,
+      "components": {
+        "missed": 8,
+        "false_alarm": 0,
+        "confusion": 0,
+        "total": 8
+      }
+    },
+    {
+      "id": "extra-unmapped-speaker",
+      "hypothesis": [
+        [
+          "X",
+          0,
+          64000
+        ],
+        [
+          "Y",
+          64000,
+          128000
+        ],
+        [
+          "Z",
+          128000,
+          160000
+        ]
+      ],
+      "der": 0.25,
+      "jer": 0.0,
+      "components": {
+        "missed": 0,
+        "false_alarm": 2,
+        "confusion": 0,
+        "total": 8
+      },
+      "derivation": "Z is unmapped: a DER false alarm, not penalized by JER"
+    },
+    {
+      "id": "overlap",
+      "reference": [
+        [
+          "A",
+          0,
+          64000
+        ],
+        [
+          "B",
+          32000,
+          96000
+        ]
+      ],
+      "hypothesis": [
+        [
+          "X",
+          0,
+          64000
+        ],
+        [
+          "Y",
+          64000,
+          96000
+        ]
+      ],
+      "der": 0.25,
+      "jer": 0.25,
+      "components": {
+        "missed": 2,
+        "false_alarm": 0,
+        "confusion": 0,
+        "total": 8
+      },
+      "derivation": "two reference speakers in [2,4), one hypothesis speaker: 2 s missed; JER A 0, B (2 missed)/4"
+    },
+    {
+      "id": "unscored-region-masked",
+      "uem": [
+        [
+          0,
+          128000
+        ]
+      ],
+      "hypothesis": [
+        [
+          "X",
+          0,
+          64000
+        ],
+        [
+          "Y",
+          64000,
+          128000
+        ],
+        [
+          "X",
+          128000,
+          160000
+        ]
+      ],
+      "der": 0.0,
+      "jer": 0.0,
+      "components": {
+        "missed": 0,
+        "false_alarm": 0,
+        "confusion": 0,
+        "total": 8
+      },
+      "derivation": "hypothesis speech outside the UEM is not scored"
+    },
+    {
+      "id": "same-speaker-union",
+      "reference": [
+        [
+          "A",
+          0,
+          48000
+        ],
+        [
+          "A",
+          32000,
+          64000
+        ],
+        [
+          "B",
+          64000,
+          128000
+        ]
+      ],
+      "hypothesis": [
+        [
+          "X",
+          0,
+          64000
+        ],
+        [
+          "Y",
+          64000,
+          128000
+        ]
+      ],
+      "der": 0.0,
+      "jer": 0.0,
+      "components": {
+        "missed": 0,
+        "false_alarm": 0,
+        "confusion": 0,
+        "total": 8
+      },
+      "derivation": "A's overlapping segments union to [0,4)"
+    },
+    {
+      "id": "sub-frame-boundary",
+      "reference": [
+        [
+          "A",
+          0,
+          64001
+        ],
+        [
+          "B",
+          64001,
+          128000
+        ]
+      ],
+      "hypothesis": [
+        [
+          "X",
+          0,
+          64000
+        ],
+        [
+          "Y",
+          64000,
+          128000
+        ]
+      ],
+      "der": 7.8125e-06,
+      "jer": 1.562487793159482e-05,
+      "components": {
+        "missed": 0,
+        "false_alarm": 0,
+        "confusion": 6.25e-05,
+        "total": 8
+      },
+      "derivation": "one sample of A is labelled Y: confusion 1/16000 s over 8 s; A<->X union 64001 error 1, B<->Y union 64000 error 1"
+    },
+    {
+      "id": "unequal-speaker-counts",
+      "hypothesis": [
+        [
+          "X",
+          0,
+          128000
+        ]
+      ],
+      "der": 0.5,
+      "jer": 0.75,
+      "components": {
+        "missed": 0,
+        "false_alarm": 0,
+        "confusion": 4,
+        "total": 8
+      },
+      "derivation": "one speaker matched (union 8, error 4 -> 1/2), the other unmatched (1): mean 3/4"
+    },
+    {
+      "id": "empty-uem",
+      "uem": [],
+      "hypothesis": [
+        [
+          "X",
+          0,
+          64000
+        ]
+      ],
+      "der": null,
+      "jer": null,
+      "reason": "empty_uem"
+    },
+    {
+      "id": "silent-reference",
+      "reference": [],
+      "hypothesis": [
+        [
+          "X",
+          0,
+          32000
+        ]
+      ],
+      "der": null,
+      "jer": null,
+      "reason": "zero_reference_speech",
+      "components": {
+        "false_alarm": 2
+      },
+      "derivation": "no reference speech: never 'perfect'; false alarm seconds kept"
+    }
+  ],
+  "mapping": {
+    "description": "Half-up boundary mapping (plan D2 item 11), floor((s*Rout + floor(Rin/2))/Rin) clamped to the stream length.",
+    "cases": [
+      {
+        "sample": 22049,
+        "rate_in": 22050,
+        "rate_out": 16000,
+        "limit": 15999,
+        "expected": 15999
+      },
+      {
+        "sample": 192000,
+        "rate_in": 48000,
+        "rate_out": 16000,
+        "limit": 128000,
+        "expected": 64000
+      },
+      {
+        "sample": 1,
+        "rate_in": 48000,
+        "rate_out": 16000,
+        "limit": 128000,
+        "expected": 0
+      },
+      {
+        "sample": 2,
+        "rate_in": 48000,
+        "rate_out": 16000,
+        "limit": 128000,
+        "expected": 1
+      },
+      {
+        "sample": 11025,
+        "rate_in": 22050,
+        "rate_out": 16000,
+        "limit": 100000,
+        "expected": 8000
+      }
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+.build/
+.swiftpm/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+# Run outputs and checkpoint evidence are retained locally for owner delivery.
+runs/
+evidence/
+# Generated large/temporary audio (long-run fixtures, spools).
+datasets/fixtures/generated-large/
+scratch/

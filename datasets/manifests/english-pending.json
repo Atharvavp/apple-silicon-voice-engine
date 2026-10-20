@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "dataset_id": "public-en-pending",
+  "version": "pending",
+  "languages": ["en"],
+  "source_name": "Unselected English conversational source",
+  "source_url": null,
+  "license": null,
+  "license_verified": false,
+  "redistribution_allowed": null,
+  "external_root": null,
+  "annotation_type": null,
+  "status": "pending",
+  "provenance_notes": "Gate B: AMI is only a candidate from the planning pack and has not been verified; select a primary source, verify rights, access and transcript/speaker annotation granularity before acquisition.",
+  "items": []
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "event_id": "two-speaker-en/runner/telemetry.sample/0",
+  "run_id": "example-run",
+  "stream_id": "audio-0",
+  "source_id": "two-speaker-en",
+  "sequence": 17,
+  "producer_id": "runner",
+  "producer_sequence": 1,
+  "type": "telemetry.sample",
+  "media_start_sample": null,
+  "media_end_sample": null,
+  "sample_rate_hz": 16000,
+  "monotonic_emitted_ns": 1004500000,
+  "monotonic_recorded_ns": 1004600000,
+  "virtual_emitted_ns": null,
+  "cause_chunk_index": null,
+  "invocation_id": null,
+  "payload": {
+    "sample_id": "t0000",
+    "phase": "start"
+  }
+}

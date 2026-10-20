@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "run_id": "example-run",
+  "created_wall_time": "2026-10-20T00:00:00+05:30",
+  "os": {
+    "product_version": "26.6.2",
+    "build_version": "25G83"
+  },
+  "arch": "arm64",
+  "target_hardware_expectation": "MacBook Air M5, 16 GB unified memory",
+  "toolchain": {
+    "swift_version": "6.3.2",
+    "sdk_version": "26.5",
+    "deployment_target": "13.0",
+    "build_configuration": "release"
+  },
+  "build": {
+    "voicebench_version": "0.2.0-phase0-m2",
+    "git_revision": null,
+    "git_dirty": null,
+    "package_resolved_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+  },
+  "python": {
+    "executable": "/abs/.venv/bin/python",
+    "version": "3.12.14",
+    "lock_sha256": "fedcba9876543210fedcba9876543210fedcba9876543210fedcba9876543210",
+    "distributions": {
+      "jiwer": "4.0.0"
+    }
+  },
+  "analysis_version": "0.2.0",
+  "locale": "en_IN",
+  "unicode_version": "15.1.0",
+  "clock": {
+    "source": "ContinuousClock",
+    "minimum_resolution_ns": 1
+  },
+  "telemetry_capabilities": {
+    "thermal_state": {
+      "status": "ok",
+      "value": "nominal",
+      "source": "ProcessInfo.thermalState",
+      "reason": null
+    }
+  },
+  "run_conditions": {
+    "warm_state": "not_applicable_mock",
+    "background_load": "idle"
+  },
+  "placement": {
+    "requested": {
+      "asr": "cpu"
+    },
+    "observed": {
+      "asr": {
+        "status": "unavailable",
+        "value": null,
+        "source": "none",
+        "reason": "no_backend_execution_probe"
+      }
+    }
+  }
+}

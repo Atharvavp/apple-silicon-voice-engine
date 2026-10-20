@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "kind": "transcript",
+  "source_id": "two-speaker-hi",
+  "languages": [
+    "hi-IN"
+  ],
+  "timebase": {
+    "unit": "samples",
+    "sample_rate_hz": 48000
+  },
+  "duration_samples": 384000,
+  "original_precision": {
+    "unit": "samples",
+    "step": 1
+  },
+  "coverage": [
+    {
+      "start_sample": 0,
+      "end_sample": 384000
+    }
+  ],
+  "granularity": "utterances",
+  "segments": [
+    {
+      "segment_id": "u0",
+      "start_sample": 0,
+      "end_sample": 192000,
+      "text": "नमस्ते, भारत!"
+    },
+    {
+      "segment_id": "u1",
+      "start_sample": 192000,
+      "end_sample": 288000,
+      "text": "कि"
+    }
+  ],
+  "recording_text": null
+}

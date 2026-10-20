@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "run_id": "example-run",
+  "state": "running",
+  "updated_wall_time": "2026-10-20T00:00:00+05:30",
+  "failure": null,
+  "last_event_sequence": 12,
+  "artifacts": [
+    {
+      "path": "events.jsonl",
+      "byte_count": 1,
+      "sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+    }
+  ]
+}

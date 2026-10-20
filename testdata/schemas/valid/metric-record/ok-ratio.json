@@ -1,0 +1,15 @@
+{
+  "status": "ok",
+  "value": 0.6666666666666666,
+  "unit": "ratio",
+  "definition_id": "wer_v1",
+  "sample_count": 3,
+  "clock_domain": "none",
+  "reason": null,
+  "components": {
+    "substitutions": 1,
+    "deletions": 0,
+    "insertions": 1,
+    "reference_tokens": 3
+  }
+}

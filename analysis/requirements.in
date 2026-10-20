@@ -1,0 +1,6 @@
+# Runtime analysis dependencies (plan section B2). Exact pins only where the
+# release was verified; constraints are resolved into the hash lock.
+jiwer==4.0.0
+pyannote.metrics==4.2.0
+jsonschema>=4,<5
+matplotlib>=3.10,<4

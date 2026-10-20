@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "event_id": "two-speaker-en/mock-diar-scripted/adapter.stopped/0",
+  "run_id": "example-run",
+  "stream_id": "audio-0",
+  "source_id": "two-speaker-en",
+  "sequence": 17,
+  "producer_id": "mock-diar-scripted",
+  "producer_sequence": 1,
+  "type": "adapter.stopped",
+  "media_start_sample": null,
+  "media_end_sample": null,
+  "sample_rate_hz": 16000,
+  "monotonic_emitted_ns": 1004500000,
+  "monotonic_recorded_ns": 1004600000,
+  "virtual_emitted_ns": null,
+  "cause_chunk_index": null,
+  "invocation_id": null,
+  "payload": {
+    "role": "diarization",
+    "adapter_id": "mock-diar-scripted",
+    "shutdown": {
+      "status": "ok",
+      "message": null,
+      "pending_tasks": 0
+    }
+  }
+}

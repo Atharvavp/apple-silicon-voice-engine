@@ -1,0 +1,171 @@
+{
+  "description": "Hand-built realtime rows (16 kHz) and hand-computed expectations for plan E3 formulas: nearest-rank quantiles sorted[ceil(p*n)-1], wake = offer - planned, jitter = entry - planned, residence = dequeue - entry, lag = finish - planned, blocked = entry - offer, emission = emitted - invocation start, delivery-to-output = emitted - cause entry. Chunk 2 ends at 10.02 s of media, so it is the only chunk after the 10 s warm-up.",
+  "percentiles": [
+    {
+      "values": [
+        -200,
+        1000,
+        3000,
+        5000,
+        250
+      ],
+      "p50": 1000,
+      "p95": 5000,
+      "min": -200,
+      "max": 5000
+    },
+    {
+      "values": [
+        7
+      ],
+      "p50": 7,
+      "p95": 7,
+      "min": 7,
+      "max": 7
+    },
+    {
+      "values": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "p50": 10,
+      "p95": 19,
+      "min": 1,
+      "max": 20
+    }
+  ],
+  "chunks": [
+    {
+      "index": 0,
+      "start": 0,
+      "end": 320,
+      "planned": 1020000000,
+      "offer": 1021000000,
+      "entry": 1021000100,
+      "dequeue": 1021000200,
+      "finish": 1021050000
+    },
+    {
+      "index": 1,
+      "start": 320,
+      "end": 640,
+      "planned": 1040000000,
+      "offer": 1040500000,
+      "entry": 1040500000,
+      "dequeue": 1040600000,
+      "finish": 1040700000
+    },
+    {
+      "index": 2,
+      "start": 160000,
+      "end": 160320,
+      "planned": 11020000000,
+      "offer": 11020002000,
+      "entry": 11020002500,
+      "dequeue": 11020003000,
+      "finish": 11020100000
+    }
+  ],
+  "stage": {
+    "invocation": "asr/consume/0",
+    "stage": "asr.consume",
+    "start": 1021000300,
+    "end": 1021020000
+  },
+  "output": {
+    "invocation": "asr/consume/0",
+    "cause": 0,
+    "emitted": 1021010000
+  },
+  "recorder_delay_ns": 50,
+  "expected": {
+    "scheduler_wake_error_ns": {
+      "n": 3,
+      "p50": 500000,
+      "p95": 1000000,
+      "min": 2000,
+      "max": 1000000
+    },
+    "delivery_jitter_ns": {
+      "n": 3,
+      "p50": 500000,
+      "p95": 1000100,
+      "min": 2500,
+      "max": 1000100
+    },
+    "absolute_scheduling_error_ns": {
+      "n": 3,
+      "p50": 500000,
+      "p95": 1000100
+    },
+    "absolute_scheduling_error_post_warmup_ns": {
+      "n": 1,
+      "p50": 2500,
+      "p95": 2500,
+      "excluded": 2
+    },
+    "queue_residence_ns": {
+      "n": 3,
+      "p50": 500,
+      "p95": 100000
+    },
+    "processing_lag_ns": {
+      "n": 3,
+      "p50": 700000,
+      "p95": 1050000
+    },
+    "producer_blocked_ns": {
+      "n": 3,
+      "p50": 100,
+      "p95": 500
+    },
+    "event_emission_latency_ns": {
+      "n": 1,
+      "p50": 9700,
+      "p95": 9700
+    },
+    "delivery_to_output_latency_ns": {
+      "n": 1,
+      "p50": 9900,
+      "p95": 9900
+    },
+    "asr_consume_ns": {
+      "n": 1,
+      "p50": 19700,
+      "p95": 19700
+    }
+  },
+  "throughput": {
+    "total_frames": 192000,
+    "sample_rate_hz": 16000,
+    "setup_start_ns": 0,
+    "replay_anchor_ns": 1000000000,
+    "drain_end_ns": 13200000000,
+    "replay_elapsed_ns": 12000000000,
+    "expected": {
+      "end_to_end_rtf": 1.1,
+      "replay_rtf": 1.0166666666666666,
+      "adapter_service_rtf": 1.6416666666666667e-06,
+      "media_seconds_per_second": 1.0,
+      "consumed_samples_per_second": 16000.0
+    }
+  }
+}

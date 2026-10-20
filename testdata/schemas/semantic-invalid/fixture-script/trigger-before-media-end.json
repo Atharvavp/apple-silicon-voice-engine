@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "kind": "mock_fixture_script",
+  "source_id": "two-speaker-en",
+  "sample_rate_hz": 16000,
+  "duration_samples": 192000,
+  "perturbation": null,
+  "faults": [],
+  "asr": [
+    {
+      "ordinal": 0,
+      "trigger_sample": 32000,
+      "utterance_id": "u0",
+      "revision": 0,
+      "text": "hello",
+      "is_final": false,
+      "start_sample": 0,
+      "end_sample": 32000
+    },
+    {
+      "ordinal": 1,
+      "trigger_sample": 32000,
+      "utterance_id": "u0",
+      "revision": 1,
+      "text": "hello world",
+      "is_final": true,
+      "start_sample": 0,
+      "end_sample": 64000
+    },
+    {
+      "ordinal": 2,
+      "trigger_sample": 96000,
+      "utterance_id": "u1",
+      "revision": 0,
+      "text": "a x",
+      "is_final": false,
+      "start_sample": 64000,
+      "end_sample": 96000
+    },
+    {
+      "ordinal": 3,
+      "trigger_sample": null,
+      "utterance_id": "u1",
+      "revision": 1,
+      "text": "a x c d",
+      "is_final": true,
+      "start_sample": 64000,
+      "end_sample": 128000
+    }
+  ],
+  "diarization": [
+    {
+      "ordinal": 0,
+      "trigger_sample": 128000,
+      "segment_id": "hyp-y0",
+      "speaker_id": "Y",
+      "start_sample": 96000,
+      "end_sample": 128000
+    },
+    {
+      "ordinal": 1,
+      "trigger_sample": null,
+      "segment_id": "hyp-x0",
+      "speaker_id": "X",
+      "start_sample": 0,
+      "end_sample": 96000
+    }
+  ]
+}

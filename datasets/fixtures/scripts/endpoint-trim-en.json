@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "kind": "mock_fixture_script",
+  "source_id": "endpoint-trim-en",
+  "sample_rate_hz": 16000,
+  "duration_samples": 15999,
+  "perturbation": null,
+  "faults": [],
+  "asr": [
+    {
+      "ordinal": 0,
+      "trigger_sample": null,
+      "utterance_id": "u0",
+      "revision": 0,
+      "text": "test one",
+      "is_final": true,
+      "start_sample": 0,
+      "end_sample": 15999
+    }
+  ],
+  "diarization": [
+    {
+      "ordinal": 0,
+      "trigger_sample": null,
+      "segment_id": "hyp-x0",
+      "speaker_id": "X",
+      "start_sample": 0,
+      "end_sample": 15999
+    }
+  ]
+}

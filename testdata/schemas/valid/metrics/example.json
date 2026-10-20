@@ -1,0 +1,91 @@
+{
+  "schema_version": "1.0",
+  "run_id": "example-run",
+  "source_id": "two-speaker-en",
+  "analysis_id": "initial",
+  "mock": true,
+  "inputs": {
+    "predictions_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+    "references": [
+      {
+        "path": "references/transcript.json",
+        "byte_count": 10,
+        "sha256": "fedcba9876543210fedcba9876543210fedcba9876543210fedcba9876543210"
+      }
+    ],
+    "source_events": {
+      "path": "events.jsonl",
+      "byte_count": 12345,
+      "line_count": 40,
+      "sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+    }
+  },
+  "policies": {
+    "text": "nfc_casefold_punct_space_cp_v1",
+    "diarization": "pyannote_c0_overlap_uem_v1",
+    "scorers": {
+      "jiwer": "4.0.0",
+      "pyannote.metrics": "4.2.0"
+    }
+  },
+  "accuracy": {
+    "wer": {
+      "status": "ok",
+      "value": 0.6666666666666666,
+      "unit": "ratio",
+      "definition_id": "wer_v1",
+      "sample_count": 3,
+      "clock_domain": "none",
+      "reason": null,
+      "components": {
+        "substitutions": 1,
+        "deletions": 0,
+        "insertions": 1,
+        "reference_tokens": 3
+      }
+    },
+    "cer": {
+      "status": "not_computable",
+      "value": null,
+      "unit": "ratio",
+      "definition_id": "wer_v1",
+      "sample_count": 0,
+      "clock_domain": "none",
+      "reason": "zero_reference_tokens",
+      "components": {
+        "substitutions": 0,
+        "deletions": 0,
+        "insertions": 2,
+        "reference_tokens": 0
+      }
+    }
+  },
+  "timing": {
+    "delivery_jitter": {
+      "status": "ok",
+      "unit": "ns",
+      "definition_id": "delivery_jitter_v1",
+      "clock_domain": "monotonic",
+      "n": 3,
+      "p50": 1000.0,
+      "p95": 5000.0,
+      "min": -200.0,
+      "max": 5000.0,
+      "percentile_method": "nearest_rank_v1",
+      "exclusions": [
+        {
+          "reason": "warmup_first_10s",
+          "count": 0
+        }
+      ],
+      "source": {
+        "artifact": "events.jsonl",
+        "field": "payload.deadline_error_ns"
+      },
+      "reason": null
+    }
+  },
+  "throughput": {},
+  "resources": {},
+  "data_integrity": {}
+}

@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "source_id": "two-speaker-en",
+  "languages": [
+    "en"
+  ],
+  "timebase": {
+    "unit": "samples",
+    "sample_rate_hz": 16000
+  },
+  "duration_samples": 192000,
+  "original_precision": {
+    "unit": "samples",
+    "step": 1
+  },
+  "coverage": [
+    {
+      "start_sample": 0,
+      "end_sample": 192000
+    }
+  ],
+  "kind": "speakers",
+  "segments": [
+    {
+      "segment_id": "s0",
+      "speaker_id": "A",
+      "start_sample": -1,
+      "end_sample": 64000
+    },
+    {
+      "segment_id": "s1",
+      "speaker_id": "B",
+      "start_sample": 32000,
+      "end_sample": 96000
+    },
+    {
+      "segment_id": "s2",
+      "speaker_id": "A",
+      "start_sample": 60000,
+      "end_sample": 70000
+    }
+  ]
+}
