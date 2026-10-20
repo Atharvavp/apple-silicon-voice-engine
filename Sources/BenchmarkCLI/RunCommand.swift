@@ -111,6 +111,11 @@ enum RunSummary {
                 lines.append("  endpoint correction disclosed: \(status)")
             }
         }
-        Swift.print(lines.joined(separator: "\n"))
+        let text = lines.joined(separator: "\n") + "\n"
+        if outcome.failure == nil {
+            FileHandle.standardOutput.write(Data(text.utf8))
+        } else {
+            FileHandle.standardError.write(Data(text.utf8))
+        }
     }
 }

@@ -249,3 +249,18 @@ present but no checkpoint. Full regressions were re-run: 211 pytest passed; 170 
 ran with one failure (`periodicSamplesUseAbsoluteDeadlinesWithoutCatchUp`), traced to the
 DEC-062 phase-label bug and fixed. Remaining M5 work (production `run`, sealed-run and
 scoring-failure tests, telemetry error tests, checkpoint) was then completed.
+
+### M6: CLI validate/compare/export, schema freeze
+
+- Swift: `ValidateCommand` (run / rescore / dataset / suite), `CompareCommand`, `ExportCommand`,
+  `AnalysisCommands` + `DatasetValidator` (Experiment), usage errors mapped to exit 2.
+- Python: `compatibility.py`, `compare.py`, `export.py` (CSV + Agg PNG); `compare`/`export`
+  operations; `scripts/e2e.py`; `docs/cli.md`.
+- Schema 1.0 frozen (DEC-072).
+- Issues found and fixed: ArgumentParser's exit 64 for usage errors (G3 requires 2); a
+  failed run's summary printed to stdout.
+- The `--suite gate-a` path deliberately fails ("not available yet") until M7 wires it.
+- Checkpoint `evidence/M6/checkpoint.json` = **pass** (9/9): Swift CLI tests, 18 Python
+  compare/export/CLI tests, release build, `e2e.py` 45/45 on the release binary (successful
+  runs in all modes, validate, rescore, compare compatible/incompatible/override/lossy/failed,
+  export, and every negative exit category), 179 Swift tests, 230 pytest.

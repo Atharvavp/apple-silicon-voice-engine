@@ -184,3 +184,12 @@ def test_strict_endpoint_policy_refuses_a_corrected_conversion(voicebench: Path,
                              "--scratch", str(tmp_path / "strict")], capture_output=True, timeout=60, check=False)
     assert strict.returncode != 0
     assert b"conversionContract" in strict.stderr
+
+
+def test_schema_bundle_is_frozen(project_root: Path) -> None:
+    """DEC-008: schema 1.0 was frozen before the first sealed benchmark run. Any schema
+    edit changes this digest and must come with a new schema version."""
+    from phase0_analysis.validate import schema_bundle_digest
+
+    recorded = (project_root / "schemas/SCHEMA_BUNDLE_V1.sha256").read_text().split()[0]
+    assert schema_bundle_digest(project_root / "schemas/v1") == recorded

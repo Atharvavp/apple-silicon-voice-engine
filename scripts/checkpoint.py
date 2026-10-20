@@ -133,7 +133,18 @@ def groups(out: Path) -> dict[str, list[tuple[str, list[str]]]]:
                                    "--out", str(out / "m5-hi-validation.json")]),
         *common_tail,
     ]
-    return {"M1": m1, "M2": m2, "M2-hardening": hardening, "M3": m3, "M4": m4, "M5": m5}
+    m6 = [
+        ("swift-build", ["swift", "build"]),
+        ("swift-test-cli", ["scripts/swift_test.sh", "--filter", "BenchmarkCLITests",
+                            "--xunit-output", str(out / "xunit-cli.xml")]),
+        ("pytest-compare-export-cli", [PY, "-m", "pytest", "analysis/tests/test_compatibility.py",
+                                       "analysis/tests/test_export.py", "analysis/tests/test_cli.py", "-q",
+                                       "--junitxml", str(out / "pytest-m6.xml")]),
+        ("swift-build-release", ["swift", "build", "-c", "release"]),
+        ("e2e-release", [PY, "scripts/e2e.py", "--voicebench", release, "--out", str(out / "e2e")]),
+        *common_tail,
+    ]
+    return {"M1": m1, "M2": m2, "M2-hardening": hardening, "M3": m3, "M4": m4, "M5": m5, "M6": m6}
 
 
 def sha256(path: Path) -> str | None:
@@ -153,7 +164,7 @@ def now() -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("milestone", choices=["M1", "M2", "M2-hardening", "M3", "M4", "M5"])
+    parser.add_argument("milestone", choices=["M1", "M2", "M2-hardening", "M3", "M4", "M5", "M6"])
     parser.add_argument("--out", required=True)
     args = parser.parse_args()
     out = (ROOT / args.out).resolve()
