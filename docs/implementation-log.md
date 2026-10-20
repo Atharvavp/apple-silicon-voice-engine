@@ -264,3 +264,26 @@ scoring-failure tests, telemetry error tests, checkpoint) was then completed.
   compare/export/CLI tests, release build, `e2e.py` 45/45 on the release binary (successful
   runs in all modes, validate, rescore, compare compatible/incompatible/override/lossy/failed,
   export, and every negative exit category), 179 Swift tests, 230 pytest.
+
+### M7: acceptance, characterization, readiness
+
+- Tooling: `scripts/characterize.py` (P01–P04), `scripts/determinism.py`, `scripts/offline_smoke.sh`,
+  `scripts/acceptance.py`; analysis `acceptance.py` and `readiness.py`; `validate --suite gate-a`;
+  `docs/phase1-adapter-guide.md`; `PHASE_0_READINESS_REPORT.md`.
+- Campaign (`evidence/M7/performance`, uncontrolled host, all 13 runs exit 0): P01 post-warm-up
+  absolute admission error p95 8.96–9.06 ms (max ≈ 10.03 ms), 0 dropped; P02 720 s exact (11,520,000
+  samples, 36,000 chunks), trend −136 ns per media second, final deviation 6.01 ms; P03 raw pairs;
+  P04 every telemetry-on run took all expected periodic samples with 0 missed intervals.
+- Determinism: 3 separate processes, identical `logical_trace_v1` event, prediction and metric
+  projections; raw traces distinct.
+- Offline: network denial proven by positive/negative controls; e2e 45/45 under the policy.
+- Acceptance: V01–V20 all pass (every selection executed tests; 0 failures, errors or skips);
+  `voicebench validate --suite gate-a` → pass 20/20 with the uncontrolled-host disclosure.
+- Issues found and fixed: empty test selections could have passed silently (guard added, DEC-073);
+  the readiness headline did not state the uncontrolled-host limitation (fixed); the automated
+  SIGINT test closed the last API-ledger gap.
+- Checkpoint `evidence/M7/checkpoint/checkpoint.json` = **pass** (9/9): fixtures reproducible,
+  debug and pinned release builds, 179 Swift tests, 231 pytest, schema-check, doctor, Gate A suite,
+  TSan over 61 concurrency tests with 0 reports. Final Python regression after the last edits:
+  235 passed.
+- **Decision: Gate A PASS with documented limitations; Gate B PENDING.** Stopped at Phase 0.

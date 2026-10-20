@@ -48,3 +48,27 @@ def test_validation_discloses_endpoint_correction(voicebench: Path, sealed: dict
 def test_suite_never_reports_an_unearned_pass(voicebench: Path, tmp_path: Path) -> None:
     result = vb(voicebench, "validate", "--suite", "gate-a", "--evidence-dir", str(tmp_path))
     assert result.returncode != 0
+
+
+def test_sigint_cancels_a_running_experiment(voicebench: Path, tmp_path: Path) -> None:
+    """A real SIGINT reaches the dispatch-source handler and ends the run `cancelled` (exit 130)."""
+    import signal
+    import time
+
+    process = subprocess.Popen([str(voicebench), "run", "--config", str(PROJECT_ROOT / "configs/mock-realtime.yaml"),
+                                "--runs-dir", str(tmp_path), "--run-id", "sigint"], cwd=PROJECT_ROOT,
+                               stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    status = tmp_path / "sigint/status.json"
+    deadline = time.monotonic() + 60
+    while time.monotonic() < deadline:
+        if status.exists() and json.loads(status.read_text())["state"] == "running":
+            break
+        time.sleep(0.05)
+    time.sleep(0.5)
+    process.send_signal(signal.SIGINT)
+    _, stderr = process.communicate(timeout=60)
+    assert process.returncode == 130, stderr.decode()
+    final = json.loads(status.read_text())
+    assert final["state"] == "cancelled" and final["failure"]["category"] == "cancelled"
+    lines = (tmp_path / "sigint/events.jsonl.partial").read_bytes().splitlines()
+    assert json.loads(lines[-1])["type"] == "experiment.cancelled"
