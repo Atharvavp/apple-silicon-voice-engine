@@ -1,0 +1,395 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.voicebench.invalid/v1/annotations.schema.json",
+  "title": "Canonical reference annotations",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/transcript"
+    },
+    {
+      "$ref": "#/$defs/speakers"
+    },
+    {
+      "$ref": "#/$defs/joint_words"
+    }
+  ],
+  "$defs": {
+    "transcript": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "$ref": "common.schema.json#/$defs/schema_version"
+        },
+        "kind": {
+          "const": "transcript"
+        },
+        "source_id": {
+          "$ref": "common.schema.json#/$defs/stable_id"
+        },
+        "languages": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "common.schema.json#/$defs/language_tag"
+          }
+        },
+        "timebase": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "unit": {
+              "const": "samples"
+            },
+            "sample_rate_hz": {
+              "$ref": "common.schema.json#/$defs/sample_rate_hz"
+            }
+          },
+          "required": [
+            "sample_rate_hz",
+            "unit"
+          ]
+        },
+        "duration_samples": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "original_precision": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "unit": {
+              "enum": [
+                "samples",
+                "ms",
+                "cs",
+                "s"
+              ]
+            },
+            "step": {
+              "$ref": "common.schema.json#/$defs/pos_int64"
+            }
+          },
+          "required": [
+            "step",
+            "unit"
+          ]
+        },
+        "coverage": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/sample_interval"
+          }
+        },
+        "granularity": {
+          "enum": [
+            "recording",
+            "utterances",
+            "words"
+          ]
+        },
+        "segments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "segment_id": {
+                "$ref": "common.schema.json#/$defs/stable_id"
+              },
+              "start_sample": {
+                "$ref": "common.schema.json#/$defs/nonneg_int64"
+              },
+              "end_sample": {
+                "$ref": "common.schema.json#/$defs/nonneg_int64"
+              },
+              "text": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "end_sample",
+              "segment_id",
+              "start_sample",
+              "text"
+            ]
+          }
+        },
+        "recording_text": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "coverage",
+        "duration_samples",
+        "granularity",
+        "kind",
+        "languages",
+        "original_precision",
+        "recording_text",
+        "schema_version",
+        "segments",
+        "source_id",
+        "timebase"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "granularity": {
+                "const": "recording"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "segments": {
+                "maxItems": 0
+              },
+              "recording_text": {
+                "type": "string"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "recording_text": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "speakers": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "$ref": "common.schema.json#/$defs/schema_version"
+        },
+        "kind": {
+          "const": "speakers"
+        },
+        "source_id": {
+          "$ref": "common.schema.json#/$defs/stable_id"
+        },
+        "languages": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "common.schema.json#/$defs/language_tag"
+          }
+        },
+        "timebase": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "unit": {
+              "const": "samples"
+            },
+            "sample_rate_hz": {
+              "$ref": "common.schema.json#/$defs/sample_rate_hz"
+            }
+          },
+          "required": [
+            "sample_rate_hz",
+            "unit"
+          ]
+        },
+        "duration_samples": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "original_precision": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "unit": {
+              "enum": [
+                "samples",
+                "ms",
+                "cs",
+                "s"
+              ]
+            },
+            "step": {
+              "$ref": "common.schema.json#/$defs/pos_int64"
+            }
+          },
+          "required": [
+            "step",
+            "unit"
+          ]
+        },
+        "coverage": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/sample_interval"
+          }
+        },
+        "segments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "segment_id": {
+                "$ref": "common.schema.json#/$defs/stable_id"
+              },
+              "start_sample": {
+                "$ref": "common.schema.json#/$defs/nonneg_int64"
+              },
+              "end_sample": {
+                "$ref": "common.schema.json#/$defs/nonneg_int64"
+              },
+              "speaker_id": {
+                "$ref": "common.schema.json#/$defs/stable_id"
+              }
+            },
+            "required": [
+              "end_sample",
+              "segment_id",
+              "speaker_id",
+              "start_sample"
+            ]
+          }
+        }
+      },
+      "required": [
+        "coverage",
+        "duration_samples",
+        "kind",
+        "languages",
+        "original_precision",
+        "schema_version",
+        "segments",
+        "source_id",
+        "timebase"
+      ]
+    },
+    "joint_words": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "$ref": "common.schema.json#/$defs/schema_version"
+        },
+        "kind": {
+          "const": "joint_words"
+        },
+        "source_id": {
+          "$ref": "common.schema.json#/$defs/stable_id"
+        },
+        "languages": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "common.schema.json#/$defs/language_tag"
+          }
+        },
+        "timebase": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "unit": {
+              "const": "samples"
+            },
+            "sample_rate_hz": {
+              "$ref": "common.schema.json#/$defs/sample_rate_hz"
+            }
+          },
+          "required": [
+            "sample_rate_hz",
+            "unit"
+          ]
+        },
+        "duration_samples": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "original_precision": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "unit": {
+              "enum": [
+                "samples",
+                "ms",
+                "cs",
+                "s"
+              ]
+            },
+            "step": {
+              "$ref": "common.schema.json#/$defs/pos_int64"
+            }
+          },
+          "required": [
+            "step",
+            "unit"
+          ]
+        },
+        "coverage": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/sample_interval"
+          }
+        },
+        "granularity": {
+          "const": "words"
+        },
+        "words": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "word_id": {
+                "$ref": "common.schema.json#/$defs/stable_id"
+              },
+              "start_sample": {
+                "$ref": "common.schema.json#/$defs/nonneg_int64"
+              },
+              "end_sample": {
+                "$ref": "common.schema.json#/$defs/nonneg_int64"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1
+              },
+              "speaker_id": {
+                "anyOf": [
+                  {
+                    "$ref": "common.schema.json#/$defs/stable_id"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "end_sample",
+              "speaker_id",
+              "start_sample",
+              "text",
+              "word_id"
+            ]
+          }
+        }
+      },
+      "required": [
+        "coverage",
+        "duration_samples",
+        "granularity",
+        "kind",
+        "languages",
+        "original_precision",
+        "schema_version",
+        "source_id",
+        "timebase",
+        "words"
+      ]
+    }
+  }
+}

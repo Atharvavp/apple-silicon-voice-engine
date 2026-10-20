@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.voicebench.invalid/v1/telemetry.schema.json",
+  "title": "Telemetry sidecar JSONL record",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "$ref": "common.schema.json#/$defs/schema_version"
+    },
+    "run_id": {
+      "$ref": "common.schema.json#/$defs/run_id"
+    },
+    "sample_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "phase": {
+      "type": "string",
+      "minLength": 1
+    },
+    "measured_ns": {
+      "$ref": "common.schema.json#/$defs/nonneg_int64"
+    },
+    "scheduled_ns": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "interval_ns": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "collection_duration_ns": {
+      "$ref": "common.schema.json#/$defs/nonneg_int64"
+    },
+    "measurements": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "common.schema.json#/$defs/observation"
+      }
+    }
+  },
+  "required": [
+    "collection_duration_ns",
+    "interval_ns",
+    "measured_ns",
+    "measurements",
+    "phase",
+    "run_id",
+    "sample_id",
+    "scheduled_ns",
+    "schema_version"
+  ]
+}

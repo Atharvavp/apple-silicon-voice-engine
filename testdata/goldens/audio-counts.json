@@ -1,0 +1,2394 @@
+{
+  "generator_version": "fixtures_v1",
+  "rule": "floor((Nin*Rout + floor(Rin/2)) / Rin)",
+  "deadline_rule": "floor(end_sample * 1e9 / rate) (end-of-frame availability)",
+  "fixtures": {
+    "mono11k025_f32_len10": {
+      "source_frames": 10,
+      "source_rate_hz": 11025,
+      "channels": 1,
+      "target_rate_hz": 16000,
+      "converted_frames": 15,
+      "source_rate_chunking": [
+        {
+          "frame_ms": 10,
+          "valid": false
+        },
+        {
+          "frame_ms": 20,
+          "valid": false
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 441,
+          "chunks": 1,
+          "final_chunk_samples": 10,
+          "final_end_sample": 10,
+          "final_deadline_ns": 907029
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 882,
+          "chunks": 1,
+          "final_chunk_samples": 10,
+          "final_end_sample": 10,
+          "final_deadline_ns": 907029
+        }
+      ],
+      "chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 1,
+          "final_chunk_samples": 15,
+          "final_end_sample": 15,
+          "final_deadline_ns": 937500
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 1,
+          "final_chunk_samples": 15,
+          "final_end_sample": 15,
+          "final_deadline_ns": 937500
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 1,
+          "final_chunk_samples": 15,
+          "final_end_sample": 15,
+          "final_deadline_ns": 937500
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 1,
+          "final_chunk_samples": 15,
+          "final_end_sample": 15,
+          "final_deadline_ns": 937500
+        }
+      ]
+    },
+    "mono16k_ext_f32": {
+      "source_frames": 1000,
+      "source_rate_hz": 16000,
+      "channels": 1,
+      "target_rate_hz": 16000,
+      "converted_frames": 1000,
+      "source_rate_chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 7,
+          "final_chunk_samples": 40,
+          "final_end_sample": 1000,
+          "final_deadline_ns": 62500000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 4,
+          "final_chunk_samples": 40,
+          "final_end_sample": 1000,
+          "final_deadline_ns": 62500000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 2,
+          "final_chunk_samples": 360,
+          "final_end_sample": 1000,
+          "final_deadline_ns": 62500000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 1,
+          "final_chunk_samples": 1000,
+          "final_end_sample": 1000,
+          "final_deadline_ns": 62500000
+        }
+      ],
+      "chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 7,
+          "final_chunk_samples": 40,
+          "final_end_sample": 1000,
+          "final_deadline_ns": 62500000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 4,
+          "final_chunk_samples": 40,
+          "final_end_sample": 1000,
+          "final_deadline_ns": 62500000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 2,
+          "final_chunk_samples": 360,
+          "final_end_sample": 1000,
+          "final_deadline_ns": 62500000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 1,
+          "final_chunk_samples": 1000,
+          "final_end_sample": 1000,
+          "final_deadline_ns": 62500000
+        }
+      ]
+    },
+    "mono16k_ext_pcm16": {
+      "source_frames": 1000,
+      "source_rate_hz": 16000,
+      "channels": 1,
+      "target_rate_hz": 16000,
+      "converted_frames": 1000,
+      "source_rate_chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 7,
+          "final_chunk_samples": 40,
+          "final_end_sample": 1000,
+          "final_deadline_ns": 62500000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 4,
+          "final_chunk_samples": 40,
+          "final_end_sample": 1000,
+          "final_deadline_ns": 62500000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 2,
+          "final_chunk_samples": 360,
+          "final_end_sample": 1000,
+          "final_deadline_ns": 62500000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 1,
+          "final_chunk_samples": 1000,
+          "final_end_sample": 1000,
+          "final_deadline_ns": 62500000
+        }
+      ],
+      "chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 7,
+          "final_chunk_samples": 40,
+          "final_end_sample": 1000,
+          "final_deadline_ns": 62500000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 4,
+          "final_chunk_samples": 40,
+          "final_end_sample": 1000,
+          "final_deadline_ns": 62500000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 2,
+          "final_chunk_samples": 360,
+          "final_end_sample": 1000,
+          "final_deadline_ns": 62500000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 1,
+          "final_chunk_samples": 1000,
+          "final_end_sample": 1000,
+          "final_deadline_ns": 62500000
+        }
+      ]
+    },
+    "mono16k_f32_impulse": {
+      "source_frames": 8000,
+      "source_rate_hz": 16000,
+      "channels": 1,
+      "target_rate_hz": 16000,
+      "converted_frames": 8000,
+      "source_rate_chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 50,
+          "final_chunk_samples": 160,
+          "final_end_sample": 8000,
+          "final_deadline_ns": 500000000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 25,
+          "final_chunk_samples": 320,
+          "final_end_sample": 8000,
+          "final_deadline_ns": 500000000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 13,
+          "final_chunk_samples": 320,
+          "final_end_sample": 8000,
+          "final_deadline_ns": 500000000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 7,
+          "final_chunk_samples": 320,
+          "final_end_sample": 8000,
+          "final_deadline_ns": 500000000
+        }
+      ],
+      "chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 50,
+          "final_chunk_samples": 160,
+          "final_end_sample": 8000,
+          "final_deadline_ns": 500000000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 25,
+          "final_chunk_samples": 320,
+          "final_end_sample": 8000,
+          "final_deadline_ns": 500000000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 13,
+          "final_chunk_samples": 320,
+          "final_end_sample": 8000,
+          "final_deadline_ns": 500000000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 7,
+          "final_chunk_samples": 320,
+          "final_end_sample": 8000,
+          "final_deadline_ns": 500000000
+        }
+      ]
+    },
+    "mono16k_f32_outside_unit": {
+      "source_frames": 4,
+      "source_rate_hz": 16000,
+      "channels": 1,
+      "target_rate_hz": 16000,
+      "converted_frames": 4,
+      "source_rate_chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 1,
+          "final_chunk_samples": 4,
+          "final_end_sample": 4,
+          "final_deadline_ns": 250000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 1,
+          "final_chunk_samples": 4,
+          "final_end_sample": 4,
+          "final_deadline_ns": 250000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 1,
+          "final_chunk_samples": 4,
+          "final_end_sample": 4,
+          "final_deadline_ns": 250000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 1,
+          "final_chunk_samples": 4,
+          "final_end_sample": 4,
+          "final_deadline_ns": 250000
+        }
+      ],
+      "chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 1,
+          "final_chunk_samples": 4,
+          "final_end_sample": 4,
+          "final_deadline_ns": 250000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 1,
+          "final_chunk_samples": 4,
+          "final_end_sample": 4,
+          "final_deadline_ns": 250000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 1,
+          "final_chunk_samples": 4,
+          "final_end_sample": 4,
+          "final_deadline_ns": 250000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 1,
+          "final_chunk_samples": 4,
+          "final_end_sample": 4,
+          "final_deadline_ns": 250000
+        }
+      ]
+    },
+    "mono16k_pcm16_empty": {
+      "source_frames": 0,
+      "source_rate_hz": 16000,
+      "channels": 1,
+      "target_rate_hz": 16000,
+      "converted_frames": 0,
+      "source_rate_chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 0,
+          "final_chunk_samples": 0,
+          "final_end_sample": 0,
+          "final_deadline_ns": 0
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 0,
+          "final_chunk_samples": 0,
+          "final_end_sample": 0,
+          "final_deadline_ns": 0
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 0,
+          "final_chunk_samples": 0,
+          "final_end_sample": 0,
+          "final_deadline_ns": 0
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 0,
+          "final_chunk_samples": 0,
+          "final_end_sample": 0,
+          "final_deadline_ns": 0
+        }
+      ],
+      "chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 0,
+          "final_chunk_samples": 0,
+          "final_end_sample": 0,
+          "final_deadline_ns": 0
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 0,
+          "final_chunk_samples": 0,
+          "final_end_sample": 0,
+          "final_deadline_ns": 0
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 0,
+          "final_chunk_samples": 0,
+          "final_end_sample": 0,
+          "final_deadline_ns": 0
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 0,
+          "final_chunk_samples": 0,
+          "final_end_sample": 0,
+          "final_deadline_ns": 0
+        }
+      ]
+    },
+    "mono16k_pcm16_final_partial": {
+      "source_frames": 16100,
+      "source_rate_hz": 16000,
+      "channels": 1,
+      "target_rate_hz": 16000,
+      "converted_frames": 16100,
+      "source_rate_chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 101,
+          "final_chunk_samples": 100,
+          "final_end_sample": 16100,
+          "final_deadline_ns": 1006250000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 51,
+          "final_chunk_samples": 100,
+          "final_end_sample": 16100,
+          "final_deadline_ns": 1006250000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 26,
+          "final_chunk_samples": 100,
+          "final_end_sample": 16100,
+          "final_deadline_ns": 1006250000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 13,
+          "final_chunk_samples": 740,
+          "final_end_sample": 16100,
+          "final_deadline_ns": 1006250000
+        }
+      ],
+      "chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 101,
+          "final_chunk_samples": 100,
+          "final_end_sample": 16100,
+          "final_deadline_ns": 1006250000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 51,
+          "final_chunk_samples": 100,
+          "final_end_sample": 16100,
+          "final_deadline_ns": 1006250000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 26,
+          "final_chunk_samples": 100,
+          "final_end_sample": 16100,
+          "final_deadline_ns": 1006250000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 13,
+          "final_chunk_samples": 740,
+          "final_end_sample": 16100,
+          "final_deadline_ns": 1006250000
+        }
+      ]
+    },
+    "mono16k_pcm16_fullscale": {
+      "source_frames": 7,
+      "source_rate_hz": 16000,
+      "channels": 1,
+      "target_rate_hz": 16000,
+      "converted_frames": 7,
+      "source_rate_chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 1,
+          "final_chunk_samples": 7,
+          "final_end_sample": 7,
+          "final_deadline_ns": 437500
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 1,
+          "final_chunk_samples": 7,
+          "final_end_sample": 7,
+          "final_deadline_ns": 437500
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 1,
+          "final_chunk_samples": 7,
+          "final_end_sample": 7,
+          "final_deadline_ns": 437500
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 1,
+          "final_chunk_samples": 7,
+          "final_end_sample": 7,
+          "final_deadline_ns": 437500
+        }
+      ],
+      "chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 1,
+          "final_chunk_samples": 7,
+          "final_end_sample": 7,
+          "final_deadline_ns": 437500
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 1,
+          "final_chunk_samples": 7,
+          "final_end_sample": 7,
+          "final_deadline_ns": 437500
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 1,
+          "final_chunk_samples": 7,
+          "final_end_sample": 7,
+          "final_deadline_ns": 437500
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 1,
+          "final_chunk_samples": 7,
+          "final_end_sample": 7,
+          "final_deadline_ns": 437500
+        }
+      ]
+    },
+    "mono16k_pcm16_one_sample": {
+      "source_frames": 1,
+      "source_rate_hz": 16000,
+      "channels": 1,
+      "target_rate_hz": 16000,
+      "converted_frames": 1,
+      "source_rate_chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 1,
+          "final_chunk_samples": 1,
+          "final_end_sample": 1,
+          "final_deadline_ns": 62500
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 1,
+          "final_chunk_samples": 1,
+          "final_end_sample": 1,
+          "final_deadline_ns": 62500
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 1,
+          "final_chunk_samples": 1,
+          "final_end_sample": 1,
+          "final_deadline_ns": 62500
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 1,
+          "final_chunk_samples": 1,
+          "final_end_sample": 1,
+          "final_deadline_ns": 62500
+        }
+      ],
+      "chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 1,
+          "final_chunk_samples": 1,
+          "final_end_sample": 1,
+          "final_deadline_ns": 62500
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 1,
+          "final_chunk_samples": 1,
+          "final_end_sample": 1,
+          "final_deadline_ns": 62500
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 1,
+          "final_chunk_samples": 1,
+          "final_end_sample": 1,
+          "final_deadline_ns": 62500
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 1,
+          "final_chunk_samples": 1,
+          "final_end_sample": 1,
+          "final_deadline_ns": 62500
+        }
+      ]
+    },
+    "mono16k_pcm16_short_319": {
+      "source_frames": 319,
+      "source_rate_hz": 16000,
+      "channels": 1,
+      "target_rate_hz": 16000,
+      "converted_frames": 319,
+      "source_rate_chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 2,
+          "final_chunk_samples": 159,
+          "final_end_sample": 319,
+          "final_deadline_ns": 19937500
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 1,
+          "final_chunk_samples": 319,
+          "final_end_sample": 319,
+          "final_deadline_ns": 19937500
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 1,
+          "final_chunk_samples": 319,
+          "final_end_sample": 319,
+          "final_deadline_ns": 19937500
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 1,
+          "final_chunk_samples": 319,
+          "final_end_sample": 319,
+          "final_deadline_ns": 19937500
+        }
+      ],
+      "chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 2,
+          "final_chunk_samples": 159,
+          "final_end_sample": 319,
+          "final_deadline_ns": 19937500
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 1,
+          "final_chunk_samples": 319,
+          "final_end_sample": 319,
+          "final_deadline_ns": 19937500
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 1,
+          "final_chunk_samples": 319,
+          "final_end_sample": 319,
+          "final_deadline_ns": 19937500
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 1,
+          "final_chunk_samples": 319,
+          "final_end_sample": 319,
+          "final_deadline_ns": 19937500
+        }
+      ]
+    },
+    "mono16k_pcm16_silence_0p5s": {
+      "source_frames": 8000,
+      "source_rate_hz": 16000,
+      "channels": 1,
+      "target_rate_hz": 16000,
+      "converted_frames": 8000,
+      "source_rate_chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 50,
+          "final_chunk_samples": 160,
+          "final_end_sample": 8000,
+          "final_deadline_ns": 500000000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 25,
+          "final_chunk_samples": 320,
+          "final_end_sample": 8000,
+          "final_deadline_ns": 500000000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 13,
+          "final_chunk_samples": 320,
+          "final_end_sample": 8000,
+          "final_deadline_ns": 500000000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 7,
+          "final_chunk_samples": 320,
+          "final_end_sample": 8000,
+          "final_deadline_ns": 500000000
+        }
+      ],
+      "chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 50,
+          "final_chunk_samples": 160,
+          "final_end_sample": 8000,
+          "final_deadline_ns": 500000000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 25,
+          "final_chunk_samples": 320,
+          "final_end_sample": 8000,
+          "final_deadline_ns": 500000000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 13,
+          "final_chunk_samples": 320,
+          "final_end_sample": 8000,
+          "final_deadline_ns": 500000000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 7,
+          "final_chunk_samples": 320,
+          "final_end_sample": 8000,
+          "final_deadline_ns": 500000000
+        }
+      ]
+    },
+    "mono16k_pcm16_tone440_1s": {
+      "source_frames": 16000,
+      "source_rate_hz": 16000,
+      "channels": 1,
+      "target_rate_hz": 16000,
+      "converted_frames": 16000,
+      "source_rate_chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 100,
+          "final_chunk_samples": 160,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 50,
+          "final_chunk_samples": 320,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 25,
+          "final_chunk_samples": 640,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 13,
+          "final_chunk_samples": 640,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        }
+      ],
+      "chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 100,
+          "final_chunk_samples": 160,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 50,
+          "final_chunk_samples": 320,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 25,
+          "final_chunk_samples": 640,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 13,
+          "final_chunk_samples": 640,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        }
+      ]
+    },
+    "mono16k_pcm24_fullscale": {
+      "source_frames": 7,
+      "source_rate_hz": 16000,
+      "channels": 1,
+      "target_rate_hz": 16000,
+      "converted_frames": 7,
+      "source_rate_chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 1,
+          "final_chunk_samples": 7,
+          "final_end_sample": 7,
+          "final_deadline_ns": 437500
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 1,
+          "final_chunk_samples": 7,
+          "final_end_sample": 7,
+          "final_deadline_ns": 437500
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 1,
+          "final_chunk_samples": 7,
+          "final_end_sample": 7,
+          "final_deadline_ns": 437500
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 1,
+          "final_chunk_samples": 7,
+          "final_end_sample": 7,
+          "final_deadline_ns": 437500
+        }
+      ],
+      "chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 1,
+          "final_chunk_samples": 7,
+          "final_end_sample": 7,
+          "final_deadline_ns": 437500
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 1,
+          "final_chunk_samples": 7,
+          "final_end_sample": 7,
+          "final_deadline_ns": 437500
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 1,
+          "final_chunk_samples": 7,
+          "final_end_sample": 7,
+          "final_deadline_ns": 437500
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 1,
+          "final_chunk_samples": 7,
+          "final_end_sample": 7,
+          "final_deadline_ns": 437500
+        }
+      ]
+    },
+    "mono16k_pcm32_fullscale": {
+      "source_frames": 7,
+      "source_rate_hz": 16000,
+      "channels": 1,
+      "target_rate_hz": 16000,
+      "converted_frames": 7,
+      "source_rate_chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 1,
+          "final_chunk_samples": 7,
+          "final_end_sample": 7,
+          "final_deadline_ns": 437500
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 1,
+          "final_chunk_samples": 7,
+          "final_end_sample": 7,
+          "final_deadline_ns": 437500
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 1,
+          "final_chunk_samples": 7,
+          "final_end_sample": 7,
+          "final_deadline_ns": 437500
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 1,
+          "final_chunk_samples": 7,
+          "final_end_sample": 7,
+          "final_deadline_ns": 437500
+        }
+      ],
+      "chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 1,
+          "final_chunk_samples": 7,
+          "final_end_sample": 7,
+          "final_deadline_ns": 437500
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 1,
+          "final_chunk_samples": 7,
+          "final_end_sample": 7,
+          "final_deadline_ns": 437500
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 1,
+          "final_chunk_samples": 7,
+          "final_end_sample": 7,
+          "final_deadline_ns": 437500
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 1,
+          "final_chunk_samples": 7,
+          "final_end_sample": 7,
+          "final_deadline_ns": 437500
+        }
+      ]
+    },
+    "mono22k05_f32_len2": {
+      "source_frames": 2,
+      "source_rate_hz": 22050,
+      "channels": 1,
+      "target_rate_hz": 16000,
+      "converted_frames": 1,
+      "source_rate_chunking": [
+        {
+          "frame_ms": 10,
+          "valid": false
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 441,
+          "chunks": 1,
+          "final_chunk_samples": 2,
+          "final_end_sample": 2,
+          "final_deadline_ns": 90702
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 882,
+          "chunks": 1,
+          "final_chunk_samples": 2,
+          "final_end_sample": 2,
+          "final_deadline_ns": 90702
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1764,
+          "chunks": 1,
+          "final_chunk_samples": 2,
+          "final_end_sample": 2,
+          "final_deadline_ns": 90702
+        }
+      ],
+      "chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 1,
+          "final_chunk_samples": 1,
+          "final_end_sample": 1,
+          "final_deadline_ns": 62500
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 1,
+          "final_chunk_samples": 1,
+          "final_end_sample": 1,
+          "final_deadline_ns": 62500
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 1,
+          "final_chunk_samples": 1,
+          "final_end_sample": 1,
+          "final_deadline_ns": 62500
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 1,
+          "final_chunk_samples": 1,
+          "final_end_sample": 1,
+          "final_deadline_ns": 62500
+        }
+      ]
+    },
+    "mono22k05_pcm16_ramp": {
+      "source_frames": 22050,
+      "source_rate_hz": 22050,
+      "channels": 1,
+      "target_rate_hz": 16000,
+      "converted_frames": 16000,
+      "source_rate_chunking": [
+        {
+          "frame_ms": 10,
+          "valid": false
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 441,
+          "chunks": 50,
+          "final_chunk_samples": 441,
+          "final_end_sample": 22050,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 882,
+          "chunks": 25,
+          "final_chunk_samples": 882,
+          "final_end_sample": 22050,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1764,
+          "chunks": 13,
+          "final_chunk_samples": 882,
+          "final_end_sample": 22050,
+          "final_deadline_ns": 1000000000
+        }
+      ],
+      "chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 100,
+          "final_chunk_samples": 160,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 50,
+          "final_chunk_samples": 320,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 25,
+          "final_chunk_samples": 640,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 13,
+          "final_chunk_samples": 640,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        }
+      ]
+    },
+    "mono44k1_f32_len1": {
+      "source_frames": 1,
+      "source_rate_hz": 44100,
+      "channels": 1,
+      "target_rate_hz": 16000,
+      "converted_frames": 0,
+      "source_rate_chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 441,
+          "chunks": 1,
+          "final_chunk_samples": 1,
+          "final_end_sample": 1,
+          "final_deadline_ns": 22675
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 882,
+          "chunks": 1,
+          "final_chunk_samples": 1,
+          "final_end_sample": 1,
+          "final_deadline_ns": 22675
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 1764,
+          "chunks": 1,
+          "final_chunk_samples": 1,
+          "final_end_sample": 1,
+          "final_deadline_ns": 22675
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 3528,
+          "chunks": 1,
+          "final_chunk_samples": 1,
+          "final_end_sample": 1,
+          "final_deadline_ns": 22675
+        }
+      ],
+      "chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 0,
+          "final_chunk_samples": 0,
+          "final_end_sample": 0,
+          "final_deadline_ns": 0
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 0,
+          "final_chunk_samples": 0,
+          "final_end_sample": 0,
+          "final_deadline_ns": 0
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 0,
+          "final_chunk_samples": 0,
+          "final_end_sample": 0,
+          "final_deadline_ns": 0
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 0,
+          "final_chunk_samples": 0,
+          "final_end_sample": 0,
+          "final_deadline_ns": 0
+        }
+      ]
+    },
+    "mono44k1_f32_len7": {
+      "source_frames": 7,
+      "source_rate_hz": 44100,
+      "channels": 1,
+      "target_rate_hz": 16000,
+      "converted_frames": 3,
+      "source_rate_chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 441,
+          "chunks": 1,
+          "final_chunk_samples": 7,
+          "final_end_sample": 7,
+          "final_deadline_ns": 158730
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 882,
+          "chunks": 1,
+          "final_chunk_samples": 7,
+          "final_end_sample": 7,
+          "final_deadline_ns": 158730
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 1764,
+          "chunks": 1,
+          "final_chunk_samples": 7,
+          "final_end_sample": 7,
+          "final_deadline_ns": 158730
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 3528,
+          "chunks": 1,
+          "final_chunk_samples": 7,
+          "final_end_sample": 7,
+          "final_deadline_ns": 158730
+        }
+      ],
+      "chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 1,
+          "final_chunk_samples": 3,
+          "final_end_sample": 3,
+          "final_deadline_ns": 187500
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 1,
+          "final_chunk_samples": 3,
+          "final_end_sample": 3,
+          "final_deadline_ns": 187500
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 1,
+          "final_chunk_samples": 3,
+          "final_end_sample": 3,
+          "final_deadline_ns": 187500
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 1,
+          "final_chunk_samples": 3,
+          "final_end_sample": 3,
+          "final_deadline_ns": 187500
+        }
+      ]
+    },
+    "mono44k1_pcm16_odd": {
+      "source_frames": 44101,
+      "source_rate_hz": 44100,
+      "channels": 1,
+      "target_rate_hz": 16000,
+      "converted_frames": 16000,
+      "source_rate_chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 441,
+          "chunks": 101,
+          "final_chunk_samples": 1,
+          "final_end_sample": 44101,
+          "final_deadline_ns": 1000022675
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 882,
+          "chunks": 51,
+          "final_chunk_samples": 1,
+          "final_end_sample": 44101,
+          "final_deadline_ns": 1000022675
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 1764,
+          "chunks": 26,
+          "final_chunk_samples": 1,
+          "final_end_sample": 44101,
+          "final_deadline_ns": 1000022675
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 3528,
+          "chunks": 13,
+          "final_chunk_samples": 1765,
+          "final_end_sample": 44101,
+          "final_deadline_ns": 1000022675
+        }
+      ],
+      "chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 100,
+          "final_chunk_samples": 160,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 50,
+          "final_chunk_samples": 320,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 25,
+          "final_chunk_samples": 640,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 13,
+          "final_chunk_samples": 640,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        }
+      ]
+    },
+    "mono44k1_pcm16_tone1k": {
+      "source_frames": 44100,
+      "source_rate_hz": 44100,
+      "channels": 1,
+      "target_rate_hz": 16000,
+      "converted_frames": 16000,
+      "source_rate_chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 441,
+          "chunks": 100,
+          "final_chunk_samples": 441,
+          "final_end_sample": 44100,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 882,
+          "chunks": 50,
+          "final_chunk_samples": 882,
+          "final_end_sample": 44100,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 1764,
+          "chunks": 25,
+          "final_chunk_samples": 1764,
+          "final_end_sample": 44100,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 3528,
+          "chunks": 13,
+          "final_chunk_samples": 1764,
+          "final_end_sample": 44100,
+          "final_deadline_ns": 1000000000
+        }
+      ],
+      "chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 100,
+          "final_chunk_samples": 160,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 50,
+          "final_chunk_samples": 320,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 25,
+          "final_chunk_samples": 640,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 13,
+          "final_chunk_samples": 640,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        }
+      ]
+    },
+    "mono48k_f32_dc": {
+      "source_frames": 48000,
+      "source_rate_hz": 48000,
+      "channels": 1,
+      "target_rate_hz": 16000,
+      "converted_frames": 16000,
+      "source_rate_chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 480,
+          "chunks": 100,
+          "final_chunk_samples": 480,
+          "final_end_sample": 48000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 960,
+          "chunks": 50,
+          "final_chunk_samples": 960,
+          "final_end_sample": 48000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 1920,
+          "chunks": 25,
+          "final_chunk_samples": 1920,
+          "final_end_sample": 48000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 3840,
+          "chunks": 13,
+          "final_chunk_samples": 1920,
+          "final_end_sample": 48000,
+          "final_deadline_ns": 1000000000
+        }
+      ],
+      "chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 100,
+          "final_chunk_samples": 160,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 50,
+          "final_chunk_samples": 320,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 25,
+          "final_chunk_samples": 640,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 13,
+          "final_chunk_samples": 640,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        }
+      ]
+    },
+    "mono48k_f32_impulse": {
+      "source_frames": 48000,
+      "source_rate_hz": 48000,
+      "channels": 1,
+      "target_rate_hz": 16000,
+      "converted_frames": 16000,
+      "source_rate_chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 480,
+          "chunks": 100,
+          "final_chunk_samples": 480,
+          "final_end_sample": 48000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 960,
+          "chunks": 50,
+          "final_chunk_samples": 960,
+          "final_end_sample": 48000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 1920,
+          "chunks": 25,
+          "final_chunk_samples": 1920,
+          "final_end_sample": 48000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 3840,
+          "chunks": 13,
+          "final_chunk_samples": 1920,
+          "final_end_sample": 48000,
+          "final_deadline_ns": 1000000000
+        }
+      ],
+      "chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 100,
+          "final_chunk_samples": 160,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 50,
+          "final_chunk_samples": 320,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 25,
+          "final_chunk_samples": 640,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 13,
+          "final_chunk_samples": 640,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        }
+      ]
+    },
+    "mono48k_f32_len5": {
+      "source_frames": 5,
+      "source_rate_hz": 48000,
+      "channels": 1,
+      "target_rate_hz": 16000,
+      "converted_frames": 2,
+      "source_rate_chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 480,
+          "chunks": 1,
+          "final_chunk_samples": 5,
+          "final_end_sample": 5,
+          "final_deadline_ns": 104166
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 960,
+          "chunks": 1,
+          "final_chunk_samples": 5,
+          "final_end_sample": 5,
+          "final_deadline_ns": 104166
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 1920,
+          "chunks": 1,
+          "final_chunk_samples": 5,
+          "final_end_sample": 5,
+          "final_deadline_ns": 104166
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 3840,
+          "chunks": 1,
+          "final_chunk_samples": 5,
+          "final_end_sample": 5,
+          "final_deadline_ns": 104166
+        }
+      ],
+      "chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 1,
+          "final_chunk_samples": 2,
+          "final_end_sample": 2,
+          "final_deadline_ns": 125000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 1,
+          "final_chunk_samples": 2,
+          "final_end_sample": 2,
+          "final_deadline_ns": 125000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 1,
+          "final_chunk_samples": 2,
+          "final_end_sample": 2,
+          "final_deadline_ns": 125000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 1,
+          "final_chunk_samples": 2,
+          "final_end_sample": 2,
+          "final_deadline_ns": 125000
+        }
+      ]
+    },
+    "mono48k_f32_tone12k": {
+      "source_frames": 48000,
+      "source_rate_hz": 48000,
+      "channels": 1,
+      "target_rate_hz": 16000,
+      "converted_frames": 16000,
+      "source_rate_chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 480,
+          "chunks": 100,
+          "final_chunk_samples": 480,
+          "final_end_sample": 48000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 960,
+          "chunks": 50,
+          "final_chunk_samples": 960,
+          "final_end_sample": 48000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 1920,
+          "chunks": 25,
+          "final_chunk_samples": 1920,
+          "final_end_sample": 48000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 3840,
+          "chunks": 13,
+          "final_chunk_samples": 1920,
+          "final_end_sample": 48000,
+          "final_deadline_ns": 1000000000
+        }
+      ],
+      "chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 100,
+          "final_chunk_samples": 160,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 50,
+          "final_chunk_samples": 320,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 25,
+          "final_chunk_samples": 640,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 13,
+          "final_chunk_samples": 640,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        }
+      ]
+    },
+    "mono48k_f32_tone1k": {
+      "source_frames": 48000,
+      "source_rate_hz": 48000,
+      "channels": 1,
+      "target_rate_hz": 16000,
+      "converted_frames": 16000,
+      "source_rate_chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 480,
+          "chunks": 100,
+          "final_chunk_samples": 480,
+          "final_end_sample": 48000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 960,
+          "chunks": 50,
+          "final_chunk_samples": 960,
+          "final_end_sample": 48000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 1920,
+          "chunks": 25,
+          "final_chunk_samples": 1920,
+          "final_end_sample": 48000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 3840,
+          "chunks": 13,
+          "final_chunk_samples": 1920,
+          "final_end_sample": 48000,
+          "final_deadline_ns": 1000000000
+        }
+      ],
+      "chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 100,
+          "final_chunk_samples": 160,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 50,
+          "final_chunk_samples": 320,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 25,
+          "final_chunk_samples": 640,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 13,
+          "final_chunk_samples": 640,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        }
+      ]
+    },
+    "mono96k_f32_len3": {
+      "source_frames": 3,
+      "source_rate_hz": 96000,
+      "channels": 1,
+      "target_rate_hz": 16000,
+      "converted_frames": 1,
+      "source_rate_chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 960,
+          "chunks": 1,
+          "final_chunk_samples": 3,
+          "final_end_sample": 3,
+          "final_deadline_ns": 31250
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 1920,
+          "chunks": 1,
+          "final_chunk_samples": 3,
+          "final_end_sample": 3,
+          "final_deadline_ns": 31250
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 3840,
+          "chunks": 1,
+          "final_chunk_samples": 3,
+          "final_end_sample": 3,
+          "final_deadline_ns": 31250
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 7680,
+          "chunks": 1,
+          "final_chunk_samples": 3,
+          "final_end_sample": 3,
+          "final_deadline_ns": 31250
+        }
+      ],
+      "chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 1,
+          "final_chunk_samples": 1,
+          "final_end_sample": 1,
+          "final_deadline_ns": 62500
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 1,
+          "final_chunk_samples": 1,
+          "final_end_sample": 1,
+          "final_deadline_ns": 62500
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 1,
+          "final_chunk_samples": 1,
+          "final_end_sample": 1,
+          "final_deadline_ns": 62500
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 1,
+          "final_chunk_samples": 1,
+          "final_end_sample": 1,
+          "final_deadline_ns": 62500
+        }
+      ]
+    },
+    "stereo16k_f32_dc": {
+      "source_frames": 4000,
+      "source_rate_hz": 16000,
+      "channels": 2,
+      "target_rate_hz": 16000,
+      "converted_frames": 4000,
+      "source_rate_chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 25,
+          "final_chunk_samples": 160,
+          "final_end_sample": 4000,
+          "final_deadline_ns": 250000000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 13,
+          "final_chunk_samples": 160,
+          "final_end_sample": 4000,
+          "final_deadline_ns": 250000000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 7,
+          "final_chunk_samples": 160,
+          "final_end_sample": 4000,
+          "final_deadline_ns": 250000000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 4,
+          "final_chunk_samples": 160,
+          "final_end_sample": 4000,
+          "final_deadline_ns": 250000000
+        }
+      ],
+      "chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 25,
+          "final_chunk_samples": 160,
+          "final_end_sample": 4000,
+          "final_deadline_ns": 250000000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 13,
+          "final_chunk_samples": 160,
+          "final_end_sample": 4000,
+          "final_deadline_ns": 250000000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 7,
+          "final_chunk_samples": 160,
+          "final_end_sample": 4000,
+          "final_deadline_ns": 250000000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 4,
+          "final_chunk_samples": 160,
+          "final_end_sample": 4000,
+          "final_deadline_ns": 250000000
+        }
+      ]
+    },
+    "stereo16k_pcm16_cancel": {
+      "source_frames": 4000,
+      "source_rate_hz": 16000,
+      "channels": 2,
+      "target_rate_hz": 16000,
+      "converted_frames": 4000,
+      "source_rate_chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 25,
+          "final_chunk_samples": 160,
+          "final_end_sample": 4000,
+          "final_deadline_ns": 250000000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 13,
+          "final_chunk_samples": 160,
+          "final_end_sample": 4000,
+          "final_deadline_ns": 250000000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 7,
+          "final_chunk_samples": 160,
+          "final_end_sample": 4000,
+          "final_deadline_ns": 250000000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 4,
+          "final_chunk_samples": 160,
+          "final_end_sample": 4000,
+          "final_deadline_ns": 250000000
+        }
+      ],
+      "chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 25,
+          "final_chunk_samples": 160,
+          "final_end_sample": 4000,
+          "final_deadline_ns": 250000000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 13,
+          "final_chunk_samples": 160,
+          "final_end_sample": 4000,
+          "final_deadline_ns": 250000000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 7,
+          "final_chunk_samples": 160,
+          "final_end_sample": 4000,
+          "final_deadline_ns": 250000000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 4,
+          "final_chunk_samples": 160,
+          "final_end_sample": 4000,
+          "final_deadline_ns": 250000000
+        }
+      ]
+    },
+    "stereo48k_pcm24_tone1k": {
+      "source_frames": 48000,
+      "source_rate_hz": 48000,
+      "channels": 2,
+      "target_rate_hz": 16000,
+      "converted_frames": 16000,
+      "source_rate_chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 480,
+          "chunks": 100,
+          "final_chunk_samples": 480,
+          "final_end_sample": 48000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 960,
+          "chunks": 50,
+          "final_chunk_samples": 960,
+          "final_end_sample": 48000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 1920,
+          "chunks": 25,
+          "final_chunk_samples": 1920,
+          "final_end_sample": 48000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 3840,
+          "chunks": 13,
+          "final_chunk_samples": 1920,
+          "final_end_sample": 48000,
+          "final_deadline_ns": 1000000000
+        }
+      ],
+      "chunking": [
+        {
+          "frame_ms": 10,
+          "valid": true,
+          "frame_samples": 160,
+          "chunks": 100,
+          "final_chunk_samples": 160,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 20,
+          "valid": true,
+          "frame_samples": 320,
+          "chunks": 50,
+          "final_chunk_samples": 320,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 40,
+          "valid": true,
+          "frame_samples": 640,
+          "chunks": 25,
+          "final_chunk_samples": 640,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        },
+        {
+          "frame_ms": 80,
+          "valid": true,
+          "frame_samples": 1280,
+          "chunks": 13,
+          "final_chunk_samples": 640,
+          "final_end_sample": 16000,
+          "final_deadline_ns": 1000000000
+        }
+      ]
+    }
+  }
+}

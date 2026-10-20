@@ -1,0 +1,15 @@
+{
+  "status": "not_computable",
+  "value": null,
+  "unit": "ratio",
+  "definition_id": "wer_v1",
+  "sample_count": 0,
+  "clock_domain": "none",
+  "reason": "",
+  "components": {
+    "substitutions": 0,
+    "deletions": 0,
+    "insertions": 2,
+    "reference_tokens": 0
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.voicebench.invalid/v1/validation.schema.json",
+  "title": "Validation report",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "$ref": "common.schema.json#/$defs/schema_version"
+    },
+    "validation_id": {
+      "$ref": "common.schema.json#/$defs/stable_id"
+    },
+    "created_wall_time": {
+      "$ref": "common.schema.json#/$defs/wall_time"
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "run",
+            "dataset",
+            "suite"
+          ]
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "kind",
+        "path"
+      ]
+    },
+    "status": {
+      "enum": [
+        "pass",
+        "fail",
+        "incomplete"
+      ]
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "check_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "enum": [
+              "pass",
+              "fail",
+              "not_run"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "evidence": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "check_id",
+          "evidence",
+          "message",
+          "status"
+        ]
+      }
+    },
+    "stage": {
+      "anyOf": [
+        {
+          "enum": [
+            "runtime",
+            "initial",
+            "sealed"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Run validation stage; null for dataset/suite targets."
+    },
+    "disclosures": {
+      "type": "array",
+      "description": "Non-failing facts a reader must see (endpoint corrections, data loss, pending datasets).",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ]
+      }
+    }
+  },
+  "required": [
+    "checks",
+    "created_wall_time",
+    "disclosures",
+    "schema_version",
+    "stage",
+    "status",
+    "target",
+    "validation_id"
+  ]
+}

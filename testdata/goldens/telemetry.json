@@ -1,0 +1,135 @@
+{
+  "description": "Hand-built telemetry samples: the first CPU interval is not computable, one-core CPU % may exceed 100 (multi-core work is not clamped), the RSS peak is the maximum sampled value, and completeness = periodic / expected periodic samples.",
+  "samples": [
+    {
+      "schema_version": "1.0",
+      "run_id": "g",
+      "sample_id": "t00000",
+      "phase": "running",
+      "measured_ns": 0,
+      "scheduled_ns": 0,
+      "interval_ns": null,
+      "collection_duration_ns": 1000,
+      "measurements": {
+        "cpu_percent": {
+          "status": "not_computable",
+          "value": null,
+          "unit": "percent_one_core",
+          "source": "getrusage",
+          "scope": "runner_process",
+          "reason": "first_sample_has_no_interval"
+        },
+        "rss_bytes": {
+          "status": "ok",
+          "value": 100,
+          "unit": "bytes",
+          "source": "task_info",
+          "scope": "runner_process",
+          "reason": null
+        },
+        "physical_footprint_bytes": {
+          "status": "ok",
+          "value": 90,
+          "unit": "bytes",
+          "source": "task_info",
+          "scope": "runner_process",
+          "reason": null
+        }
+      }
+    },
+    {
+      "schema_version": "1.0",
+      "run_id": "g",
+      "sample_id": "t00001",
+      "phase": "running",
+      "measured_ns": 1000000000,
+      "scheduled_ns": 1000000000,
+      "interval_ns": 1000000000,
+      "collection_duration_ns": 1000,
+      "measurements": {
+        "cpu_percent": {
+          "status": "ok",
+          "value": 50.0,
+          "unit": "percent_one_core",
+          "source": "getrusage",
+          "scope": "runner_process",
+          "reason": null
+        },
+        "rss_bytes": {
+          "status": "ok",
+          "value": 300,
+          "unit": "bytes",
+          "source": "task_info",
+          "scope": "runner_process",
+          "reason": null
+        },
+        "physical_footprint_bytes": {
+          "status": "ok",
+          "value": 95,
+          "unit": "bytes",
+          "source": "task_info",
+          "scope": "runner_process",
+          "reason": null
+        }
+      }
+    },
+    {
+      "schema_version": "1.0",
+      "run_id": "g",
+      "sample_id": "t00002",
+      "phase": "running",
+      "measured_ns": 2000000000,
+      "scheduled_ns": 2000000000,
+      "interval_ns": 1000000000,
+      "collection_duration_ns": 1000,
+      "measurements": {
+        "cpu_percent": {
+          "status": "ok",
+          "value": 150.0,
+          "unit": "percent_one_core",
+          "source": "getrusage",
+          "scope": "runner_process",
+          "reason": null
+        },
+        "rss_bytes": {
+          "status": "ok",
+          "value": 200,
+          "unit": "bytes",
+          "source": "task_info",
+          "scope": "runner_process",
+          "reason": null
+        },
+        "physical_footprint_bytes": {
+          "status": "unavailable",
+          "value": null,
+          "unit": "bytes",
+          "source": "task_info",
+          "scope": "runner_process",
+          "reason": "no phys_footprint"
+        }
+      }
+    }
+  ],
+  "sampler": {
+    "interval_ns": 1000000000,
+    "samples": 3,
+    "periodic_samples": 1,
+    "expected_periodic_samples": 2,
+    "missed_intervals": 1,
+    "max_lateness_ns": 5000,
+    "total_collection_ns": 3000
+  },
+  "expected": {
+    "cpu_percent": {
+      "n": 2,
+      "p50": 50.0,
+      "p95": 150.0,
+      "excluded": {
+        "first_sample_has_no_interval": 1
+      }
+    },
+    "rss_peak_sampled_bytes": 300,
+    "physical_footprint_peak_sampled_bytes": 95,
+    "telemetry_completeness": 0.5
+  }
+}

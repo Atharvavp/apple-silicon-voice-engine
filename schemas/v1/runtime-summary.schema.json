@@ -1,0 +1,511 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.voicebench.invalid/v1/runtime-summary.schema.json",
+  "title": "Runtime summary",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "$ref": "common.schema.json#/$defs/schema_version"
+    },
+    "run_id": {
+      "$ref": "common.schema.json#/$defs/run_id"
+    },
+    "conversion": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "policy": {
+          "type": "string",
+          "minLength": 1
+        },
+        "downmix_policy": {
+          "const": "arithmetic_mean_v1"
+        },
+        "endpoint_policy": {
+          "enum": [
+            "allow_one_frame_v1",
+            "strict"
+          ]
+        },
+        "endpoint_status": {
+          "enum": [
+            "bypassed",
+            "exact",
+            "trimmed_one_frame",
+            "zero_extended_one_frame"
+          ],
+          "description": "Disclosed endpoint outcome; a correction must never be reported as exact."
+        },
+        "source_frames": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "source_rate_hz": {
+          "$ref": "common.schema.json#/$defs/sample_rate_hz"
+        },
+        "target_rate_hz": {
+          "$ref": "common.schema.json#/$defs/sample_rate_hz"
+        },
+        "intended_frames": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "native_frames": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "trimmed_tail_frames": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "zero_extended_tail_frames": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "converted_sha256": {
+          "$ref": "common.schema.json#/$defs/sha256"
+        },
+        "algorithm": {
+          "type": "string",
+          "minLength": 1
+        },
+        "quality": {
+          "type": "string",
+          "minLength": 1
+        },
+        "prime_method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "bypassed": {
+          "type": "boolean"
+        },
+        "prime_leading_frames": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "prime_trailing_frames": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        }
+      },
+      "required": [
+        "algorithm",
+        "bypassed",
+        "converted_sha256",
+        "downmix_policy",
+        "endpoint_policy",
+        "endpoint_status",
+        "intended_frames",
+        "native_frames",
+        "policy",
+        "prime_leading_frames",
+        "prime_method",
+        "prime_trailing_frames",
+        "quality",
+        "source_frames",
+        "source_rate_hz",
+        "target_rate_hz",
+        "trimmed_tail_frames",
+        "zero_extended_tail_frames"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "endpoint_status": {
+                "const": "trimmed_one_frame"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "trimmed_tail_frames": {
+                "const": 1
+              },
+              "zero_extended_tail_frames": {
+                "const": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "endpoint_status": {
+                "const": "zero_extended_one_frame"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "trimmed_tail_frames": {
+                "const": 0
+              },
+              "zero_extended_tail_frames": {
+                "const": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "endpoint_status": {
+                "enum": [
+                  "exact",
+                  "bypassed"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "trimmed_tail_frames": {
+                "const": 0
+              },
+              "zero_extended_tail_frames": {
+                "const": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "endpoint_policy": {
+                "const": "strict"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "endpoint_status": {
+                "enum": [
+                  "exact",
+                  "bypassed"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "clock": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "minimum_resolution_ns": {
+          "$ref": "common.schema.json#/$defs/int64"
+        },
+        "replay_anchor_ns": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/nonneg_int64"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "setup_start_ns": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        }
+      },
+      "required": [
+        "minimum_resolution_ns",
+        "replay_anchor_ns",
+        "setup_start_ns"
+      ]
+    },
+    "phases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "phase": {
+            "type": "string",
+            "minLength": 1
+          },
+          "start_ns": {
+            "$ref": "common.schema.json#/$defs/nonneg_int64"
+          },
+          "end_ns": {
+            "$ref": "common.schema.json#/$defs/nonneg_int64"
+          }
+        },
+        "required": [
+          "end_ns",
+          "phase",
+          "start_ns"
+        ]
+      }
+    },
+    "events_prefix": {
+      "$ref": "common.schema.json#/$defs/prefix_descriptor"
+    },
+    "telemetry": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "path": {
+              "type": "string",
+              "minLength": 1
+            },
+            "line_count": {
+              "$ref": "common.schema.json#/$defs/nonneg_int64"
+            },
+            "sha256": {
+              "$ref": "common.schema.json#/$defs/sha256"
+            }
+          },
+          "required": [
+            "line_count",
+            "path",
+            "sha256"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "produced_samples": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "admitted_samples": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "consumed_samples": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "dropped_samples": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "dropped_ranges": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/sample_interval"
+          }
+        }
+      },
+      "required": [
+        "admitted_samples",
+        "consumed_samples",
+        "dropped_ranges",
+        "dropped_samples",
+        "produced_samples"
+      ]
+    },
+    "recorder": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "batches": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "bytes": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "total_write_ns": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "max_write_ns": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        }
+      },
+      "required": [
+        "batches",
+        "bytes",
+        "max_write_ns",
+        "total_write_ns"
+      ]
+    },
+    "queues": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "audio_max_depth": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "event_max_depth": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "telemetry_max_depth": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        }
+      },
+      "required": [
+        "audio_max_depth",
+        "event_max_depth",
+        "telemetry_max_depth"
+      ]
+    },
+    "durations_ns": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "common.schema.json#/$defs/nonneg_int64"
+      }
+    },
+    "shutdown": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "event.schema.json#/$defs/shutdown_report"
+      }
+    },
+    "replay": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "mode": {
+          "enum": [
+            "realtime",
+            "accelerated",
+            "step"
+          ]
+        },
+        "frame_samples": {
+          "$ref": "common.schema.json#/$defs/pos_int64"
+        },
+        "speed": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/speed"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "deadline_convention": {
+          "const": "end_of_frame_v1"
+        },
+        "overflow": {
+          "enum": [
+            "block",
+            "drop_newest"
+          ]
+        },
+        "queue_capacity": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "sample_rate_hz": {
+          "$ref": "common.schema.json#/$defs/sample_rate_hz"
+        },
+        "total_frames": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "elapsed_ns": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        }
+      },
+      "required": [
+        "deadline_convention",
+        "elapsed_ns",
+        "frame_samples",
+        "mode",
+        "overflow",
+        "queue_capacity",
+        "sample_rate_hz",
+        "speed",
+        "total_frames"
+      ]
+    },
+    "telemetry_sampler": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "interval_ns": {
+              "$ref": "common.schema.json#/$defs/pos_int64"
+            },
+            "samples": {
+              "$ref": "common.schema.json#/$defs/nonneg_int64"
+            },
+            "periodic_samples": {
+              "$ref": "common.schema.json#/$defs/nonneg_int64"
+            },
+            "expected_periodic_samples": {
+              "$ref": "common.schema.json#/$defs/nonneg_int64"
+            },
+            "missed_intervals": {
+              "$ref": "common.schema.json#/$defs/nonneg_int64"
+            },
+            "max_lateness_ns": {
+              "$ref": "common.schema.json#/$defs/int64"
+            },
+            "total_collection_ns": {
+              "$ref": "common.schema.json#/$defs/nonneg_int64"
+            }
+          },
+          "required": [
+            "expected_periodic_samples",
+            "interval_ns",
+            "max_lateness_ns",
+            "missed_intervals",
+            "periodic_samples",
+            "samples",
+            "total_collection_ns"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "data_loss": {
+      "type": "boolean"
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Spool integrity: SHA-256 re-verified on disk before replay and over the replayed bytes at end of stream.",
+      "properties": {
+        "spool_sha256": {
+          "$ref": "common.schema.json#/$defs/sha256"
+        },
+        "spool_frames": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "pre_replay_verified": {
+          "const": true
+        },
+        "end_of_stream_verified": {
+          "const": true
+        }
+      },
+      "required": [
+        "end_of_stream_verified",
+        "pre_replay_verified",
+        "spool_frames",
+        "spool_sha256"
+      ]
+    }
+  },
+  "required": [
+    "clock",
+    "conversion",
+    "coverage",
+    "data_loss",
+    "durations_ns",
+    "events_prefix",
+    "integrity",
+    "phases",
+    "queues",
+    "recorder",
+    "replay",
+    "run_id",
+    "schema_version",
+    "shutdown",
+    "telemetry",
+    "telemetry_sampler"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "kind": "speakers",
+  "source_id": "endpoint-trim-en",
+  "languages": [
+    "en"
+  ],
+  "timebase": {
+    "unit": "samples",
+    "sample_rate_hz": 22050
+  },
+  "duration_samples": 22049,
+  "original_precision": {
+    "unit": "samples",
+    "step": 1
+  },
+  "coverage": [
+    {
+      "start_sample": 0,
+      "end_sample": 22049
+    }
+  ],
+  "segments": [
+    {
+      "segment_id": "ref-a0",
+      "speaker_id": "A",
+      "start_sample": 0,
+      "end_sample": 22049
+    }
+  ]
+}

@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.voicebench.invalid/v1/metrics.schema.json",
+  "title": "Scored metrics",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "$ref": "common.schema.json#/$defs/schema_version"
+    },
+    "run_id": {
+      "$ref": "common.schema.json#/$defs/run_id"
+    },
+    "source_id": {
+      "$ref": "common.schema.json#/$defs/stable_id"
+    },
+    "analysis_id": {
+      "$ref": "common.schema.json#/$defs/stable_id"
+    },
+    "mock": {
+      "type": "boolean"
+    },
+    "inputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "predictions_sha256": {
+          "$ref": "common.schema.json#/$defs/sha256"
+        },
+        "references": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/artifact_digest"
+          }
+        },
+        "source_events": {
+          "$ref": "common.schema.json#/$defs/prefix_descriptor"
+        }
+      },
+      "required": [
+        "predictions_sha256",
+        "references",
+        "source_events"
+      ]
+    },
+    "policies": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "diarization": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scorers": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "diarization",
+        "scorers",
+        "text"
+      ]
+    },
+    "accuracy": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "common.schema.json#/$defs/metric_record"
+          },
+          {
+            "$ref": "common.schema.json#/$defs/distribution"
+          }
+        ]
+      }
+    },
+    "timing": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "common.schema.json#/$defs/metric_record"
+          },
+          {
+            "$ref": "common.schema.json#/$defs/distribution"
+          }
+        ]
+      }
+    },
+    "throughput": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "common.schema.json#/$defs/metric_record"
+          },
+          {
+            "$ref": "common.schema.json#/$defs/distribution"
+          }
+        ]
+      }
+    },
+    "resources": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "common.schema.json#/$defs/metric_record"
+          },
+          {
+            "$ref": "common.schema.json#/$defs/distribution"
+          }
+        ]
+      }
+    },
+    "data_integrity": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "common.schema.json#/$defs/metric_record"
+          },
+          {
+            "$ref": "common.schema.json#/$defs/distribution"
+          }
+        ]
+      }
+    }
+  },
+  "required": [
+    "accuracy",
+    "analysis_id",
+    "data_integrity",
+    "inputs",
+    "mock",
+    "policies",
+    "resources",
+    "run_id",
+    "schema_version",
+    "source_id",
+    "throughput",
+    "timing"
+  ]
+}

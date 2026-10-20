@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0",
+  "event_id": "two-speaker-en/mock-asr-scripted/adapter.diagnostic/0",
+  "run_id": "example-run",
+  "stream_id": "audio-0",
+  "source_id": "two-speaker-en",
+  "sequence": 17,
+  "producer_id": "mock-asr-scripted",
+  "producer_sequence": 1,
+  "type": "adapter.diagnostic",
+  "media_start_sample": 64000,
+  "media_end_sample": 96000,
+  "sample_rate_hz": 16000,
+  "monotonic_emitted_ns": 1004500000,
+  "monotonic_recorded_ns": 1004600000,
+  "virtual_emitted_ns": 20000000,
+  "cause_chunk_index": 299,
+  "invocation_id": "asr/consume/299",
+  "payload": {
+    "role": "asr",
+    "adapter_id": "mock-asr-scripted",
+    "code": "missing_audio",
+    "message": "transcript u1 suppressed",
+    "required_range": {
+      "start_sample": 64000,
+      "end_sample": 96000
+    },
+    "missing_ranges": [
+      {
+        "start_sample": 64000,
+        "end_sample": 64320
+      }
+    ]
+  }
+}

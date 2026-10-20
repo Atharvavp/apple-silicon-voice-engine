@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "run_id": "example-run",
+  "source_id": "two-speaker-en",
+  "mock": true,
+  "adapters": {
+    "asr": {
+      "id": "mock-asr-scripted",
+      "revision": "1"
+    },
+    "diarization": {
+      "id": "mock-diar-scripted",
+      "revision": "1"
+    }
+  },
+  "audio": {
+    "sample_rate_hz": 16000,
+    "duration_samples": 192000,
+    "source_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+    "converted_sha256": "fedcba9876543210fedcba9876543210fedcba9876543210fedcba9876543210"
+  },
+  "transcript_granularity": "utterances",
+  "transcript_assembly_policy": "media_order_space_join_v1",
+  "transcript": [
+    {
+      "utterance_id": "u0",
+      "start_sample": 0,
+      "end_sample": 32000,
+      "text": "hello world",
+      "event_ids": [
+        "two-speaker-en/asr/transcript.final/0"
+      ]
+    }
+  ],
+  "speakers": [
+    {
+      "segment_id": "s0",
+      "speaker_id": "spk-1",
+      "start_sample": 0,
+      "end_sample": 64000,
+      "event_ids": [
+        "two-speaker-en/diar/speaker.segment/0"
+      ]
+    }
+  ],
+  "coverage": {
+    "consumed_samples": 192000,
+    "dropped_samples": 0,
+    "dropped_ranges": []
+  },
+  "source_events": {
+    "path": "events.jsonl",
+    "byte_count": 12345,
+    "line_count": 40,
+    "sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+  }
+}

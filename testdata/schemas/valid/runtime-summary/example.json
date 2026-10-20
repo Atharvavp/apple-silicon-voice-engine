@@ -1,0 +1,102 @@
+{
+  "schema_version": "1.0",
+  "run_id": "example-run",
+  "conversion": {
+    "policy": "apple_normal_max_half_up_v1",
+    "downmix_policy": "arithmetic_mean_v1",
+    "endpoint_policy": "allow_one_frame_v1",
+    "endpoint_status": "exact",
+    "source_frames": 441000,
+    "source_rate_hz": 44100,
+    "target_rate_hz": 16000,
+    "intended_frames": 160000,
+    "native_frames": 160000,
+    "trimmed_tail_frames": 0,
+    "zero_extended_tail_frames": 0,
+    "bypassed": false,
+    "algorithm": "normal",
+    "quality": "max",
+    "prime_method": "normal",
+    "prime_leading_frames": 0,
+    "prime_trailing_frames": 0,
+    "converted_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+  },
+  "clock": {
+    "minimum_resolution_ns": 1,
+    "replay_anchor_ns": 5000000,
+    "setup_start_ns": 1000
+  },
+  "phases": [
+    {
+      "phase": "replay",
+      "start_ns": 5000000,
+      "end_ns": 12005000000
+    }
+  ],
+  "events_prefix": {
+    "path": "events.jsonl",
+    "byte_count": 12345,
+    "line_count": 40,
+    "sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+  },
+  "telemetry": {
+    "path": "telemetry.jsonl",
+    "line_count": 13,
+    "sha256": "fedcba9876543210fedcba9876543210fedcba9876543210fedcba9876543210"
+  },
+  "coverage": {
+    "produced_samples": 192000,
+    "admitted_samples": 192000,
+    "consumed_samples": 192000,
+    "dropped_samples": 0,
+    "dropped_ranges": []
+  },
+  "recorder": {
+    "batches": 10,
+    "bytes": 12345,
+    "total_write_ns": 900000,
+    "max_write_ns": 200000
+  },
+  "queues": {
+    "audio_max_depth": 1,
+    "event_max_depth": 3,
+    "telemetry_max_depth": 1
+  },
+  "durations_ns": {
+    "decode": 1000000
+  },
+  "shutdown": {
+    "asr": {
+      "status": "ok",
+      "message": null,
+      "pending_tasks": 0
+    }
+  },
+  "replay": {
+    "mode": "realtime",
+    "frame_samples": 320,
+    "speed": null,
+    "deadline_convention": "end_of_frame_v1",
+    "overflow": "block",
+    "queue_capacity": 32,
+    "sample_rate_hz": 16000,
+    "total_frames": 192000,
+    "elapsed_ns": 12000000000
+  },
+  "telemetry_sampler": {
+    "interval_ns": 1000000000,
+    "samples": 13,
+    "periodic_samples": 11,
+    "expected_periodic_samples": 12,
+    "missed_intervals": 1,
+    "max_lateness_ns": 2500000,
+    "total_collection_ns": 400000
+  },
+  "data_loss": false,
+  "integrity": {
+    "spool_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "spool_frames": 192000,
+    "pre_replay_verified": true,
+    "end_of_stream_verified": true
+  }
+}
