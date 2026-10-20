@@ -14,14 +14,15 @@ enum BuildInfo {
 struct VoiceBench: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "voicebench",
-        abstract: "Phase 0 streaming speech benchmark harness (mock adapters only).",
+        abstract: "Streaming speech benchmark harness (Phase 0 mocks; Phase 1 real wrappers when compiled in).",
         discussion: """
-        One experiment (one dataset item, one stream) per process. Mock adapters only:
-        scores validate the harness, never speech-recognition quality.
+        One experiment (one dataset item, one stream) per process. Mock adapter scores
+        validate the harness, never speech-recognition quality. Real Phase 1 wrappers are
+        present only in PHASE1_FRAMEWORKS builds (see --version) and load verified local models.
         Exit codes: 0 ok, 2 invalid input, 3 dataset, 4 audio, 5 runtime/adapter,
         6 recorder, 7 analysis, 8 incompatible comparison, 9 validation, 130 interrupted.
         """,
-        version: "\(BuildInfo.version) (schema \(SchemaVersion.current))",
+        version: "\(BuildInfo.version) (schema \(SchemaVersion.current); phase1 frameworks: \(RealAdapterFactory.compiledFrameworks.isEmpty ? "none" : RealAdapterFactory.compiledFrameworks.joined(separator: ", ")))",
         subcommands: [RunCommand.self, ValidateCommand.self, CompareCommand.self, ExportCommand.self, Dev.self]
     )
 

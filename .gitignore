@@ -11,3 +11,5 @@ evidence/
 # Generated large/temporary audio (long-run fixtures, spools).
 datasets/fixtures/generated-large/
 scratch/
+# Owned copy of pinned speech-swift (recreate with scripts/run_phase1.py vendor-speech).
+vendor/

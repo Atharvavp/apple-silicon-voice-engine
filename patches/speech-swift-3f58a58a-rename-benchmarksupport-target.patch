@@ -1,0 +1,50 @@
+diff --git a/Package.swift b/Package.swift
+index 6f64592..bed9343 100644
+--- a/Package.swift
++++ b/Package.swift
+@@ -888,18 +888,19 @@ let package = Package(
+             ]
+         ),
+         .target(
+-            name: "BenchmarkSupport",
++            name: "SpeechSwiftBenchmarkSupport",
+             dependencies: [
+                 "AudioCommon",
+                 "SpeechVAD",
+-            ]
++            ],
++            path: "Sources/BenchmarkSupport"
+         ),
+         .executableTarget(
+             name: "VadBenchmark",
+             dependencies: [
+                 "AudioCommon",
+                 "SpeechVAD",
+-                "BenchmarkSupport",
++                "SpeechSwiftBenchmarkSupport",
+                 .product(name: "ArgumentParser", package: "swift-argument-parser")
+             ]
+         ),
+@@ -909,7 +910,7 @@ let package = Package(
+                 "AudioCommon",
+                 "MossTranscribe",
+                 "SpeechVAD",
+-                "BenchmarkSupport",
++                "SpeechSwiftBenchmarkSupport",
+                 .product(name: "ArgumentParser", package: "swift-argument-parser")
+             ]
+         ),
+@@ -967,11 +968,11 @@ let package = Package(
+         ),
+         .testTarget(
+             name: "BenchmarkSupportTests",
+-            dependencies: ["BenchmarkSupport", "AudioCommon", "SpeechVAD"]
++            dependencies: ["SpeechSwiftBenchmarkSupport", "AudioCommon", "SpeechVAD"]
+         ),
+         .testTarget(
+             name: "DiarizationBenchmarkTests",
+-            dependencies: ["DiarizationBenchmark", "BenchmarkSupport"]
++            dependencies: ["DiarizationBenchmark", "SpeechSwiftBenchmarkSupport"]
+         ),
+         .testTarget(
+             name: "PersonaPlexTests",

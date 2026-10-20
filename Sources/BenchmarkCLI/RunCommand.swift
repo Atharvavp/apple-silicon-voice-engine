@@ -44,7 +44,8 @@ struct RunCommand: AsyncParsableCommand {
         }
         let request = RunRequest(configURL: URL(fileURLWithPath: config), runsDirectory: URL(fileURLWithPath: runsDir),
                                  runID: runID, overrides: overrides)
-        let task = Task { await ExperimentRunner().run(request) }
+        let factory = RealAdapterFactory.make()
+        let task = Task { await ExperimentRunner(factory: factory).run(request) }
         let signals = SignalCancellation(task: task)
         let outcome = await task.value
         signals.stop()
@@ -87,7 +88,9 @@ enum RunSummary {
         }
         if case .object(let metrics)? = outcome.summary {
             let mock = metrics["mock"] == .bool(true)
-            lines.append(mock ? "adapters: MOCK (scores validate the harness, not speech recognition)" : "adapters: real")
+            let roles = configuredRoles(outcome.directory).map { " — \($0)" } ?? ""
+            lines.append(mock ? "adapters: MOCK (scores validate the harness, not speech recognition)\(roles)"
+                              : "adapters: real\(roles)")
             if case .object(let accuracy)? = metrics["accuracy"] {
                 for key in ["wer", "cer", "der", "jer"] {
                     guard case .object(let record)? = accuracy[key] else { continue }
@@ -117,5 +120,16 @@ enum RunSummary {
         } else {
             FileHandle.standardError.write(Data(text.utf8))
         }
+    }
+
+    /// Active/passive/mock role description from the run's frozen config.
+    private static func configuredRoles(_ directory: URL?) -> String? {
+        guard let directory,
+              case .object(let config)? = try? StrictJSON.parseFile(directory.appendingPathComponent("config.json")),
+              case .object(let adapters)? = config["adapters"],
+              case .object(let asr)? = adapters["asr"], case .string(let asrID)? = asr["id"],
+              case .object(let diarization)? = adapters["diarization"], case .string(let diarizationID)? = diarization["id"]
+        else { return nil }
+        return RealAdapterFactory.describe(asrID: asrID, diarizationID: diarizationID)
     }
 }

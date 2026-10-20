@@ -12,8 +12,10 @@ struct CLIResult {
 }
 
 /// Runs the built CLI. A missing binary is a failure, not a skip (run `swift build` first).
+/// `VOICEBENCH_BIN` selects another build (as the Python tests do); the default is unchanged.
 func voicebench(_ args: [String]) throws -> CLIResult {
-    let binary = repositoryRoot.appendingPathComponent(".build/debug/voicebench")
+    let binary = ProcessInfo.processInfo.environment["VOICEBENCH_BIN"].map { URL(fileURLWithPath: $0) }
+        ?? repositoryRoot.appendingPathComponent(".build/debug/voicebench")
     guard FileManager.default.isExecutableFile(atPath: binary.path) else {
         throw ValidationError(binary.path, "voicebench is not built; run `swift build` first")
     }
