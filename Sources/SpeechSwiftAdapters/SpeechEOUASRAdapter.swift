@@ -20,11 +20,9 @@ public enum SpeechEOUASRAdapter {
 /// `finalize` return segment-indexed partial/final texts; the accumulator keeps finalized
 /// segments (including legitimately repeated utterances) and replaces the current partial.
 ///
-/// The pinned loader has no cache-directory or offline parameter. Its cache root comes from
-/// `QWEN3_CACHE_DIR`, which must resolve to exactly the verified profile directory, and it
-/// may consult the Hub before falling back to a complete local cache. Measured runs therefore
-/// execute with network access denied (see docs/phase1/README.md); a missing or incomplete
-/// cache then fails the load instead of downloading.
+/// Loads with `cacheDir:` (the verified profile directory) and `offlineMode: true`, parameters
+/// added by the owned copy's loader patch (DEC-079): only the local cache is consulted, and a
+/// missing or incomplete cache fails the load instead of downloading or retrying the Hub.
 actor SpeechEOUBackend: StreamingASRBackend {
     nonisolated var accumulatorMode: RecordingTranscriptAccumulator.Mode { .segmented }
 
@@ -46,12 +44,8 @@ actor SpeechEOUBackend: StreamingASRBackend {
     }
 
     func load() async throws {
-        let resolved = try HuggingFaceDownloader.getCacheDirectory(for: modelID).standardizedFileURL
-        guard resolved.path == cacheDirectory.path else {
-            throw ValidationError(SpeechSwiftAdapterIDs.cacheRootVariable,
-                                  "speech-swift resolves \(modelID) to \(resolved.path), not the verified \(cacheDirectory.path)")
-        }
-        let model = try await ParakeetStreamingASRModel.fromPretrained(modelId: modelID)
+        let model = try await ParakeetStreamingASRModel.fromPretrained(modelId: modelID, cacheDir: cacheDirectory,
+                                                                       offlineMode: true)
         let streaming = model.config.streaming
         let actual: [String: Int64] = ["chunk_ms": Int64(streaming.chunkMs), "mel_frames": Int64(streaming.melFrames),
                                        "pre_cache_size": Int64(streaming.preCacheSize),

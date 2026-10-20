@@ -141,14 +141,16 @@ def compare_snapshots(before: dict, after: dict) -> dict:
 # --- owned speech-swift copy ------------------------------------------------------------------
 
 SPEECH_VENDOR = ROOT / "vendor/speech-swift"
-SPEECH_PATCH = ROOT / "patches/speech-swift-3f58a58a-rename-benchmarksupport-target.patch"
+SPEECH_PATCH = ROOT / "patches/speech-swift-3f58a58a-phase1.patch"
 
 
 def vendor_speech(dest: Path) -> dict:
-    """speech-swift declares a benchmark-only target named `BenchmarkSupport`, which collides with the
-    harness module of the same name (SwiftPM requires unique target names across the graph; module
-    aliases cannot rename a target outside the product's dependency closure). The owned copy is the
-    exact pinned commit with one manifest-only patch renaming that target; no source file changes."""
+    """The owned copy is the exact pinned commit plus one patch touching two files:
+    * Package.swift renames speech-swift's benchmark-only `BenchmarkSupport` target, which collides
+      with the harness module (SwiftPM requires unique target names; module aliases cannot reach it);
+    * ParakeetStreamingASR.swift adds optional `cacheDir:`/`offlineMode:` loader parameters (defaults
+      keep upstream behavior), so the verified cache loads without ~110 s of Hub retries.
+    No inference, preprocessing or decoding code changes."""
     if dest.exists():
         raise FileExistsError(f"{dest} exists; verify it with `git -C {dest} diff` instead of recreating it")
     dest.parent.mkdir(parents=True, exist_ok=True)
@@ -162,8 +164,9 @@ def vendor_speech(dest: Path) -> dict:
         raise RuntimeError(f"fetched {head}, expected {SPEECH_REVISION}")
     git_in("apply", str(SPEECH_PATCH))
     changed = git_in("diff", "--name-only").split()
-    if changed != ["Package.swift"]:
-        raise RuntimeError(f"patch changed {changed}; only Package.swift may change")
+    allowed = ["Package.swift", "Sources/ParakeetStreamingASR/ParakeetStreamingASR.swift"]
+    if changed != allowed:
+        raise RuntimeError(f"patch changed {changed}; only {allowed} may change")
     record = {"source": "https://github.com/soniqo/speech-swift.git", "revision": head,
               "patch": str(SPEECH_PATCH.relative_to(ROOT)), "patch_sha256": sha256_file(SPEECH_PATCH),
               "changed_files": changed, "patched_manifest_sha256": sha256_file(dest / "Package.swift"),
@@ -208,7 +211,7 @@ MATRIX = [
                   "pre_cache_size": 9, "eou_debounce_ms": 1280, "decoder_path": "reference_two_model"}},
     {"row": "A2", "role": "asr", "framework": "speech", "adapter_id": "speech-parakeet-eou-120m-int8",
      "projection": "recording_text_segment_assembly_one_final",
-     "settings": {"chunk_ms": 320, "mel_frames": 33, "pre_cache_size": 9, "output_frames": 4, "sample_rate": 16000,
+     "settings": {"chunk_ms": 320, "mel_frames": 64, "pre_cache_size": 9, "output_frames": 4, "sample_rate": 16000,
                   "eou_debounce_ms": 1280}},
 ]
 SANDBOX = "/usr/bin/sandbox-exec"
@@ -459,8 +462,6 @@ def run_env(row: dict | None, profiles: Path, entry: dict | None) -> dict:
     if row is not None and entry is not None:
         env["VOICEBENCH_PHASE1_PROFILES"] = str(profiles)
         env["VOICEBENCH_PHASE1_ASSETS"] = str(entry["root"])
-        if row["adapter_id"] == "speech-parakeet-eou-120m-int8":
-            env["QWEN3_CACHE_DIR"] = str(entry["root"])  # loader resolves <root>/qwen3-speech/models/<repo>
     return env
 
 

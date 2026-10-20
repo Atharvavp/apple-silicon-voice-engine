@@ -86,9 +86,32 @@ actor FluidSortformerBackend: DiarizationBackend {
 
     private var samplesPerFrame: Int64 { Int64(config.subsamplingFactor * config.melStride) }
 
+    /// Loads the compiled BNNS-fixed `v3/fp16` export directly, as FluidAudio's own Hub loader
+    /// does (`initialize(mainModelPath:)` would try to compile an `.mlpackage`). FluidAudio only
+    /// logs a geometry mismatch; this wrapper rejects it.
     func load() async throws {
+        guard modelURL.pathExtension == "mlmodelc" else {
+            throw ValidationError("$.model.load_path", "expected a compiled .mlmodelc (got \(modelURL.lastPathComponent))")
+        }
+        let configuration = MLModelConfiguration()
+        configuration.computeUnits = units
+        let started = Date()
+        let model = try MLModel(contentsOf: modelURL, configuration: configuration)
+        let models = try SortformerModels(config: config, main: model,
+                                          compilationDuration: Date().timeIntervalSince(started))
+        // The EmbeddedConfig memberwise initializer is not public, so compare field by field.
+        if let embedded = models.embeddedConfig {
+            let actual = [embedded.chunkLen, embedded.chunkLeftContext, embedded.chunkRightContext, embedded.fifoLen,
+                          embedded.spkcacheLen]
+            let expected = [config.chunkLen, config.chunkLeftContext, config.chunkRightContext, config.fifoLen,
+                            config.spkcacheLen]
+            guard actual == expected else {
+                throw ValidationError("fluid-sortformer",
+                                      "model metadata geometry \(actual) differs from fastV2_1 \(expected) (C/L/R/FIFO/cache)")
+            }
+        }
         let diarizer = SortformerDiarizer(config: config, timelineConfig: timelineConfig)
-        try await diarizer.initialize(mainModelPath: modelURL, computeUnits: units)
+        diarizer.initialize(models: models)
         self.diarizer = diarizer
     }
 

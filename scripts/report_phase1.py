@@ -175,9 +175,9 @@ def classify(summary: dict, matrix: dict) -> dict[str, dict]:
                                         "minimum speech / 0.15 s gap merge)",
                                         "speech-swift compacts speaker IDs in its final snapshot"]
                                        if role == "diarization" else
-                                       ["Fluid 320 ms FP conversion vs speech-swift INT8 conversion",
-                                        "different chunk geometry (Fluid 64 mel frames/5120-sample shift vs speech 33 mel "
-                                        "frames/4 output frames)",
+                                       ["Fluid 320 ms FP16-storage conversion vs speech-swift INT8-palettized encoder",
+                                        "same declared chunk geometry (64 mel frames, 4 output frames, 5120-sample shift) "
+                                        "but separate mel/RNNT decoder implementations",
                                         "different transcript assembly (cumulative decode vs EOU-segmented finals; speech "
                                         "suppresses consecutive identical finals natively)"])
                        + (["separate per-framework binaries"] if len({v.get('binary_sha256') for k, v in

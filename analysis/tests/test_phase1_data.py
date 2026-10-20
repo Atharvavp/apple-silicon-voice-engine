@@ -78,6 +78,19 @@ def test_crop_end_never_cuts_a_word_and_respects_the_minimum():
         data.choose_end([], Decimal(800))
 
 
+def test_crop_end_moves_before_a_trailing_untimed_word():
+    words = [data.Word("M.A.words0", "A", Decimal("1000.0"), Decimal("1041.14"), "okay", False),
+             data.Word("M.A.words1", "A", None, None, "mm", False)]
+    end, reason = data.choose_end(words, Decimal("1043.36"))
+    assert end == Decimal("1000.0") or (end <= Decimal("1041.14") and reason == "moved_earlier_to_exclude_untimed_words")
+    words = [data.Word("M.A.words0", "A", Decimal("1040.0"), Decimal("1041.14"), "okay", False),
+             data.Word("M.A.words1", "A", None, None, "mm", False)]
+    end, reason = data.choose_end(words, Decimal("1043.36"))
+    assert (end, reason) == (Decimal("1040.0"), "moved_earlier_to_exclude_untimed_words")
+    inside, unplaced = data.words_in_crop(words, end)
+    assert unplaced == [] and inside == []
+
+
 def test_untimed_word_inside_the_crop_blocks_instead_of_guessing():
     words = [data.Word("M.A.words0", "A", Decimal(1), Decimal(2), "a", False),
              data.Word("M.A.words1", "A", None, None, "b", False),

@@ -174,21 +174,44 @@ def timed_union(intervals: list[tuple[Decimal, Decimal]]) -> list[tuple[Decimal,
     return [(a, b) for a, b in merged]
 
 
+def untimed_spans(words: list[Word], horizon: Decimal) -> list[tuple[Decimal, Decimal]]:
+    """Where each untimed lexical word must lie: between its timed neighbours in the same speaker's
+    document order (speaker files are time-ordered), from the previous word's end (or 0) to the next
+    word's start (or `horizon`)."""
+    spans = []
+    by_agent: dict[str, list[Word]] = {}
+    for word in words:
+        by_agent.setdefault(word.agent, []).append(word)
+    for agent_words in by_agent.values():
+        for index, word in enumerate(agent_words):
+            if word.start is not None and word.end is not None:
+                continue
+            before = next((w for w in reversed(agent_words[:index]) if w.end is not None), None)
+            after = next((w for w in agent_words[index + 1:] if w.start is not None), None)
+            spans.append((before.end if before else Decimal(0), after.start if after else horizon))
+    return spans
+
+
 def choose_end(words: list[Word], audio_seconds: Decimal, target: Decimal = TARGET_S,
                minimum: Decimal = MINIMUM_S) -> tuple[Decimal, str]:
-    """Crop end <= min(target, audio length) that cuts no timed word; earliest allowed is `minimum`."""
+    """Crop end <= min(target, audio length) that cuts no timed word and does not fall where an
+    untimed word may lie (annotation metadata only); earliest allowed is `minimum`."""
     limit = min(target, audio_seconds)
     if limit < minimum:
         raise ValueError(f"recording is {audio_seconds} s; at least {minimum} s is required")
-    intervals = [(w.start, w.end) for w in words if w.start is not None and w.end is not None and w.end > w.start]
-    end = limit
-    for start, stop in timed_union(intervals):
+    timed = [(w.start, w.end) for w in words if w.start is not None and w.end is not None and w.end > w.start]
+    untimed = untimed_spans(words, max(audio_seconds, limit) + 1)
+    end, reason = limit, None
+    for start, stop in timed_union(timed + untimed):
         if start < end < stop:
             end = start
+            touches_untimed = any(a < limit < b or (a <= limit and b > limit) for a, b in untimed)
+            reason = "moved_earlier_to_exclude_untimed_words" if touches_untimed else "moved_earlier_to_avoid_cutting_a_word"
             break
     if end < minimum:
         raise ValueError(f"no word-free boundary between {minimum} s and {limit} s")
-    reason = "target" if end == target else ("audio_end" if end == audio_seconds else "moved_earlier_to_avoid_cutting_a_word")
+    if reason is None:
+        reason = "target" if end == target else "audio_end"
     return end, reason
 
 
@@ -211,8 +234,8 @@ def words_in_crop(words: list[Word], end: Decimal) -> tuple[list[Word], list[str
             # outside only when provably after the crop; otherwise it cannot be ordered honestly.
             before = next((w for w in reversed(agent_words[:index]) if w.end is not None), None)
             after = next((w for w in agent_words[index + 1:] if w.start is not None), None)
-            if before is not None and before.end is not None and before.end > end:
-                continue
+            if before is not None and before.end is not None and before.end >= end:
+                continue  # it follows a word ending at or after the crop end, so it lies outside
             if before is None and after is not None and after.start is not None and after.start >= end:
                 continue
             unplaced.append(word.word_id)
@@ -468,7 +491,9 @@ def prepare_ami(ami: dict[str, Any], voicebench: Path, out: Path, record: dict[s
         result = subprocess.run(argv, capture_output=True, text=True, check=False)
         validations[role] = {"argv": argv, "exit_code": result.returncode, "stdout": result.stdout[-2000:],
                              "stderr": result.stderr[-2000:]}
-    smoke = prepare_smoke(audio, info, meeting, end_sample, crop_sha, rights, out)
+    alternate = ami.get("smoke_meeting")
+    alternate_audio = audio_root / alternate / "audio" / f"{alternate}.Mix-Headset.wav" if alternate else None
+    smoke = prepare_smoke(audio, info, meeting, end_sample, crop_sha, rights, out, alternate, alternate_audio)
     spot = acoustic_spot_check(crop, speakers_doc, duration)
     overlap = overlap_seconds(speakers_doc)
     return {
@@ -496,14 +521,21 @@ SMOKE_SAMPLES = 60 * RATE
 
 
 def prepare_smoke(audio: Path, info: dict[str, Any], meeting: str, end_sample: int, crop_sha: str,
-                  rights: dict[str, Any], out: Path) -> dict[str, Any] | None:
-    """Fixed 60 s smoke input taken right after the evaluation crop (disjoint from it), no references.
+                  rights: dict[str, Any], out: Path, alternate: str | None = None,
+                  alternate_audio: Path | None = None) -> dict[str, Any] | None:
+    """Fixed 60 s smoke input disjoint from the evaluation crop, no references: the 60 s right after
+    the crop, or (when the recording ends there) the first 60 s of the owner-listed `smoke_meeting`.
     Used only to prove loading/streaming/output before measured runs; never scored or counted."""
-    if info["frames"] < end_sample + SMOKE_SAMPLES:
+    if info["frames"] >= end_sample + SMOKE_SAMPLES:
+        source, source_meeting, start = audio, meeting, end_sample
+    elif alternate and alternate != meeting and alternate_audio is not None and alternate_audio.is_file() \
+            and read_wav_info(alternate_audio)["frames"] >= SMOKE_SAMPLES:
+        source, source_meeting, start = alternate_audio, alternate, 0
+    else:
         return None
-    item_id = f"ami-{meeting}-mixheadset-smoke-{end_sample}-{end_sample + SMOKE_SAMPLES}"
+    item_id = f"ami-{source_meeting}-mixheadset-smoke-{start}-{start + SMOKE_SAMPLES}"
     path = out / f"{item_id}.wav"
-    crop_wav(audio, path, end_sample + SMOKE_SAMPLES, start_sample=end_sample)
+    crop_wav(source, path, start + SMOKE_SAMPLES, start_sample=start)
     sha = sha256_file(path)
     assert sha != crop_sha
     item = {"item_id": item_id, "languages": ["en"], "split": "phase1-smoke", "status": "ready", "audio_path": path.name,
@@ -518,12 +550,12 @@ def prepare_smoke(audio: Path, info: dict[str, Any], meeting: str, end_sample: i
                 "license": rights["license"], "license_verified": True,
                 "redistribution_allowed": rights["redistribution_allowed"], "external_root": None,
                 "annotation_type": "mixed", "status": "ready",
-                "provenance_notes": "Smoke-only item: the 60 s following the evaluation crop; no references, not scored.",
+                "provenance_notes": f"Smoke-only item: 60 s of {source_meeting} disjoint from the evaluation crop; no references, not scored.",
                 "items": [item]}
     manifest_path = out / "ami-smoke.manifest.json"
     manifest_path.write_bytes(canonical_bytes(document))
-    return {"manifest": str(manifest_path), "item_id": item_id, "sha256": sha,
-            "start_sample": end_sample, "end_sample": end_sample + SMOKE_SAMPLES}
+    return {"manifest": str(manifest_path), "item_id": item_id, "sha256": sha, "meeting": source_meeting,
+            "source_sha256": sha256_file(source), "start_sample": start, "end_sample": start + SMOKE_SAMPLES}
 
 
 def overlap_seconds(speakers_doc: dict[str, Any]) -> float:

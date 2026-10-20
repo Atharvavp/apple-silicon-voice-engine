@@ -13,8 +13,6 @@ public enum SpeechSwiftAdapterIDs {
     public static let eou = "speech-parakeet-eou-120m-int8"
     /// speech-swift's loaders resolve compute units from this variable before their defaults.
     public static let computeUnitsVariable = "SPEECH_COREML_COMPUTE_UNITS"
-    /// speech-swift's cache root variable (`<root>/qwen3-speech/...`).
-    public static let cacheRootVariable = "QWEN3_CACHE_DIR"
 }
 
 /// The requested units must also be the explicit environment override, so every speech

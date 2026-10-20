@@ -44,8 +44,9 @@ PHASE1_FRAMEWORKS=both swift build --disable-keychain -c release --scratch-path 
 SwiftPM rewrites `Package.resolved` for the selected graph; the committed file is the `both` lock and
 each variant's lock is copied into the evidence packet. FluidAudio is used with only its `Diarizer`
 trait (its prebuilt NeMo text-normalization artifact is still downloaded at resolution, never linked).
-speech-swift is used from `vendor/speech-swift` (the pinned commit plus one manifest-only patch that
-renames its benchmark-only `BenchmarkSupport` target, which collides with the harness module) and
+speech-swift is used from `vendor/speech-swift`: the pinned commit plus `patches/speech-swift-3f58a58a-phase1.patch`
+(two files: a manifest rename of its benchmark-only `BenchmarkSupport` target, which collides with the
+harness module, and optional `cacheDir:`/`offlineMode:` parameters on the EOU loader). It
 contributes only `SpeechVAD`, `ParakeetStreamingASR` and `AudioCommon`; MLX is a
 compile-time dependency of `SpeechVAD`, not evidence of GPU inference.
 
@@ -62,13 +63,13 @@ Nothing is acquired or accepted on the owner's behalf. The campaign reads one lo
   "models": {
     "fluid-sortformer-v21-lowctx": {
       "root": "/abs/models/fluid-sortformer", "repository": "FluidInference/diar-streaming-sortformer-coreml",
-      "revision": "<40-hex commit>", "load_path": "<relative path of the low-context v2.1 .mlpackage>",
+      "revision": "<40-hex commit>", "load_path": "v3/fp16/Sortformer_v2.1.mlmodelc",
       "precision": "fp16", "licenses": ["NVIDIA Open Model License", "<conversion terms>"],
       "license_acceptance": {"accepted": true, "evidence": "<where/when the owner accepted>"}
     },
     "speech-sortformer-v21-streaming": {"root": "/abs/models/speech-sortformer", "load_path": "<dir with Sortformer_streaming.mlmodelc and config.json>", "…": "…"},
     "fluid-parakeet-eou-120m-320ms": {"root": "/abs/models/fluid-eou", "load_path": "<dir with streaming_encoder/decoder/joint_decision .mlmodelc and vocab.json>", "…": "…"},
-    "speech-parakeet-eou-120m-int8": {"root": "/abs/speech-cache", "load_path": "qwen3-speech/models/aufklarer/Parakeet-EOU-120M-CoreML-INT8", "…": "…"}
+    "speech-parakeet-eou-120m-int8": {"root": "/abs/models/speech-eou", "load_path": "<dir with encoder/decoder/joint .mlmodelc, vocab.json and config.json>", "…": "…"}
   },
   "datasets": {
     "ami": {
@@ -83,8 +84,9 @@ Nothing is acquired or accepted on the owner's behalf. The campaign reads one lo
 ```
 
 `audio_root/<meeting>/audio/<meeting>.Mix-Headset.wav` and `annotations_root/{corpusResources/meetings.xml,
-words/<meeting>.<agent>.words.xml}` follow the official AMI layout. For the speech-swift EOU row,
-`root` is the `QWEN3_CACHE_DIR` the loader resolves (`<root>/qwen3-speech/models/<repo>`).
+words/<meeting>.<agent>.words.xml}` follow the official AMI layout. Fluid's Sortformer row loads the
+compiled BNNS-fixed `v3/fp16` export (FluidAudio's own `fastV2_1`/fp16 mapping); the wrapper rejects
+a model whose embedded geometry differs from the profile.
 
 ## Run the stages
 
@@ -115,10 +117,10 @@ VB=.build/phase1-both/release/voicebench
   plots and `PHASE_1_RESULTS.md` with status COMPLETE / PARTIAL / NOT_RUN / INVALID.
 
 Runtime environment set by the campaign: `VOICEBENCH_PHASE1_PROFILES`, `VOICEBENCH_PHASE1_ASSETS`,
-`SPEECH_COREML_COMPUTE_UNITS=all` (the speech-swift EOU loader otherwise hard-codes `.cpuAndGPU`),
-`QWEN3_CACHE_DIR` for the speech EOU row, `FLUID_EOU_FUSED` unset. The speech EOU loader has no offline
-parameter: under the deny-network sandbox it retries the Hub and then loads the complete local cache,
-which adds a few seconds to its disclosed setup time.
+`SPEECH_COREML_COMPUTE_UNITS=all` (the speech-swift EOU loader otherwise hard-codes `.cpuAndGPU`);
+`FLUID_EOU_FUSED`, `QWEN3_CACHE_DIR` and `QWEN3_ASR_CACHE_DIR` are removed. Both speech-swift loaders
+run with an explicit cache directory and `offlineMode: true` (the EOU loader's parameters come from the
+owned copy's patch, DEC-079), so neither contacts the Hub; the sandbox is a second guarantee.
 
 ## Tests
 

@@ -48,3 +48,35 @@ index 6f64592..bed9343 100644
          ),
          .testTarget(
              name: "PersonaPlexTests",
+diff --git a/Sources/ParakeetStreamingASR/ParakeetStreamingASR.swift b/Sources/ParakeetStreamingASR/ParakeetStreamingASR.swift
+index 0f80776..ac48a04 100644
+--- a/Sources/ParakeetStreamingASR/ParakeetStreamingASR.swift
++++ b/Sources/ParakeetStreamingASR/ParakeetStreamingASR.swift
+@@ -152,6 +152,8 @@ public class ParakeetStreamingASRModel {
+ 
+     public static func fromPretrained(
+         modelId: String? = nil,
++        cacheDir explicitCacheDir: URL? = nil,
++        offlineMode: Bool = false,
+         progressHandler: ((Double, String) -> Void)? = nil
+     ) async throws -> ParakeetStreamingASRModel {
+         let effectiveModelId = modelId ?? defaultModelId
+@@ -159,7 +161,7 @@ public class ParakeetStreamingASRModel {
+ 
+         let cacheDir: URL
+         do {
+-            cacheDir = try HuggingFaceDownloader.getCacheDirectory(for: effectiveModelId)
++            cacheDir = try explicitCacheDir ?? HuggingFaceDownloader.getCacheDirectory(for: effectiveModelId)
+         } catch {
+             throw AudioModelError.modelLoadFailed(
+                 modelId: effectiveModelId, reason: "Failed to resolve cache directory", underlying: error)
+@@ -176,7 +178,8 @@ public class ParakeetStreamingASRModel {
+                     "joint.mlmodelc/**",
+                     "vocab.json",
+                     "config.json",
+-                ]
++                ],
++                offlineMode: offlineMode
+             ) { fraction in
+                 progressHandler?(fraction * 0.7, "Downloading model...")
+             }
