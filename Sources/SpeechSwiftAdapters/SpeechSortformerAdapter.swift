@@ -72,11 +72,12 @@ actor SpeechSortformerBackend: DiarizationBackend {
             throw ValidationError("$.settings.model_file", "preset .streaming loads \(config.coreMLModelFileName)")
         }
         let binarization = DiarizationConfig.sortformer
-        let expectedPost: [(String, Double)] = [
-            ("onset_threshold", Double(binarization.onset)), ("offset_threshold", Double(binarization.offset)),
-            ("min_speech_s", Double(binarization.minSpeechDuration)), ("min_silence_s", Double(binarization.minSilenceDuration)),
+        // Compared in the SDK's Float precision: JSON 0.3 widens differently from Float(0.3).
+        let expectedPost: [(String, Float)] = [
+            ("onset_threshold", binarization.onset), ("offset_threshold", binarization.offset),
+            ("min_speech_s", binarization.minSpeechDuration), ("min_silence_s", binarization.minSilenceDuration),
         ]
-        for (key, value) in expectedPost where try profile.numberSetting(key) != value {
+        for (key, value) in expectedPost where Float(try profile.numberSetting(key)) != value {
             throw ValidationError("$.settings.\(key)", "profile declares \(try profile.numberSetting(key)); speech default is \(value)")
         }
         self.config = config

@@ -71,12 +71,13 @@ actor FluidSortformerBackend: DiarizationBackend {
         var timeline = DiarizerTimelineConfig.sortformerDefault
         timeline.storeSegments = true
         timeline.maxStoredFrames = nil
-        let expectedTimeline: [(String, Double)] = [
-            ("onset_threshold", Double(timeline.onsetThreshold)), ("offset_threshold", Double(timeline.offsetThreshold)),
-            ("onset_pad_frames", Double(timeline.onsetPadFrames)), ("offset_pad_frames", Double(timeline.offsetPadFrames)),
-            ("min_frames_on", Double(timeline.minFramesOn)), ("min_frames_off", Double(timeline.minFramesOff)),
+        // Compared in the SDK's Float precision (JSON numbers are Double).
+        let expectedTimeline: [(String, Float)] = [
+            ("onset_threshold", timeline.onsetThreshold), ("offset_threshold", timeline.offsetThreshold),
+            ("onset_pad_frames", Float(timeline.onsetPadFrames)), ("offset_pad_frames", Float(timeline.offsetPadFrames)),
+            ("min_frames_on", Float(timeline.minFramesOn)), ("min_frames_off", Float(timeline.minFramesOff)),
         ]
-        for (key, value) in expectedTimeline where try profile.numberSetting(key) != value {
+        for (key, value) in expectedTimeline where Float(try profile.numberSetting(key)) != value {
             throw ValidationError("$.settings.\(key)", "profile declares \(try profile.numberSetting(key)); Fluid default is \(value)")
         }
         self.config = config
