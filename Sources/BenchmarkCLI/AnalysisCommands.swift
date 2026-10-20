@@ -136,9 +136,27 @@ struct ExportCommand: AsyncParsableCommand {
     }
 }
 
-/// Placeholder until M7 wires the acceptance orchestration; never reports a pass.
+/// `validate --suite gate-a`: evaluates the recorded acceptance evidence. It never
+/// re-runs the long campaigns and reports pending inputs as incomplete (exit 9).
 enum GateASuite {
     static func run(suite: String, evidence: URL) async throws {
-        throw fail("validation suite \(suite) is not available yet", ExitCodes.validation)
+        guard suite == "gate-a" else { throw fail("unknown suite \(suite); available: gate-a", ExitCodes.invalidInput) }
+        let executable = URL(fileURLWithPath: CommandLine.arguments.first ?? "").resolvingSymlinksInPath()
+        guard let root = ProjectRoot.discover(from: executable.deletingLastPathComponent()) else {
+            throw fail("cannot locate the project root from \(executable.path)", ExitCodes.invalidInput)
+        }
+        let python = root.appendingPathComponent(".venv/bin/python")
+        guard FileManager.default.isExecutableFile(atPath: python.path) else {
+            throw fail("analysis environment \(python.path) is missing", ExitCodes.analysis)
+        }
+        let bridge = PythonBridge(python: python, projectRoot: root, timeoutSeconds: 600)
+        let out = evidence.appendingPathComponent("gate-a-suite-\(UUID().uuidString.prefix(8).lowercased()).json")
+        let logs = FileManager.default.temporaryDirectory.appendingPathComponent("voicebench-suite-\(UUID().uuidString)")
+        let result = try await bridge.run("acceptance", ["--evidence", evidence.path, "--out", out.path],
+                                          logDirectory: logs, label: "acceptance")
+        FileHandle.standardError.write((try? Data(contentsOf: result.stderrLog)) ?? Data())
+        try? FileManager.default.removeItem(at: logs)
+        print("suite report: \(out.path)")
+        if !result.succeeded { throw ExitCode(result.exitCode == 0 ? ExitCodes.analysis : result.exitCode) }
     }
 }

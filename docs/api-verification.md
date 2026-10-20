@@ -52,10 +52,22 @@ bytes RAM. Package tools-version 6.0, Swift 6 language mode, deployment floor
 | pyannote.core 6.1.0 / pyannote.metrics 4.2.0 | `Annotation`, `Segment`, `Timeline`, `DiarizationErrorRate`, `JaccardErrorRate` | **Import only** (doctor). Signatures and components are verified in M5. Their package metadata declares no license; each wheel ships an MIT `LICENSE` file (read by the doctor). |
 | matplotlib 3.11.2 | `use("Agg")` | Import only. |
 
-## Not yet verified (owned by later milestones)
+## Verified in M3–M7
 
-- C shim for `getrusage`/`task_info` (M5); runner-process sampler cadence.
-- Installed jiwer transform and count fields; pyannote detailed components, mapping and empty cases (M5).
-- Signal handling (SIGINT/SIGTERM dispatch source), child-process pipe draining and timeouts, atomic rename durability (M4).
-- `/usr/bin/sandbox-exec` network denial (M7). The binary exists, but it hasn't been exercised.
+| API / behavior | Used for | Verification | Observed / notes |
+|---|---|---|---|
+| jiwer 4.0.0 `process_words(reference, hypothesis, reference_transform=, hypothesis_transform=)`; fields `substitutions/deletions/insertions/hits` | WER/CER edit counts | Installed signature inspected; 19 hand-derived cases | Empty reference `"" vs "a b"` returns wer 2 and `"" vs ""` returns 0; the wrapper reports `not_computable` instead (DEC-058). `ReduceToListOfListOfWords` splits on ASCII space only. |
+| pyannote.metrics 4.2.0 `DiarizationErrorRate(collar=0.0, skip_overlap=False)`, `JaccardErrorRate(...)`, `metric(ref, hyp, uem=, detailed=True)`, `optimal_mapping` | DER/JER | Installed source read (`diarization.py`); 14 hand-derived cases | DER components `total, correct, false alarm, missed detection, confusion`; zero denominator returns 0.0 or 1.0. JER components `speaker count, speaker error`; no reference speakers returns 1.0. Both become `not_computable` (DEC-059). Hungarian mapping on co-occurrence. |
+| `getrusage(RUSAGE_SELF)` via C shim | CPU telemetry | `ProcessSamplerTests` | Cumulative user+system ns, monotone across a CPU burst. |
+| `task_info(TASK_VM_INFO)` with returned-count check | Current RSS, phys_footprint | `ProcessSamplerTests`, P04 | Returned count covers `phys_footprint` on macOS 26.6.2; RSS positive in every sample. |
+| `__MAC_OS_X_VERSION_MAX_ALLOWED`/`MIN_REQUIRED` | SDK/deployment facts | `buildFactsComeFromTheCompiler` | SDK `26.5`, deployment target `13.0`. |
+| `sysctlbyname` (`hw.model`, `machdep.cpu.brand_string`, `hw.memsize`, `hw.logicalcpu`, `kern.osversion`) | environment.json | Every run | `Mac17,3`, `Apple M5`, 17,179,869,184 bytes, 10 logical CPUs, `25G83`. |
+| `Process` with `FileHandle` stdout/stderr, `terminate()` + `SIGKILL` | Python bridge | `PythonBridgeTests` | No pipe deadlock with 8 MiB of stderr (log cap stops the child); timeout terminates a sleeping child; explicit environment (no `HOME` inherited). |
+| `DispatchSource.makeSignalSource` + `signal(SIG_IGN)` | SIGINT/SIGTERM cancellation | `cancellationProducesACancelledRunWithoutOrphans`; `test_sigint_cancels_a_running_experiment` (real SIGINT to `voicebench run`) | A real SIGINT ends a running real-time run `cancelled` (exit 130), both adapters shut down, one terminal `experiment.cancelled` event. |
+| `renamex_np(..., RENAME_EXCL)`, `mkdir` exclusivity, `open(O_EXCL)` | Never-overwrite artifacts | `RecorderTests`, `existingRunDirectoryIsNeverOverwritten` | Existing artifacts and run directories are refused. |
+| `/usr/bin/sandbox-exec -p '(version 1)(allow default)(deny network*)'` | V19 offline proof | `scripts/offline_smoke.sh` control test | See `evidence/M7/offline/control.json`: a local listener reachable outside the sandbox is refused with `EPERM` inside it. `sandbox-exec` is deprecated by Apple but functional on macOS 26.6.2. |
+
+## Still unverified
+
 - Behavior on macOS 13–25 or with Python other than 3.12.14.
+- Long-term durability semantics beyond fsync + rename on APFS.

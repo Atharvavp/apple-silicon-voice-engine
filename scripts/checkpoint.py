@@ -144,7 +144,21 @@ def groups(out: Path) -> dict[str, list[tuple[str, list[str]]]]:
         ("e2e-release", [PY, "scripts/e2e.py", "--voicebench", release, "--out", str(out / "e2e")]),
         *common_tail,
     ]
-    return {"M1": m1, "M2": m2, "M2-hardening": hardening, "M3": m3, "M4": m4, "M5": m5, "M6": m6}
+    m7 = [
+        ("fixtures-reproducible", [PY, "scripts/generate_fixtures.py", "--small", "--out", "datasets/fixtures",
+                                   "--verify"]),
+        ("swift-build", ["swift", "build"]),
+        ("swift-build-release-pinned", ["swift", "build", "-c", "release", "--disable-automatic-resolution",
+                                        "--skip-update"]),
+        *common_tail,
+        ("gate-a-suite", [release, "validate", "--suite", "gate-a", "--evidence-dir", str(ROOT / "evidence/M7")]),
+        # Last, because it rebuilds the test bundle with Thread Sanitizer instrumentation.
+        ("tsan-concurrency-suites", ["scripts/swift_test.sh", "--sanitize=thread", "--filter",
+                                     "QueueHardeningTests|BoundedQueueTests|AudioIntegrityTests|ReplayModeTests|"
+                                     "RecorderTests|RunLifecycleTests|PartialRunTests|LifecycleTests|StageTimingTests",
+                                     "--xunit-output", str(out / "xunit-tsan.xml")]),
+    ]
+    return {"M1": m1, "M2": m2, "M2-hardening": hardening, "M3": m3, "M4": m4, "M5": m5, "M6": m6, "M7": m7}
 
 
 def sha256(path: Path) -> str | None:
@@ -164,7 +178,7 @@ def now() -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("milestone", choices=["M1", "M2", "M2-hardening", "M3", "M4", "M5", "M6"])
+    parser.add_argument("milestone", choices=["M1", "M2", "M2-hardening", "M3", "M4", "M5", "M6", "M7"])
     parser.add_argument("--out", required=True)
     args = parser.parse_args()
     out = (ROOT / args.out).resolve()

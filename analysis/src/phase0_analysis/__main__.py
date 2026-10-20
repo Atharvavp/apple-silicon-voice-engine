@@ -72,6 +72,15 @@ def main(argv: list[str] | None = None) -> int:
     export.add_argument("--out", required=True)
     export.add_argument("--format", choices=["csv", "plots", "all"], default="all")
 
+    acceptance = sub.add_parser("acceptance", help="evaluate recorded Gate A evidence (never re-runs tests)")
+    acceptance.add_argument("--evidence", required=True)
+    acceptance.add_argument("--out")
+
+    readiness = sub.add_parser("readiness", help="render PHASE_0_READINESS_REPORT.md from evidence")
+    readiness.add_argument("--evidence", required=True)
+    readiness.add_argument("--narrative", help="hand-written sections appended after the generated evidence")
+    readiness.add_argument("--out", required=True)
+
     validate = sub.add_parser("validate", help="validate a run directory's artifacts (never modifies the run)")
     validate.add_argument("--run", required=True)
     validate.add_argument("--schemas", default=None)
@@ -145,6 +154,28 @@ def _dispatch(args: argparse.Namespace) -> int:
 
         written = export_run(Path(args.run), Path(args.out), args.format)
         print(f"export: wrote {', '.join(written)} to {args.out}", file=sys.stderr)
+        return 0
+    if args.operation == "acceptance":
+        from .acceptance import evaluate
+
+        report = evaluate(Path(args.evidence))
+        _write(report, args.out)
+        for check in report["checks"]:
+            if check["status"] != "pass":
+                print(f"  {check['check_id']}: {check['status']} ({check['message']})", file=sys.stderr)
+        for item in report["disclosures"]:
+            print(f"  disclosed {item['code']}: {item['message']}", file=sys.stderr)
+        passed = sum(1 for c in report["checks"] if c["status"] == "pass")
+        print(f"gate-a: {report['status']} ({passed}/{len(report['checks'])} pass)", file=sys.stderr)
+        return 0 if report["status"] == "pass" else 9
+    if args.operation == "readiness":
+        from .readiness import render
+
+        text, decision = render(Path(args.evidence).resolve())
+        if args.narrative:
+            text += "\n" + Path(args.narrative).read_text(encoding="utf-8")
+        Path(args.out).write_text(text, encoding="utf-8")
+        print(f"readiness: {decision} -> {args.out}", file=sys.stderr)
         return 0
     if args.operation == "validate":
         from .validate import validate_run

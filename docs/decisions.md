@@ -103,6 +103,16 @@ Status: **adopted** (reversible, consistent with the plan), **deviation**
 | DEC-071 | adopted | Plots never render transcript text, so no font with Devanagari glyphs is needed; CSVs keep full Unicode (tested with the Hindi item). | Plan M6 font guidance; no font downloads. |
 | DEC-072 | **applied (DEC-008)** | Schema 1.0 frozen at the end of M6: `schemas/SCHEMA_BUNDLE_V1.sha256` = `cc647ac9…8918407` over 14 files. `test_schema_bundle_is_frozen` fails on any later schema edit, and every sealed run records `schema_bundle.frozen: true` (checked by `e2e.py`). | Owner decision DEC-008: freeze before the first sealed benchmark run. All M7 evidence runs are made under the frozen bundle; earlier development runs carry their own (pre-freeze) bundle digest. |
 
+## M7: acceptance, characterization, readiness, 2026-10-20
+
+| ID | Status | Decision | Reason / evidence |
+|---|---|---|---|
+| DEC-073 | adopted | Long campaigns (P01–P04, 3-process determinism, enforced-offline smoke) are explicit, separate invocations whose outputs are *external evidence inputs* to `scripts/acceptance.py`. A missing input makes its V-ID `not_run` (suite `incomplete`), never `pass`. Every Swift/pytest selection must execute at least one test with no failure or skip. | Plan M7: the acceptance runner does not silently relaunch campaigns; an empty `--filter` exits 0, so it is guarded explicitly. |
+| DEC-074 | adopted | P01–P03 ran on the developer's M5 machine from an agent session (not a controlled idle host); load averages and power source are recorded around each run, and the readiness decision text states the limitation. | Honest disclosure; the controlled-host rerun is a Phase 1 prerequisite. |
+| DEC-075 | adopted | Characterization items (`long-30s`, `long-60s`, `long-720s`) are generated locally by `generate_fixtures.py --long-seconds` with generated references and scripts, and are not committed. | Plan M7 task 4: no downloaded audio; large files stay out of the repo. |
+| DEC-076 | adopted | V19 uses `sandbox-exec` with `(deny network*)`, proven by a positive control (a local listener reachable without the sandbox) and a negative control (`EPERM` inside it, both local and outbound), then the full e2e runs under the same policy with a fresh HOME and empty model/hub caches. | Plan H3: environment flags alone are not proof. |
+| DEC-077 | adopted | `voicebench validate --suite gate-a` evaluates recorded evidence (never re-runs tests); the readiness report is generated from evidence by `phase0_analysis readiness`, with a hand-written narrative appended (`docs/readiness-narrative.md`). The decision rules never grant `PASS_WITH_APPROVED_WARNINGS` without an owner approval record. | Plan I1. `test_acceptance.py` covers the rules. |
+
 ## Findings recorded for later milestones
 
 - **P01 input (M7):** on this session's host, a 1 s real-clock replay showed
