@@ -22,8 +22,26 @@ struct VoiceBench: AsyncParsableCommand {
         6 recorder, 7 analysis, 8 incompatible comparison, 9 validation, 130 interrupted.
         """,
         version: "\(BuildInfo.version) (schema \(SchemaVersion.current))",
-        subcommands: [RunCommand.self, Dev.self]
+        subcommands: [RunCommand.self, ValidateCommand.self, CompareCommand.self, ExportCommand.self, Dev.self]
     )
+
+    /// Plan G3: invalid CLI input exits 2 (ArgumentParser's default usage code is 64).
+    static func main() async {
+        do {
+            var command = try parseAsRoot()
+            if var asyncCommand = command as? AsyncParsableCommand {
+                try await asyncCommand.run()
+            } else {
+                try command.run()
+            }
+        } catch {
+            if exitCode(for: error) == .validationFailure {
+                FileHandle.standardError.write(Data((fullMessage(for: error) + "\n").utf8))
+                Foundation.exit(2)
+            }
+            exit(withError: error)
+        }
+    }
 }
 
 /// Hidden developer tools used by the cross-language schema tests.

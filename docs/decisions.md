@@ -92,6 +92,17 @@ Status: **adopted** (reversible, consistent with the plan), **deviation**
 | DEC-065 | adopted | The converted spool is removed only after the completed status is durable; its SHA-256 and frame count stay in `runtime_summary.integrity`. Failed runs keep the spool. | Plan D6 scratch rule. |
 | DEC-066 | adopted | Versions: `voicebench 0.7.0-phase0`, analysis `0.7.0`. | One version for the M3–M7 delivery. |
 
+## M6: CLI validate/compare/export and schema freeze, 2026-10-20
+
+| ID | Status | Decision | Reason / evidence |
+|---|---|---|---|
+| DEC-067 | adopted | `validate`, `compare` and `export` are native Swift subcommands that delegate to the analysis package through `PythonBridge`, using the interpreter and project root frozen in the (first) run's `config.json`. `validate --dataset` is native Swift. | Plan D3/H2: never the ambient `python3`. |
+| DEC-068 | adopted | Comparison compatibility (E4) is a list of field-level reasons with effect `blocks_ranking` or `disclosed`. Run-level blockers: not completed, failed sealed re-validation, data loss (accuracy), step-mode latency, unverified hardware. Endpoint corrections are identified both as a blocking key difference (`conversion.endpoint_status`) and as a disclosure. Non-`ok` profile metrics are disclosed as incomplete measurements. Ranking = ascending primary metric (WER; post-warm-up absolute scheduling error p95; sampled RSS peak), ties by run ID, and only when compatible and every primary value is `ok`. | Owner M6 requirement: identify incompatible settings, corrected endpoints, failed runs and incomplete measurements. |
+| DEC-069 | adopted | Comparison rows use the `metric_record` shape; a distribution is represented by its p95 with p50/min/max/n in `components` and `#p95` appended to its definition ID. | The 1.0 comparison schema requires `metric_record` rows; no schema change was needed. |
+| DEC-070 | adopted | Usage errors exit 2, not ArgumentParser's default 64; a failed run's summary goes to stderr. | Plan G3 ("invalid CLI … exit 2"). Found by the first e2e draft and `test_cli.py`. |
+| DEC-071 | adopted | Plots never render transcript text, so no font with Devanagari glyphs is needed; CSVs keep full Unicode (tested with the Hindi item). | Plan M6 font guidance; no font downloads. |
+| DEC-072 | **applied (DEC-008)** | Schema 1.0 frozen at the end of M6: `schemas/SCHEMA_BUNDLE_V1.sha256` = `cc647ac9…8918407` over 14 files. `test_schema_bundle_is_frozen` fails on any later schema edit, and every sealed run records `schema_bundle.frozen: true` (checked by `e2e.py`). | Owner decision DEC-008: freeze before the first sealed benchmark run. All M7 evidence runs are made under the frozen bundle; earlier development runs carry their own (pre-freeze) bundle digest. |
+
 ## Findings recorded for later milestones
 
 - **P01 input (M7):** on this session's host, a 1 s real-clock replay showed

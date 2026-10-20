@@ -42,6 +42,7 @@ let package = Package(
         .testTarget(name: "BenchmarkSupportTests", dependencies: ["BenchmarkSupport"]),
         .testTarget(name: "AudioCoreTests", dependencies: ["AudioCore", "Replay", "BenchmarkSupport"]),
         .testTarget(name: "ReplayTests", dependencies: ["Replay", "AudioCore", "BenchmarkSupport"]),
+        .testTarget(name: "BenchmarkCLITests", dependencies: ["BenchmarkSupport"]),
         .testTarget(name: "TelemetryTests", dependencies: ["Telemetry", "BenchmarkSupport"]),
         .testTarget(name: "ExperimentTests",
                     dependencies: ["Experiment", "AdapterContracts", "MockAdapters", "Replay", "AudioCore",

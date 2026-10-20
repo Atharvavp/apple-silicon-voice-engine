@@ -60,6 +60,18 @@ def main(argv: list[str] | None = None) -> int:
     score.add_argument("--analysis-id", default="initial")
     score.add_argument("--out-dir", help="rescore target (must be a new directory under the run's derived/)")
 
+    compare = sub.add_parser("compare", help="compare completed runs under one profile")
+    compare.add_argument("--runs", nargs="+", required=True)
+    compare.add_argument("--profile", choices=["accuracy", "latency", "resources"], required=True)
+    compare.add_argument("--allow-noncomparable", action="store_true")
+    compare.add_argument("--schemas", default=None)
+    compare.add_argument("--out", required=True, help="new (or empty) output directory")
+
+    export = sub.add_parser("export", help="export one run to CSV and/or PNG in a new directory")
+    export.add_argument("--run", required=True)
+    export.add_argument("--out", required=True)
+    export.add_argument("--format", choices=["csv", "plots", "all"], default="all")
+
     validate = sub.add_parser("validate", help="validate a run directory's artifacts (never modifies the run)")
     validate.add_argument("--run", required=True)
     validate.add_argument("--schemas", default=None)
@@ -107,6 +119,32 @@ def _dispatch(args: argparse.Namespace) -> int:
         _write(report, str(out / "validation.json"), exclusive=True)
         accuracy = {k: v["value"] for k, v in metrics["accuracy"].items()}
         print(f"score: accuracy {accuracy}; validation {report['status']}", file=sys.stderr)
+        return 0
+    if args.operation == "compare":
+        from .compare import compare, to_csv
+
+        if len(args.runs) < 2:
+            print("compare: at least two runs are required", file=sys.stderr)
+            return 2
+        out = Path(args.out)
+        if out.exists() and any(out.iterdir()):
+            raise FileExistsError(str(out))
+        report = compare([Path(r) for r in args.runs], args.profile, _schemas(args.schemas), args.allow_noncomparable)
+        out.mkdir(parents=True, exist_ok=True)
+        _write(report, str(out / "comparison.json"), exclusive=True)
+        with open(out / "comparison.csv", "x", encoding="utf-8") as handle:
+            handle.write(to_csv(report))
+        blocking = [r["field"] for r in report["reasons"] if r["effect"] == "blocks_ranking"]
+        verdict = "compatible" if report["compatible"] else f"NONCOMPARABLE ({', '.join(sorted(set(blocking)))})"
+        print(f"compare ({args.profile}): {verdict}; ranking: {report['ranking']}", file=sys.stderr)
+        if not report["compatible"] and not args.allow_noncomparable:
+            return 8
+        return 0
+    if args.operation == "export":
+        from .export import export_run
+
+        written = export_run(Path(args.run), Path(args.out), args.format)
+        print(f"export: wrote {', '.join(written)} to {args.out}", file=sys.stderr)
         return 0
     if args.operation == "validate":
         from .validate import validate_run

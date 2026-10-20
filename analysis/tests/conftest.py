@@ -46,3 +46,24 @@ def step_copy(step_run: Path, tmp_path: Path) -> Path:
     target = tmp_path / "run"
     shutil.copytree(step_run, target)
     return target
+
+
+def sealed_run(voicebench: Path, config: str, runs: Path, run_id: str, *extra: str) -> Path:
+    """A completed, sealed run produced by the production `voicebench run`."""
+    result = subprocess.run([str(voicebench), "run", "--config", str(PROJECT_ROOT / "configs" / config), "--runs-dir",
+                             str(runs), "--run-id", run_id, *extra], capture_output=True, timeout=600, check=False)
+    assert result.returncode == 0, result.stderr.decode() + result.stdout.decode()
+    return runs / run_id
+
+
+@pytest.fixture(scope="session")
+def sealed(voicebench: Path, tmp_path_factory: pytest.TempPathFactory) -> dict[str, Path]:
+    runs = tmp_path_factory.mktemp("sealed")
+    return {
+        "step-a": sealed_run(voicebench, "mock-step.yaml", runs, "step-a"),
+        "step-b": sealed_run(voicebench, "mock-step.yaml", runs, "step-b"),
+        "hindi": sealed_run(voicebench, "mock-step-hi.yaml", runs, "hindi"),
+        "endpoint": sealed_run(voicebench, "mock-step-endpoint.yaml", runs, "endpoint"),
+        "drop": sealed_run(voicebench, "mock-slow-drop.yaml", runs, "drop"),
+        "seed": sealed_run(voicebench, "mock-step.yaml", runs, "seed", "--seed", "7"),
+    }
