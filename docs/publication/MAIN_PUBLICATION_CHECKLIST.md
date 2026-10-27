@@ -1,11 +1,11 @@
 # Main publication checklist
 
-**Updated 2026-10-27 from the [verification report](REPO_PUBLICATION_VERIFICATION_REPORT.md). Current verdict: NOT READY (candidate locally verified; not integrated or public).**
+**Updated 2026-10-28 from the [verification report](REPO_PUBLICATION_VERIFICATION_REPORT.md) §15. Current verdict: NOT READY. PR #1 is open with green CI and awaits the owner's merge; public `main` is unchanged.**
 
 Use with the [audit](REPO_PUBLICATION_AUDIT.md), [plan](REPO_PUBLICATION_PLAN.md), and implementation prompt (an internal working document, not published). Boxes are intentionally unchecked: passing checks on the local audit snapshot do not establish readiness of public `main`. Record a commit, date, environment and evidence link for every checked gate. Mark a conditional item “not applicable” with the narrower approved claim rather than silently checking it.
 
-Candidate branch/commit: `publication/readiness` @ `5cd3f18` (verified code); local only\
-Integrated main commit: _pending (not pushed or merged)_\
+Candidate branch/commit: `publication/readiness` @ `b94c80c`, pushed; [PR #1](https://github.com/Atharvavp/apple-silicon-voice-engine/pull/1). Items marked `5cd3f18` were verified on the pre-rewrite commit with the identical tree (`2f38aef`)\
+Integrated main commit: _pending (not merged)_\
 Verification date/environment: 2026-10-27, Apple M5 / macOS 26.6.2 / Swift 6.3.2 CLT / Python 3.12.14\
 Selected publication scope: methodology-focused harness release; accuracy conditional (owner decision 2026-10-27); MIT license; evidence packet approved\
 Final verification report: [REPO_PUBLICATION_VERIFICATION_REPORT.md](REPO_PUBLICATION_VERIFICATION_REPORT.md)
@@ -22,7 +22,8 @@ Final verification report: [REPO_PUBLICATION_VERIFICATION_REPORT.md](REPO_PUBLIC
 - [x] Original owner modifications/untracked work were preserved and reviewed, with an explicit inclusion/disposition record. *(candidate `5cd3f18`: §2)*
 - [x] Changed `Package.swift` and the required native test directory are included coherently; corrected results do not depend on omitted untracked review/follow-up files. *(candidate `5cd3f18`: §2–3)*
 - [x] Candidate diff was reviewed against `main`; no accidental `diff.txt`, private inputs, full evidence tree, model/data assets, caches or generated exports were staged. *(candidate `5cd3f18`: §3, §12)*
-- [ ] Push/PR/integration were explicitly authorized before external action; no unapproved merge, branch deletion, force-push or history rewrite occurred.
+- [x] Push/PR/integration were explicitly authorized before external action; no unapproved merge, branch deletion, force-push or history rewrite occurred. *(2026-10-28: push and PR authorized by the owner; the message-only rewrite was approved before it ran; only `publication/readiness` was pushed, without force; no merge or deletion)*
+- [x] Commit attribution audited: all PR commits are authored and committed by `Atharvavp` (linked GitHub account); the AI co-author trailer was removed from all 22 earlier commits with owner approval, trees identical *(report §15; remote `imp/phase-0` still has 3 pre-rewrite commits, an owner decision)*
 - [ ] Intended candidate changes are fully integrated into authoritative `main`, with recorded commit/check URLs.
 - [ ] Fresh main checkout has clean tracked status; no required assets exist only uncommitted/untracked or under an author's ignored directory.
 - [x] Default setup/build/smoke does not rewrite the intended root lock or source files. Ignored generated output is intentional and documented. *(candidate `5cd3f18`: §6)*
@@ -36,7 +37,7 @@ Final verification report: [REPO_PUBLICATION_VERIFICATION_REPORT.md](REPO_PUBLIC
 - [x] Minimal example uses committed synthetic tones/silence; success, output locations and mock scores are explained. *(candidate `5cd3f18`: README, §6)*
 - [x] Comparison examples create both input runs before comparing; repeated-run/output refusal is explained. *(candidate `5cd3f18`: §6)*
 - [x] Architecture diagram matches spool → replay → FIFO → sequential role calls → artifacts → Python scoring/validation/seal; no unsupported mic/VAD/simultaneous inference edge. *(candidate `5cd3f18`: §8 (source-checked; rendering separate))*
-- [ ] The architecture diagram (static SVG since 2026-10-28; it replaced the planned Mermaid chart) renders correctly on GitHub in light and dark mode and has a readable prose fallback.
+- [ ] The architecture diagram (static SVG since 2026-10-28; it replaced the planned Mermaid chart) renders correctly on GitHub in light and dark mode and has a readable prose fallback. *(partial: assets served as image/svg+xml and the `<picture>` markup is present on the PR branch; a visual check in both themes is NOT VERIFIED)*
 - [x] Current architecture, CLI, contracts, evaluation, adapter, dependency and development documents are discoverable through relative links. *(candidate `5cd3f18`: docs/README.md)*
 - [x] Historical Phase 0 readiness, milestone logs, prior reviews and superseded results are clearly dated/labelled; useful history and report-generator inputs are preserved. *(candidate `5cd3f18`: docs/README.md)*
 - [ ] Relative paths, anchors, external source links and GitHub rendering have been checked; visitor-critical evidence references are accessible or explicitly unavailable.
@@ -62,8 +63,8 @@ Final verification report: [REPO_PUBLICATION_VERIFICATION_REPORT.md](REPO_PUBLIC
 - [x] Full Python suite, including real Swift parity/CLI checks, passes; no missing binary silently skips mandatory checks. *(candidate `5cd3f18`: §6)*
 - [x] Doctor, shared schema corpus and supported-host fixture byte verification pass. *(candidate `5cd3f18`: §6)*
 - [x] Release e2e checks pass into a new safe output; expected negative exits are validated. *(candidate `5cd3f18`: §6)*
-- [ ] Portable Python CI actually passed on its stated Linux environment/subset/dependencies; it is not described as Swift/Core ML/native-inference validation.
-- [ ] macOS CI passed on its reported architecture/toolchain for declared mock-harness scope, or an honest manual gate/runner limitation is visible without a misleading badge.
+- [x] Portable Python CI actually passed on its stated Linux environment/subset/dependencies; it is not described as Swift/Core ML/native-inference validation. *(run 40590411586 @ `b94c80c`: ubuntu-24.04 x64, Python 3.12.15, hash-locked install, 70 passed, schema 133)*
+- [x] macOS CI passed on its reported architecture/toolchain for declared mock-harness scope, or an honest manual gate/runner limitation is visible without a misleading badge. *(run 40590411586 @ `b94c80c`: macos-26-arm64, Xcode 26.6, Swift 6.3.3: 212 Swift, 289 Python, fixtures 55/0, smoke, tracked files unchanged; after two fixes, report §15)*
 - [x] Workflow permissions, caches, timeouts, triggers and artifact uploads are proportionate; no untrusted-PR privileged self-hosted model job or private-data upload. *(candidate `5cd3f18`: ci.yml (not yet run))*
 - [x] Optional SDK build/stub tests have exact evidence before any claim that the current candidate's native SDK integration was tested. *(candidate `5cd3f18`: §6)*
 - [x] Real-model smoke/campaign status is separately recorded as executed, historical, blocked or not run; mocks/stub MLModels do not count as real inference. *(candidate `5cd3f18`: §7, §11)*
@@ -100,7 +101,7 @@ Final verification report: [REPO_PUBLICATION_VERIFICATION_REPORT.md](REPO_PUBLIC
 ## 8. Security, privacy and rights
 
 - [x] Bounded credential scan of intended tracked tree/relevant reachable history completed; scan scope/limitations documented and no secret values printed. *(candidate `5cd3f18`: §6)*
-- [ ] Any actual credential exposure was contained/rotated with owner involvement; history cleanup, if needed, separately authorized. Removing current-tree text was not treated as sufficient containment.
+- [x] Any actual credential exposure was contained/rotated with owner involvement; history cleanup, if needed, separately authorized. Removing current-tree text was not treated as sufficient containment. *(not applicable: the bounded scans found no credential)*
 - [x] No private recordings, full AMI crop, weights, proprietary checkpoints, owner input/authorization file or private transcript/log output is in the intended publication tree without explicit rights/export approval. *(candidate `5cd3f18`: §2, §9)*
 - [x] Curated evidence was reviewed for absolute personal paths, machine/private metadata, transcript text, emails and accidental credentials. *(candidate `5cd3f18`: §9)*
 - [ ] Project license and all required third-party notices approved; optional SDK/path dependencies and embedded notices are accounted for as applicable to distributed artifacts.
@@ -131,6 +132,6 @@ Final verification report: [REPO_PUBLICATION_VERIFICATION_REPORT.md](REPO_PUBLIC
 - [ ] Owner has approved the concrete integrated/public result and the final sharing action; any unresolved required gate keeps the verdict NOT READY.
 
 Final verdict: **NOT READY** (2026-10-27). The candidate is locally verified. Nothing is on public `main` yet.\
-Outstanding blockers: the copyright-line confirmation, push/PR/merge, a first CI run, the security reporting route, a GitHub rendering check, metadata/protection review, an incognito check and caption review (NOT REVIEWED).\
+Outstanding blockers: the owner's merge of PR #1; after the merge, a visual rendering check (both themes), the license display, the description/topics (the live description still overclaims), a protection review and an incognito check; the security reporting route; caption review (NOT REVIEWED). The owner's 2026-10-28 brief names the owner as Atharva Pawar, which matches the LICENSE copyright line.\
 Accepted scope reductions: accuracy conditional (no README headline); evidence figures omitted; T52 deferred; no real-model run in this session.\
 Owner approval/date: decisions of 2026-10-27 recorded in the report §5. Final publication approval is _pending_.

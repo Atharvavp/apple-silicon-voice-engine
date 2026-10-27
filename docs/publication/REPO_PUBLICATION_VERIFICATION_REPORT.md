@@ -3,8 +3,11 @@
 Prepared 2026-10-27 (Asia/Kolkata) for the owner. It records the implementation of
 [REPO_PUBLICATION_PLAN.md](REPO_PUBLICATION_PLAN.md) on a local candidate branch.
 
-**State: LOCALLY VERIFIED, AWAITING OWNER DECISIONS AND EXTERNAL ACTIONS. Not pushed, not merged,
-not public.** Public `main` is still the two-line initial README.
+**State (2026-10-28): PR OPEN, CI GREEN, AWAITING THE OWNER'S MERGE DECISION.** The branch
+`publication/readiness` is pushed and [PR #1](https://github.com/Atharvavp/apple-silicon-voice-engine/pull/1)
+targets `main`. It is not merged, and public `main` is still the two-line initial README. Sections
+1–14 record the 2026-10-27 local implementation. Commit IDs cited there are pre-rewrite IDs with
+identical trees; see §15 for the mapping.
 
 ## 1. Baseline and candidate identities
 
@@ -268,65 +271,177 @@ Publication blockers (owner actions):
 
 ## 13. PR title, body and integration plan
 
-The code and documentation that were verified are at commit `5cd3f18bb0f3a24cedfad542cd0ee1e79e57b57f`.
-The later commits on the branch add only this report, the updated checklist and a `.gitattributes`.
-The `.gitattributes` keeps the evidence packet and the patch byte-exact (no EOL normalization) and
-exempts their intentional CRLF and context whitespace from `git diff --check`.
-
-**Title:** `Publish the benchmark harness: accurate scope, tested quick start, safe scripts, provenance, CI`
-
-**Body** (ready to paste):
-
-````markdown
-## Summary
-
-Brings the full benchmark harness to `main` (until now `main` held only the initial README) and makes it publishable:
-
-- **Scope:** the README describes what exists: a Swift/Python benchmark harness with mock adapters by default and optional FluidAudio / speech-swift wrappers. The integrated voice engine is described as planned.
-- **Onboarding:** `scripts/setup.sh` (Python 3.12 check, hash-locked venv, doctor, default build) and `scripts/smoke.sh` (one mock run → validate → export, with accounting assertions). Both are tested in a fresh clone.
-- **Safety:** scripts refuse existing output instead of `rm -rf`. The default `Package.resolved` now matches the default graph, so builds no longer dirty the tree. Ignore rules are narrow.
-- **Provenance:** a curated, owner-approved evidence packet for campaign 20261021-s2 (aggregates, identities, per-run record; no audio, transcripts or traces), `verify-speech` for the vendored SDK, and a dated correction (two runs recorded a dirty tree).
-- **Tests:** a deterministic cancellation gate replaces a 200 ms wall-clock bound that failed under parallel load. The build-facts test knows each graph's floor.
-- **Rights:** MIT for project files, and `THIRD_PARTY_NOTICES.md` for dependencies, models and AMI.
-- **CI:** a Linux portable Python subset and a macOS mock-harness job. No models, data or secrets.
-
-Includes the Phase 1 follow-up Step 0 work (native EOU stub tests, read-only audits, corrected results) and the publication planning records.
-
-## Verification (local, Apple M5, macOS 26.6.2, Swift 6.3.2 CLT, Python 3.12.14)
-
-See `docs/publication/REPO_PUBLICATION_VERIFICATION_REPORT.md`. It covers: a fresh clone following the README, the Swift and Python suites, doctor, the schema corpus (133 docs), fixture bytes (55, 0 mismatches), release e2e, an optional both-graph build plus stub tests, and the evidence recomputation.
-
-## Not verified / out of scope
-
-- No real-model inference was run (mock and stub tests only). There is no throughput, latency-to-word, ANE or power data, and no accuracy headline (accuracy stays conditional).
-- CI has not run yet. GitHub rendering of the SVG diagram and callouts is unchecked. The security reporting route is pending.
-````
-
-**Integration plan (each step requires explicit owner authorization):**
-
-1. Owner reviews `git diff main...publication/readiness` (431 files vs `main`, 65 vs `e29f345`) and
-   this report. Owner confirms the copyright line and decides on the security route.
-2. `git push origin publication/readiness`. Push only this branch: no `--all`, no `--mirror`, so
-   the local `refs/codex/*` are never pushed.
-3. Open the PR against `main`, wait for `python-portable` and `macos-mock`, and fix any portability
-   finding without rewriting goldens.
-4. Merge. `main` is an ancestor, so fast-forward or a merge commit both work. No force-push.
-5. On public `main`: check the rendered README, the diagram in light and dark mode, the links, and the license
-   display. Apply the description and topics in [GITHUB_PRESENTATION.md](GITHUB_PRESENTATION.md) if
-   wanted. Review branch protection. Open the URL in an incognito window.
-6. Review the LinkedIn caption against README and the evidence packet before posting.
-
-The original `imp/phase-1` checkout still holds the same owner changes, uncommitted. After the
-merge, the owner can delete the worktree with `git worktree remove` (it is not deleted
-automatically) and decide what to do with `imp/phase-1` and `diff.txt`.
-
+- **PR:** [#1](https://github.com/Atharvavp/apple-silicon-voice-engine/pull/1), "Publish the benchmark
+  harness: accurate scope, tested quick start, safe scripts, provenance, CI", `publication/readiness`
+  → `main`. The description lives on the PR. It has no AI-attribution footer, by owner instruction.
+- **Integration plan (owner actions):**
+  1. Review PR #1 and merge it. `main` is an ancestor, so a fast-forward or a merge commit both
+     work. No force-push.
+  2. After the merge, check the rendered README and diagram in light and dark mode, and the
+     license detection.
+  3. Apply the About-panel description and topics ([GITHUB_PRESENTATION.md](GITHUB_PRESENTATION.md)).
+     The current live description still claims "a fully on-device, real-time voice intelligence
+     engine" and contradicts the README.
+  4. Decide whether to delete the remote `imp/phase-0` branch. It still holds the three pre-rewrite
+     Phase 0 commits with the AI co-author trailer (§15).
+  5. Review branch protection, open the repository in an incognito window, and review the LinkedIn
+     caption.
+- The original `imp/phase-1` checkout keeps the pre-rewrite commit IDs. Further work there would
+  need a rebase onto the published history. The local worktree can be removed with
+  `git worktree remove` once you no longer need it.
 
 ## 14. Repository state and authorization used
 
-- **Committed:** yes, locally on `publication/readiness` only (authorized by the implementation
-  prompt). **Pushed:** no. **PR created:** no. **Merged:** no. **Tags/releases:** none.
-  **GitHub settings/metadata:** unchanged.
+- **Committed and pushed:** `publication/readiness` only, by explicit refspec. No `--all`,
+  `--mirror` or force-push was used. No other branch or tag was pushed. The local
+  `refs/backup/publication-readiness-pre-attribution`, `refs/original/*` and `refs/codex/*` refs
+  stay local.
+- **PR created:** yes, #1 (authorized 2026-10-28). **Merged:** no. **Tags/releases:** none.
+  **GitHub settings/metadata:** unchanged. `main` was not modified.
 - No model was downloaded and no license was accepted. No restricted asset was redistributed beyond
-  the owner-approved aggregate packet. No long campaign was run. Network use: PyPI and SwiftPM
-  package fetches, one shallow GitHub fetch of speech-swift `3f58a58a`, GitHub docs and release
-  pages, and PyPI metadata for the Linux dry-run.
+  the owner-approved aggregate packet. No long campaign was run. The original development checkout
+  was not modified (20/20 pre-existing files hash-identical, same HEAD and status).
+- GitHub API calls (PR creation, CI inspection) used the git credential already stored for this
+  remote. It was never printed or written to a file.
+
+## 15. Publication stage (2026-10-28)
+
+### Attribution audit
+
+- **Inspected:** all 22 commits in `origin/main..publication/readiness` (author, committer, both
+  emails, full messages and trailers), plus the public `origin/imp/phase-0` and `origin/main`
+  commits, repository content, the PR template, the PR body and GitHub's own rendering of
+  attribution.
+- **Identities:** one author and one committer, `Atharvavp <atharva.vijay.pawar@gmail.com>`. GitHub
+  resolves this email to the account `Atharvavp` (profile name Atharva Pawar), confirmed through the
+  commit API and commit pages. The initial commit on `main` is `Atharva Pawar
+  <70878243+Atharvavp@users.noreply.github.com>`, committed by GitHub's web UI.
+- **AI attribution found:** every one of the 22 commits ended with `Co-Authored-By: Claude Opus 5.5
+  <noreply@anthropic.com>`. That includes the six Phase 0/1 commits from earlier sessions, three of
+  which were already public on `imp/phase-0`. It sat in commit-message trailers only, not in Git
+  author or committer metadata. GitHub resolved it to the user account `claude` and listed that
+  account as a co-author on the public commit pages, so after a merge it would have been credited
+  on `main`. There was no `Signed-off-by` or other automated trailer.
+- **Correction (owner-approved 2026-10-28):** a message-only rewrite of all 22 commits
+  (`git filter-branch --msg-filter`, removing that exact trailer line). Verified per commit: tree,
+  author name/email/date and committer name/email/date are identical, and the message is identical
+  except for the removed line. Nothing was force-pushed, because the branch was new on the remote.
+  Later commits were made without any trailer.
+- **After the rewrite:** the PR's 25 commits all resolve to author and committer `Atharvavp`, with 0
+  AI trailers. Anonymous commit pages list only `Atharvavp`. The repository contributors list
+  (default branch) shows only `Atharvavp`.
+- **Remaining risk:** the remote `imp/phase-0` branch still holds the three pre-rewrite commits
+  (`a1835de`, `17ec563`, `b6143b6`), whose pages show `claude` as co-author. They are not on `main`
+  and do not become part of it. Deleting that branch is the owner's decision.
+- **Content (owner-approved trim):** the internal implementation prompt was removed from the
+  published tree. Local paths and the tool-specific verifier line were neutralized. The review file
+  `CODEX_INDEPENDENT_REVIEW.md` keeps its name as historical provenance. `doctor.py` lists
+  `openai-whisper` only as a forbidden package name. The prompt file still exists in branch history
+  (commit `69aae8f`); removing it there would need another rewrite and was not requested.
+
+Commit ID mapping (trees identical):
+
+| Before | Published |
+|---|---|
+| `a1835de` | `80a1f0e` |
+| `17ec563` | `182ebea` |
+| `b6143b6` | `53e597a` |
+| `e27605b` | `eadbfaa` |
+| `da04cd2` | `8fc46d0` |
+| `e29f345` | `873e5df` |
+| `dd3675c` | `71f37ab` |
+| `a906ce8` | `69aae8f` |
+| `9f92393` | `5b98644` |
+| `c1c530e` | `efa18d2` |
+| `19c6238` | `6b79eda` |
+| `14e4267` | `3e345f6` |
+| `929ab80` | `0c3abd2` |
+| `85d5968` | `b80c408` |
+| `2cc6bbf` | `9f2a159` |
+| `0dff472` | `96ad089` |
+| `877ecbb` | `acd6efa` |
+| `af7108e` | `ed11001` |
+| `5cd3f18` | `2f38aef` |
+| `21045ba` | `7b9e634` |
+| `9841f89` | `e49d54f` |
+| `6ded9b4` | `c31f92b` |
+
+The campaign's recorded source revision `e29f345` is published as `873e5df` (tree `d7b25936…`). This
+is noted in the evidence packet README and in the corrections of `PHASE_1_RESULTS.md`. The sealed
+values are unchanged.
+
+### Public content audit
+
+437 tracked files at `0d56cca`. No credentials (bounded pattern scan), no `.env`, keys, model files
+or archives, no AMI audio or transcripts, no `diff.txt` or inputs file. The largest file is a 1.5 MB
+synthetic tone fixture. All 52 WAVs are regenerated byte-identically by `generate_fixtures.py`. The
+evidence packet holds aggregates only, and its manifest hashes verify. No email addresses appear
+outside lock files. The remaining absolute paths are a parser fixture (`/Users/example/…`), the
+exporter's own path guard, and dated audit records. LICENSE (MIT) and THIRD_PARTY_NOTICES are
+unchanged and accurate.
+
+### Local verification of the pushed candidates
+
+| Commit | Checks | Result |
+|---|---|---|
+| `0d56cca` (first push) | Fresh clone, README order, full matrix | All exit 0. 212 Swift, 289 Python, e2e 45/45, fixtures 55/0, schema 133, doctor, smoke, 0 tracked changes |
+| `e4e453d` | Swift suite through the fixed wrapper (CLT) | 212 passed. Publication-script tests 17 passed |
+| `b94c80c` | Swift suite | 212 passed |
+
+### Push, PR and CI
+
+| Commit | Run | `python-portable` (ubuntu-24.04 x64, Python 3.12.15) | `macos-mock` (macos-26-arm64 M1, macOS 26.6.2, Xcode 26.6, Swift 6.3.3, Python 3.12.10) |
+|---|---|---|---|
+| `0d56cca` | 40566921491 | success: hash-locked install, `pip check`, 70 passed, schema 133 | **failure** in the Swift suite step: `scripts/swift_test.sh: line 19: flags[@]: unbound variable` |
+| `e4e453d` | 40568881402 | success | **failure**: 211/212. `timeoutTerminatesTheChild` measured 10.93 s against a 10 s bound |
+| `b94c80c` | [40590411586](https://github.com/Atharvavp/apple-silicon-voice-engine/actions/runs/40590411586) | **success** | **success**: doctor, 212 Swift, 289 Python, fixture bytes 55/0, schema 133, smoke, tracked files unchanged |
+
+The two fixes were reproduced and explained before changing anything:
+
+1. **Wrapper bug (genuine, pre-existing).** With Xcode selected, the CLT-only flag array is empty.
+   macOS `/bin/bash` 3.2 treats an empty array as unbound under `set -u`, so the script exited
+   before running any test (reproduced locally). The fix is the 3.2-safe expansion
+   `${flags[@]+"${flags[@]}"}`. The Command Line Tools path is unchanged.
+2. **Host-speed bounds in two tests.** On the 3-core runner, the sibling bridge tests whose child
+   exits immediately also took about 11.9 s, which identifies cold Python launch as the cause, and
+   `timedOut` was true. `timeoutTerminatesTheChild` now uses a 120 s child sleep with a 60 s bound
+   and requires that the child ended by SIGTERM/SIGKILL. `stepDelayIsVirtualOnly` (15.0 s against
+   its 15 s bound) now uses 25 s, which is still below the 30 s that sleeping the virtual delay
+   takes. Both are test-only changes, with no production change and no skipped test.
+
+The Linux install from the macOS-named hash lock, previously NOT VERIFIED, **passed** with
+`--require-hashes` intact.
+
+### GitHub rendering and access
+
+- Verified anonymously (no authentication) from the PR branch's rendered README HTML:
+  - both callouts render as GitHub alerts (`markdown-alert-note`, `-warning`);
+  - the collapsible sections and the `<picture>` with its `prefers-color-scheme: dark` source are present;
+  - every jump-link anchor exists.
+- Both SVGs are served as `image/svg+xml`, byte-identical to the repository files.
+- The LICENSE, evidence packet, provenance JSON and docs pages return HTTP 200. The PR page returns
+  HTTP 200 anonymously.
+- **NOT VERIFIED:**
+  - a visual look at the rendered page in a browser, in light and dark themes (no browser was
+    available to this session; only the markup and assets were checked);
+  - GitHub's license detection, which reports none for a non-default branch and is expected after
+    the merge;
+  - an incognito check of the final `main` URL.
+
+### Repository metadata review
+
+The proposal in [GITHUB_PRESENTATION.md](GITHUB_PRESENTATION.md) is accurate: a 220-character
+description of a benchmark harness, 12 valid topics, no homepage, no social preview. It should
+replace the live description, which overclaims "a fully on-device, real-time voice intelligence
+engine … VAD". The live repository has no topics, no homepage and no detected license. No setting
+was changed.
+
+### Remaining blockers and owner decisions
+
+- Merge PR #1 (owner).
+- After the merge: apply the description and topics, check rendering in both themes and the license
+  detection, check incognito access, review branch protection.
+- Decide whether to delete the remote `imp/phase-0` branch (pre-rewrite AI-trailer commits).
+- Security reporting route (still pending) and the manual alignment listening check (accuracy stays
+  conditional).
+- LinkedIn caption: NOT REVIEWED (none supplied).
