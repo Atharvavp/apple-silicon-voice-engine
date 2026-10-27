@@ -137,15 +137,24 @@ def run_row(run: Path, row_id: str, entry: dict, facts: dict, reasons: list[str]
         "adapter_service_rtf": metric(throughput, "adapter_service_rtf"), "replay_rtf": metric(throughput, "replay_rtf"),
         "end_to_end_rtf": metric(throughput, "end_to_end_rtf"),
         "rss_peak_sampled_mib": (metric(resources, "rss_peak_sampled_bytes") or 0) / 2**20 or None,
+        "footprint_peak_sampled_mib": (metric(resources, "physical_footprint_peak_sampled_bytes") or 0) / 2**20 or None,
     })
-    for key in (f"{role}_consume_ns", "event_emission_latency_ns", "delivery_to_output_latency_ns"):
+    cpu = distribution(resources, "cpu_percent")
+    out["cpu_percent_p50"], out["cpu_percent_p95"], out["cpu_percent_n"] = cpu["p50"], cpu["p95"], cpu["n"]
+    for key in (f"{role}_consume_ns", "event_emission_latency_ns", "delivery_to_output_latency_ns", "processing_lag_ns"):
         d = distribution(timing, key)
         out[f"{key}_p50"], out[f"{key}_p95"], out[f"{key}_n"] = d["p50"], d["p95"], d["n"]
+        name = "active_consume" if key == f"{role}_consume_ns" else key.removesuffix("_ns")
+        out[f"{name}_p50_ms"] = d["p50"] / 1e6 if d["p50"] is not None else None
+        out[f"{name}_p95_ms"] = d["p95"] / 1e6 if d["p95"] is not None else None
     return out
 
 
 SUMMARY_KEYS = ["wer", "cer", "der", "jer", "setup_s", "active_processing_s", "active_flush_s", "adapter_service_rtf",
-                "replay_rtf", "rss_peak_sampled_mib"]
+                "replay_rtf", "end_to_end_rtf", "rss_peak_sampled_mib", "footprint_peak_sampled_mib", "cpu_percent_p50",
+                "cpu_percent_p95", "active_consume_p50_ms", "active_consume_p95_ms", "event_emission_latency_p50_ms",
+                "event_emission_latency_p95_ms", "delivery_to_output_latency_p50_ms",
+                "delivery_to_output_latency_p95_ms", "processing_lag_p95_ms"]
 
 
 def summarize(rows: list[dict]) -> dict[str, dict]:
@@ -276,12 +285,27 @@ def markdown(status: str, context: dict, summary: dict, pairs: dict, runs: list[
         for row_id in ROWS:
             s = summary[row_id]
             lines.append(f"| {row_id} | {s['valid_n']} | {fmt(s['wer'])} | {fmt(s['cer'])} | {fmt(s['der'])} | {fmt(s['jer'])} |")
-        lines += ["", "| Row | Setup s | Active-role processing s | Service RTF | Replay RTF | Sampled peak RSS MiB |",
+        lines += ["", "| Row | Setup (model init) s | Active-role processing s | Service RTF | Replay RTF | End-to-end RTF |",
                   "|---|---:|---:|---:|---:|---:|"]
         for row_id in ROWS:
             s = summary[row_id]
             lines.append(f"| {row_id} | {fmt(s['setup_s'])} | {fmt(s['active_processing_s'])} | "
-                         f"{fmt(s['adapter_service_rtf'], 4)} | {fmt(s['replay_rtf'], 4)} | {fmt(s['rss_peak_sampled_mib'], 1)} |")
+                         f"{fmt(s['adapter_service_rtf'], 4)} | {fmt(s['replay_rtf'], 4)} | {fmt(s['end_to_end_rtf'], 4)} |")
+        lines += ["", "| Row | Sampled peak RSS MiB | Sampled peak footprint MiB | CPU % of one core p50 | CPU % p95 |",
+                  "|---|---:|---:|---:|---:|"]
+        for row_id in ROWS:
+            s = summary[row_id]
+            lines.append(f"| {row_id} | {fmt(s['rss_peak_sampled_mib'], 1)} | {fmt(s['footprint_peak_sampled_mib'], 1)} | "
+                         f"{fmt(s['cpu_percent_p50'], 1)} | {fmt(s['cpu_percent_p95'], 1)} |")
+        lines += ["", "Streaming timing (ms). Each cell is the median [min, max] across runs of that run's own",
+                  "p50 or p95; percentiles are never pooled across runs.", "",
+                  "| Row | Active consume p50 | Active consume p95 | Event emission p95 | Delivery-to-output p50 | "
+                  "Delivery-to-output p95 | Processing lag p95 |", "|---|---:|---:|---:|---:|---:|---:|"]
+        for row_id in ROWS:
+            s = summary[row_id]
+            lines.append(f"| {row_id} | {fmt(s['active_consume_p50_ms'], 2)} | {fmt(s['active_consume_p95_ms'], 2)} | "
+                         f"{fmt(s['event_emission_latency_p95_ms'], 2)} | {fmt(s['delivery_to_output_latency_p50_ms'], 2)} | "
+                         f"{fmt(s['delivery_to_output_latency_p95_ms'], 2)} | {fmt(s['processing_lag_p95_ms'], 2)} |")
         lines += ["", "Per-run values, including ASR consume and event-timing p50/p95/n, are in `results-per-run.csv`.",
                   "Paced replay RTF near 1 is not compute speed. Service RTF includes the passive role's calls.",
                   "ASR event timings are wrapper invocation/delivery timings, not word latency. Final-only speaker",
@@ -289,6 +313,13 @@ def markdown(status: str, context: dict, summary: dict, pairs: dict, runs: list[
                   "not computable; GPU/ANE/power are unsupported.", ""]
         for name in figures:
             lines.append(f"![{name}]({name})")
+    lines += ["", "## Campaign checks", ""]
+    checks = context.get("checks", [])
+    if not checks:
+        lines.append("- No smoke, negative-control or pacing checks were recorded.")
+    for check in checks:
+        lines.append(f"- `{check.get('kind')}` {check.get('row') or check.get('run_id')}: {check.get('status')} "
+                     f"(exit {check.get('exit_code')}, {check.get('elapsed_s')} s)")
     lines += ["", "## Comparison boundaries", ""]
     for role, pair in pairs.items():
         lines.append(f"- **{role}** ({' vs '.join(pair['rows'])}): `{pair['classification']}`. Differences: "
@@ -345,10 +376,18 @@ def main() -> int:
         "- RSS is the runner process's sampled resident size, not total unified memory; brief peaks can be missed.",
         "- One machine, one crop, three repetitions: repeatability evidence only, no significance claim.",
     ]
+    spot = ami.get("acoustic_spot_check", {})
+    if spot.get("status") != "pass":
+        ratios = ", ".join(f"{k} {w.get('ratio'):.2f}" if w.get("ratio") else f"{k} n/a"
+                           for k, w in spot.get("windows", {}).items())
+        limitations.append(f"- Dataset RMS alignment spot check status `{spot.get('status', 'missing')}` "
+                           f"(speech/silence RMS ratio per third: {ratios}; threshold {spot.get('threshold_ratio')}); "
+                           "see the validity section of the results document for the follow-up analysis.")
     context = {"campaign": str(campaign), "blocked": blocked, "vox": f"{vox.get('status')} ({vox.get('reason', '')})",
                "git": f"{git_head.get('head', 'unknown')} {'dirty' if git_head.get('porcelain') else 'clean'}",
                "schema": (protected or {}).get("snapshot", {}).get("schema_bundle", {}).get("sha256", "unknown"),
-               "lock": summary_doc.get("package_resolved_sha256", "unknown"), "limitations": limitations}
+               "lock": summary_doc.get("package_resolved_sha256", "unknown"), "limitations": limitations,
+               "checks": [e for e in ledger if e.get("kind") in ("smoke", "negative_empty_assets", "mock_pacing_60s")]}
     figures = plots(summary, out)
     write_csv(out / "results-per-run.csv", runs)
     write_csv(out / "results-summary.csv", [{"row": k, **{m: fmt(v.get(m)) if m != "valid_n" else v["valid_n"]

@@ -65,6 +65,12 @@ if useSpeech {
                        .product(name: "AudioCommon", package: "speech-swift")]))
     cliDependencies.append("SpeechSwiftAdapters")
     cliSettings.append(.define("PHASE1_SPEECH"))
+    // Model-free checks of the unmodified native EOU session (stub MLModels with scripted
+    // token/EOU outputs; Phase 1 follow-up Step 0). Test-only: the executable is unaffected.
+    phase1Targets.append(.testTarget(
+        name: "SpeechNativeEOUTests",
+        dependencies: ["SpeechSwiftAdapters", "RealAdapterSupport",
+                       .product(name: "ParakeetStreamingASR", package: "speech-swift")]))
 }
 
 let package = Package(

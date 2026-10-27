@@ -29,6 +29,10 @@ comparisons: the conversions, precision and post-processing differ (see `PHASE_1
   returns empty text by design, `finish()` returns the transcript). speech-swift partials/finals are
   segment-indexed; finalized segments are kept (repeats preserved, no substring deduplication) and the
   open partial is replaced. No word timestamps exist, so time-to-first-word is not computable.
+  The wrapper can only keep what the SDK emits: speech-swift's native session itself drops a final
+  equal to the previous final, discards a final confirmed in `finalize()`'s trailing chunk, and does
+  not decode audio after that chunk (`Tests/SpeechNativeEOUTests`; impact on the 20261021-s2 runs in
+  `PHASE_1_FOLLOWUP_RESULTS.md`). A superseded open partial is therefore dropped from the final.
 
 ## Build
 
@@ -132,4 +136,10 @@ VOICEBENCH_BIN=$VB .venv/bin/python -m pytest analysis/tests -q
 
 `RealAdapterTests` are model-free (fake backends behind the same wrappers, including runs through
 the unchanged runner and scorer). They prove wrapper contracts, not recognition quality; the model
-rows are proven only by the campaign's smokes and measured runs.
+rows are proven only by the campaign's smokes and measured runs. `SpeechNativeEOUTests` (speech
+builds only) run the unmodified speech-swift EOU session against stub models with scripted
+token/EOU outputs; `withKnownIssue` marks the native loss cases they document.
+
+Read-only follow-up audits of saved runs live in `scripts/phase1_followup/` (each writes one new
+file and refuses to overwrite): `asr_rollback_audit.py` (vanished open text / final-vs-last-partial),
+`memory_reanalysis.py` (uniform memory windows) and `der_shift_sensitivity.py` (diagnostic only).
