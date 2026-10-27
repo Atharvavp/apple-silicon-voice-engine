@@ -3,7 +3,7 @@
 Prepared 2026-10-27 (Asia/Kolkata) for the owner. It records the implementation of
 [REPO_PUBLICATION_PLAN.md](REPO_PUBLICATION_PLAN.md) on a local candidate branch.
 
-**State (2026-10-28): PR OPEN, CI GREEN, AWAITING THE OWNER'S MERGE DECISION.** The branch
+**State (2026-10-28): PR OPEN, CI GREEN ON `2f482e0`, AWAITING THE OWNER'S MERGE DECISION.** The branch
 `publication/readiness` is pushed and [PR #1](https://github.com/Atharvavp/apple-silicon-voice-engine/pull/1)
 targets `main`. It is not merged, and public `main` is still the two-line initial README. Sections
 1–14 record the 2026-10-27 local implementation. Commit IDs cited there are pre-rewrite IDs with
@@ -396,6 +396,10 @@ unchanged and accurate.
 | `e4e453d` | 40568881402 | success | **failure**: 211/212. `timeoutTerminatesTheChild` measured 10.93 s against a 10 s bound |
 | `b94c80c` | [40590411586](https://github.com/Atharvavp/apple-silicon-voice-engine/actions/runs/40590411586) | **success** | **success**: doctor, 212 Swift, 289 Python, fixture bytes 55/0, schema 133, smoke, tracked files unchanged |
 | `cb1fc31` (docs only) | [40591971932](https://github.com/Atharvavp/apple-silicon-voice-engine/actions/runs/40591971932) | success | **failure**: 211/212. The real-clock `cancellationStopsRealtimeReplayPromptly` measured 9.38 s against its 5 s gate; its `CancellationError` check and the deterministic cancellation test passed |
+| `2f482e0` | [40592913631](https://github.com/Atharvavp/apple-silicon-voice-engine/actions/runs/40592913631) | **success**: 70 passed, schema 133 | **success**: doctor, 212 Swift, 289 Python, fixture bytes 55/0, schema 133, smoke, tracked files unchanged |
+
+`2f482e0` is the last commit that changes code or tests. The commit that adds this table changes
+only this report and the checklist; its CI result is on the PR's checks.
 
 The two fixes were reproduced and explained before changing anything:
 
