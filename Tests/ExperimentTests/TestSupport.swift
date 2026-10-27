@@ -65,7 +65,10 @@ struct Variant {
     var diarizationID = "mock-diar-scripted"
     var mutateScript: (@Sendable (inout JSONObject) -> Void)? = nil
     var mutateItem: (@Sendable (inout JSONObject) -> Void)? = nil
-    var cleanupTimeoutS = 5
+    // Generous on purpose: failure-path tests assert the invariants of a cleanup that finishes. Past the budget the
+    // runner takes its separate "cleanup exceeded" fallback (no last_event_sequence), which a loaded 3-core CI
+    // runner hit with 5 s after flush/shutdown faults.
+    var cleanupTimeoutS = 60
     var pythonExecutable: String? = nil
 
     /// Writes the variant and returns the config URL.

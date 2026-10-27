@@ -398,8 +398,10 @@ unchanged and accurate.
 | `cb1fc31` (docs only) | [40591971932](https://github.com/Atharvavp/apple-silicon-voice-engine/actions/runs/40591971932) | success | **failure**: 211/212. The real-clock `cancellationStopsRealtimeReplayPromptly` measured 9.38 s against its 5 s gate; its `CancellationError` check and the deterministic cancellation test passed |
 | `2f482e0` | [40592913631](https://github.com/Atharvavp/apple-silicon-voice-engine/actions/runs/40592913631) | **success**: 70 passed, schema 133 | **success**: doctor, 212 Swift, 289 Python, fixture bytes 55/0, schema 133, smoke, tracked files unchanged |
 
-`2f482e0` is the last commit that changes code or tests. The commit that adds this table changes
-only this report and the checklist; its CI result is on the PR's checks.
+| `607d0f1` (docs only) | [40594173886](https://github.com/Atharvavp/apple-silicon-voice-engine/actions/runs/40594173886) | success | **failure**: 210/212. `adapterFaultsFailTheRunWithRuntimeCategory`, cases asr/flush and diarization/shutdown: `status.lastEventSequence` was nil while the trace ended at sequences 3013/3017 |
+
+The commit that adds this row and fix 4 below changes test code. Its CI result is on the PR's checks
+and is recorded in the final hand-over.
 
 The two fixes were reproduced and explained before changing anything:
 
@@ -421,6 +423,23 @@ The two fixes were reproduced and explained before changing anything:
    run honored only at the end delivers all 600). The latency and chunk count are recorded as
    evidence. The 5 s and 200 ms targets moved under the opt-in `VOICEBENCH_TIMING_CHECKS=1`. The
    deterministic propagation test remains the correctness gate. This is a test-only change.
+4. **Cleanup budget in the fault-injection fixture.** The shared experiment-test fixture used
+   `cleanup_timeout_s: 5`. When cleanup exceeds its budget, the runner takes a documented fallback
+   (`ExperimentRunner.cleanupAfterFailure`): it writes a failed status with
+   `last_event_sequence: null` and the note "cleanup exceeded N s". On the loaded runner, cleanup
+   after flush and shutdown faults (draining and syncing about 3,000 events, stopping telemetry)
+   took longer than 5 s. The tests, which assert the invariants of a cleanup that finishes, then
+   read the fallback status. The fixture budget is now 60 s (allowed range 1–600); the shipped
+   configs keep 5 s. This is a test-only change.
+
+**Open finding (pre-existing production behavior, not changed here).** After the cleanup budget
+expires, `Race.first` returns while the detached cleanup keeps running. That cleanup can still
+append the terminal event and overwrite `status.json` after the runner has reported the failure.
+In the CLI the process normally exits first, which cuts the late writes short. Either way the run
+is correctly reported as failed, but its final status and trace can disagree about the last event.
+The fallback path has no dedicated test. Fixing it (for example, cancelling or waiting for the late
+cleanup, or having the fallback status supersede later writes) is a failure-path design change and
+is left for a separate, owner-approved fix.
 
 The Linux install from the macOS-named hash lock, previously NOT VERIFIED, **passed** with
 `--require-hashes` intact.
@@ -457,4 +476,6 @@ was changed.
 - Decide whether to delete the remote `imp/phase-0` branch (pre-rewrite AI-trailer commits).
 - Security reporting route (still pending) and the manual alignment listening check (accuracy stays
   conditional).
+- Decide whether to fix the late-cleanup race described above before or after the merge (it is not
+  introduced by this PR).
 - LinkedIn caption: NOT REVIEWED (none supplied).
