@@ -1,6 +1,5 @@
 // swift-tools-version: 6.2
-// Phase 0 benchmark harness. Targets follow PHASE_0_CLAUDE_IMPLEMENTATION_PLAN.md
-// section C1; dependency DAG (no cycles):
+// Benchmark harness (module map and data path: docs/architecture.md). Dependency DAG (no cycles):
 //   BenchmarkSupport <- AudioCore <- Replay
 //   BenchmarkSupport, AudioCore <- AdapterContracts <- MockAdapters
 //   CTelemetry (C shim) <- Telemetry
