@@ -14,10 +14,13 @@ pre-review wording is preserved in `docs/phase1/history/PHASE_1_RESULTS-20261021
 Session 20261021-s2 (campaign 2026-10-21 02:25–06:57 +0530, verified and reported 2026-10-26).
 Evidence (git-ignored): `evidence/phase1/one-shot/20261021-s2/` with the generated report in `report/` and the
 review bundle in `review-package/`. Campaign evidence was only read; the report went to a new `report/` directory.
+A small public index (aggregate CSVs, input/model/binary identities, per-run execution record; no audio, transcripts
+or traces) is in [`evidence/20261021-s2/`](evidence/20261021-s2/README.md).
 Hardware: Apple M5 (Mac17,3), 17,179,869,184 bytes (16 GiB) memory (`sysctl hw.memsize`, recorded in all 12
 run environment files), macOS 26.6.2, on AC power. Cooling/fan configuration was not measured.
 Code: `e29f345` plus the uncommitted `scripts/report_phase1.py` reporting changes (the generated report therefore
-says "dirty"; the measured run configs record clean `e29f345`); the campaign binary is SHA-256 `5f8ccfe3…1c8`
+says "dirty"; 10 of the 12 measured run configs record clean `e29f345`, A1-rep3 and A2-rep3 record a dirty tree —
+see [Corrections (2026-10-27)](#corrections-2026-10-27)); the campaign binary is SHA-256 `5f8ccfe3…1c8`
 (FluidAudio `61d41b3c`, speech-swift `3f58a58a` plus the two-file owned patch).
 
 ## History
@@ -254,6 +257,15 @@ Made after the independent review; the measured values were not changed.
 | D2-rep3 "EXPLAINED … NO EFFECT ON RESULTS"; "supervisor's tree peak" | Characterized, cause unresolved; performance also differs; supervisor observes one PID, not the tree. | Review F07; `run_phase1.py` `ps -p` |
 | "memory size was not re-verified here" | 17,179,869,184 bytes recorded in all 12 environment files. | `environment.json` |
 | A2 "consecutive identical finals suppressed" listed only as a design difference | Confirmed native loss edge cases; audited as not affecting these runs. | Follow-up Step 0 |
+
+## Corrections (2026-10-27)
+
+Found while building the public evidence packet; no measured value changed.
+
+| Earlier statement | Correction | Basis |
+|---|---|---|
+| "the measured run configs record clean `e29f345`" | True for 10 of 12. A1-rep3 (started 06:07) and A2-rep3 (06:32) record `git_dirty: true` in `config.json` and `environment.json`: the working tree changed during the campaign, after 05:46. The protected-input comparison passed and the `Package.resolved` hash is unchanged; the binary was hashed at campaign start only. Their prediction content equals repetitions 1–2. | Sealed per-run `environment.json`; [`evidence/20261021-s2/`](evidence/20261021-s2/README.md) |
+| Unresolved item 9: reporting changes uncommitted | The `scripts/report_phase1.py` changes are now committed on the publication branch; the generated report still records the dirty tree it was produced from. | Git history |
 
 ## Scope boundaries
 

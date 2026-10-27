@@ -1,0 +1,1570 @@
+{
+  "packet_version": 1,
+  "session": "20261021-s2",
+  "campaign": {
+    "started": "2026-10-21T02:25:56+0530",
+    "finished": "2026-10-21T06:57:49+0530",
+    "status": "measured",
+    "rows": {
+      "A1": "measured",
+      "A2": "measured",
+      "D1": "measured",
+      "D2": "measured"
+    },
+    "blocked": {},
+    "sandbox_denial_enforced": true,
+    "package_resolved_sha256": "aee60879806d3b495c2794a43743114016a2803e8053d97fc350fc83644c2a3f",
+    "dataset_freeze_sha256": "6c22d6519ce5b7b11f62280386ec8db70bad85612ff429245c275748c7977f28",
+    "inputs_sha256": "73a063f574a622acad41284576769331573cd9aff989799721193fb99ec71f10",
+    "binaries": {
+      "fluid": {
+        "sha256": "5f8ccfe372b246d2e64b75b23b87706ae94c7c1c71adf2ebbe3c0247261931c8",
+        "version": "0.7.0-phase0 (schema 1.0; phase1 frameworks: FluidAudio@61d41b3ca048, speech-swift@3f58a58a8f86)",
+        "frameworks": [
+          "fluid",
+          "speech"
+        ]
+      },
+      "speech": {
+        "sha256": "5f8ccfe372b246d2e64b75b23b87706ae94c7c1c71adf2ebbe3c0247261931c8",
+        "version": "0.7.0-phase0 (schema 1.0; phase1 frameworks: FluidAudio@61d41b3ca048, speech-swift@3f58a58a8f86)",
+        "frameworks": [
+          "fluid",
+          "speech"
+        ]
+      }
+    }
+  },
+  "matrix": {
+    "blocked": {},
+    "cooldown_s": 60,
+    "dataset_item": "ami-ES2008a-mixheadset-0-16638080",
+    "order": [
+      [
+        1,
+        "diarization",
+        [
+          "fluid",
+          "speech"
+        ]
+      ],
+      [
+        1,
+        "asr",
+        [
+          "fluid",
+          "speech"
+        ]
+      ],
+      [
+        2,
+        "diarization",
+        [
+          "speech",
+          "fluid"
+        ]
+      ],
+      [
+        2,
+        "asr",
+        [
+          "speech",
+          "fluid"
+        ]
+      ],
+      [
+        3,
+        "diarization",
+        [
+          "fluid",
+          "speech"
+        ]
+      ],
+      [
+        3,
+        "asr",
+        [
+          "fluid",
+          "speech"
+        ]
+      ]
+    ],
+    "repeats": 3,
+    "replay": "realtime 1x, 20 ms frames, queue 32, block, telemetry 1 s, delay_ms 0",
+    "rows": {
+      "A1": {
+        "adapter_id": "fluid-parakeet-eou-120m-320ms",
+        "binary_sha256": "5f8ccfe372b246d2e64b75b23b87706ae94c7c1c71adf2ebbe3c0247261931c8",
+        "framework": "fluid",
+        "revision": "p1:91f0a31ab228d275b8f7870b5d3eade6ac02b07ff9ccb765ddb1a9b0e10e2287",
+        "role": "asr"
+      },
+      "A2": {
+        "adapter_id": "speech-parakeet-eou-120m-int8",
+        "binary_sha256": "5f8ccfe372b246d2e64b75b23b87706ae94c7c1c71adf2ebbe3c0247261931c8",
+        "framework": "speech",
+        "revision": "p1:9aa209ac5ffd992cf472d421545cdfbf8936b1fcb7dc48bbe40ae85f7ae668f8",
+        "role": "asr"
+      },
+      "D1": {
+        "adapter_id": "fluid-sortformer-v21-lowctx",
+        "binary_sha256": "5f8ccfe372b246d2e64b75b23b87706ae94c7c1c71adf2ebbe3c0247261931c8",
+        "framework": "fluid",
+        "revision": "p1:d6976b6c080e6d02455e58896f8d4c703c4b8b0cb33e8a6abaa51f35884d09b3",
+        "role": "diarization"
+      },
+      "D2": {
+        "adapter_id": "speech-sortformer-v21-streaming",
+        "binary_sha256": "5f8ccfe372b246d2e64b75b23b87706ae94c7c1c71adf2ebbe3c0247261931c8",
+        "framework": "speech",
+        "revision": "p1:9121de75b23a9d16a537a2e6a1367533414741fb871875cf1041481e97734e53",
+        "role": "diarization"
+      }
+    }
+  },
+  "schema_bundle": {
+    "file_count": 14,
+    "frozen": true,
+    "recorded_freeze": "cc647ac939b23f7721b5ca739b27538c3701702c7c691ffb3b9f2560a8918407",
+    "sha256": "cc647ac939b23f7721b5ca739b27538c3701702c7c691ffb3b9f2560a8918407"
+  },
+  "protected_inputs": {
+    "head_after": "e29f345abbdaa68cd496955b5e00f3fed86b140d",
+    "head_before": "da04cd28c163359de9c5714800ade6c690853afd",
+    "problems": [],
+    "status": "pass"
+  },
+  "host": {
+    "os": {
+      "product_version": "26.6.2",
+      "build_version": "25G83"
+    },
+    "arch": "arm64",
+    "hardware": {
+      "model": {
+        "status": "ok",
+        "value": "Mac17,3",
+        "source": "sysctl hw.model",
+        "reason": null
+      },
+      "chip": {
+        "status": "ok",
+        "value": "Apple M5",
+        "source": "sysctl machdep.cpu.brand_string",
+        "reason": null
+      },
+      "memory_bytes": {
+        "status": "ok",
+        "value": 17179869184,
+        "source": "sysctl hw.memsize",
+        "reason": null
+      },
+      "logical_cpu_count": {
+        "status": "ok",
+        "value": 10,
+        "source": "sysctl hw.logicalcpu",
+        "reason": null
+      }
+    },
+    "toolchain": {
+      "swift_version": "6.3.x (compile-time check)",
+      "sdk_version": "26.5",
+      "deployment_target": "15.0",
+      "build_configuration": "release"
+    },
+    "build": {
+      "voicebench_version": "0.7.0-phase0",
+      "git_revision": "e29f345abbdaa68cd496955b5e00f3fed86b140d",
+      "package_resolved_sha256": "aee60879806d3b495c2794a43743114016a2803e8053d97fc350fc83644c2a3f"
+    },
+    "python": {
+      "version": "3.12.14",
+      "lock_sha256": "75301ec0e76fd572f5d396924283c1cab2e73ffccf9f3894e7b17b01a0e225f5"
+    },
+    "analysis_version": "0.7.0",
+    "run_conditions": {
+      "warm_state": "fresh_process_model_loaded_in_prepare_os_model_caches_unknown",
+      "background_load": "recorded-in-campaign-ledger"
+    },
+    "placement": {
+      "requested": {
+        "asr": "unspecified",
+        "diarization": "unspecified"
+      },
+      "observed": {
+        "asr": {
+          "status": "not_computable",
+          "value": null,
+          "source": "passive_adapter",
+          "reason": "passive_role_runs_no_model"
+        },
+        "diarization": {
+          "status": "unavailable",
+          "value": null,
+          "source": "coreml_public_api",
+          "reason": "no_public_per_model_placement_observation"
+        }
+      }
+    },
+    "identical_across_runs": 12
+  },
+  "profiles": [
+    {
+      "adapter_id": "fluid-parakeet-eou-120m-320ms",
+      "role": "asr",
+      "profile_revision": "p1:91f0a31ab228d275b8f7870b5d3eade6ac02b07ff9ccb765ddb1a9b0e10e2287",
+      "framework": {
+        "dependency_lock_sha256": "aee60879806d3b495c2794a43743114016a2803e8053d97fc350fc83644c2a3f",
+        "name": "FluidAudio",
+        "revision": "61d41b3ca04833d1cb80632c82ba401f117a01ef",
+        "source": "https://github.com/FluidInference/FluidAudio"
+      },
+      "compute_units_requested": "all",
+      "settings": {
+        "chunk_samples": 10080,
+        "chunk_size": "320ms",
+        "decoder_path": "reference_two_model",
+        "eou_debounce_ms": 1280,
+        "mel_frames": 64,
+        "pre_cache_size": 9,
+        "shift_samples": 5120
+      },
+      "output": {
+        "eos_tail_tolerance_samples": null,
+        "projection": "recording_text_cumulative_partials_one_final"
+      },
+      "model": {
+        "repository": "FluidInference/parakeet-realtime-eou-120m-coreml",
+        "revision": "40a23f4c0b333aa17ad8c0f2ea47ec2347f2f355",
+        "precision": "fp16 storage (encoder metadata)",
+        "load_path": "320ms",
+        "licenses": [
+          "NVIDIA Open Model License (original nvidia checkpoint): nvidia/parakeet_realtime_eou_120m-v1",
+          "nvidia-open-model-license (conversion repository card)"
+        ],
+        "files": [
+          {
+            "bytes": 243,
+            "path": "320ms/decoder.mlmodelc/analytics/coremldata.bin",
+            "sha256": "3996975a8cbc1949159c55605b3132b39b2484f51acbd55d796d93c70de02b49"
+          },
+          {
+            "bytes": 497,
+            "path": "320ms/decoder.mlmodelc/coremldata.bin",
+            "sha256": "c3ccbff963d8cf07e2be2bd56ea3384a89ea49628922c6bd95ff62e2ae57dc34"
+          },
+          {
+            "bytes": 3283,
+            "path": "320ms/decoder.mlmodelc/metadata.json",
+            "sha256": "0977480649f2756894b0acfe2fdf4231a991f25e3fe02562bfb71b65ca944575"
+          },
+          {
+            "bytes": 7409,
+            "path": "320ms/decoder.mlmodelc/model.mil",
+            "sha256": "b7c084a35bdbc887d69d6226cd533e2c11b2792c37d7352cf878f9f6f3c13555"
+          },
+          {
+            "bytes": 7873600,
+            "path": "320ms/decoder.mlmodelc/weights/weight.bin",
+            "sha256": "0b4cacecdcd9df79ab1e56de67230baf5a8664d2afe0bb8f3408eefa972cb2f4"
+          },
+          {
+            "bytes": 243,
+            "path": "320ms/joint_decision.mlmodelc/analytics/coremldata.bin",
+            "sha256": "5bca32ad130dcad6605cc00044c752aa5b45ef57d14c17f2d1a2fa49d6cf55b5"
+          },
+          {
+            "bytes": 493,
+            "path": "320ms/joint_decision.mlmodelc/coremldata.bin",
+            "sha256": "22d4abc4625b935ee035b5f8ce7cb28d1041b9b01c12173e287bf4b5f5d99625"
+          },
+          {
+            "bytes": 3181,
+            "path": "320ms/joint_decision.mlmodelc/metadata.json",
+            "sha256": "e970ae87137730020690d24d971813db3633bbdfed602d43b6a9c84deced6dc8"
+          },
+          {
+            "bytes": 9608,
+            "path": "320ms/joint_decision.mlmodelc/model.mil",
+            "sha256": "45e8590bc87e34c162b547e43a4f60e64db15b017f48395d7835a6867884804f"
+          },
+          {
+            "bytes": 2794182,
+            "path": "320ms/joint_decision.mlmodelc/weights/weight.bin",
+            "sha256": "7039b2010a269153f5a96edf28637f921a86ef8822f248f2d6712f7a6bce84b4"
+          },
+          {
+            "bytes": 243,
+            "path": "320ms/streaming_encoder.mlmodelc/analytics/coremldata.bin",
+            "sha256": "ae0a559f8d53c43fe13c5c142b15ca237b97812febde71a36475b7b9612baec5"
+          },
+          {
+            "bytes": 670,
+            "path": "320ms/streaming_encoder.mlmodelc/coremldata.bin",
+            "sha256": "b57dfe32ed2acb0081f97d7a9e410117005823e3d2d995e21feb9e60775443c3"
+          },
+          {
+            "bytes": 5327,
+            "path": "320ms/streaming_encoder.mlmodelc/metadata.json",
+            "sha256": "3adc7839db0f5d20b19e2dcd1c009bcf935a7edc61d7473c8150be444bd80488"
+          },
+          {
+            "bytes": 655998,
+            "path": "320ms/streaming_encoder.mlmodelc/model.mil",
+            "sha256": "eb9d56d7467ad3a8796ec9098b27fb89197638b31e24ede6dd924807d25086e6"
+          },
+          {
+            "bytes": 212865856,
+            "path": "320ms/streaming_encoder.mlmodelc/weights/weight.bin",
+            "sha256": "ff553fcb4f4560cfce1e558e16bb9d856e4b4f6a4c08f800d5c126fce4196822"
+          },
+          {
+            "bytes": 17437,
+            "path": "320ms/vocab.json",
+            "sha256": "83fd42ad33dae1bd3ceee6c0bb6c625f314cf0b2dc8430be441ac1e2643d5c36"
+          }
+        ],
+        "total_bytes": 224238270
+      }
+    },
+    {
+      "adapter_id": "fluid-sortformer-v21-lowctx",
+      "role": "diarization",
+      "profile_revision": "p1:d6976b6c080e6d02455e58896f8d4c703c4b8b0cb33e8a6abaa51f35884d09b3",
+      "framework": {
+        "dependency_lock_sha256": "aee60879806d3b495c2794a43743114016a2803e8053d97fc350fc83644c2a3f",
+        "name": "FluidAudio",
+        "revision": "61d41b3ca04833d1cb80632c82ba401f117a01ef",
+        "source": "https://github.com/FluidInference/FluidAudio"
+      },
+      "compute_units_requested": "all",
+      "settings": {
+        "chunk_len": 6,
+        "fifo_len": 40,
+        "left_context": 1,
+        "mel_stride": 160,
+        "min_frames_off": 0,
+        "min_frames_on": 0,
+        "num_speakers": 4,
+        "offset_pad_frames": 0,
+        "offset_threshold": 0.5,
+        "onset_pad_frames": 0,
+        "onset_threshold": 0.5,
+        "precision": "fp16",
+        "preset": "fastV2_1",
+        "right_context": 7,
+        "sample_rate": 16000,
+        "spkcache_len": 188,
+        "spkcache_update_period": 31,
+        "subsampling_factor": 8
+      },
+      "output": {
+        "eos_tail_tolerance_samples": 2560,
+        "projection": "final_timeline_at_flush"
+      },
+      "model": {
+        "repository": "FluidInference/diar-streaming-sortformer-coreml",
+        "revision": "ae9a27ab45dc0aa3abede7d2d6bad2b7a69aa6d1",
+        "precision": "fp16 (FluidAudio v3/fp16 BNNS-fixed export)",
+        "load_path": "v3/fp16/Sortformer_v2.1.mlmodelc",
+        "licenses": [
+          "NVIDIA Open Model License (original nvidia checkpoint): nvidia/diar_streaming_sortformer_4spk-v2.1",
+          "CC-BY-4.0 (conversion repository card)"
+        ],
+        "files": [
+          {
+            "bytes": 202,
+            "path": "v3/fp16/Sortformer_v2.1.mlmodelc/analytics/coremldata.bin",
+            "sha256": "ad751275f22001fc74264b510c5aacde2706be37f983c0ba5c676c700abc51d7"
+          },
+          {
+            "bytes": 1091,
+            "path": "v3/fp16/Sortformer_v2.1.mlmodelc/coremldata.bin",
+            "sha256": "5935b49ce40e428ee71257fbef03bb971ef3aba08e30667ccce6444205ae4752"
+          },
+          {
+            "bytes": 108,
+            "path": "v3/fp16/Sortformer_v2.1.mlmodelc/model0/analytics/coremldata.bin",
+            "sha256": "5a8281049b2a65a3be541cfd9f949e84b8fe1c5251ce90e46da1626fed54e58a"
+          },
+          {
+            "bytes": 632,
+            "path": "v3/fp16/Sortformer_v2.1.mlmodelc/model0/coremldata.bin",
+            "sha256": "0da04d1360e9dc8653deb610947d648710d4138d1f2229588e2c142ee473cf1f"
+          },
+          {
+            "bytes": 31782,
+            "path": "v3/fp16/Sortformer_v2.1.mlmodelc/model0/model.mil",
+            "sha256": "f6b9b011973f566a8037664418abd87c3c878c2b5bcfaa86d4eceebcfba6b4df"
+          },
+          {
+            "bytes": 8948544,
+            "path": "v3/fp16/Sortformer_v2.1.mlmodelc/model0/weights/0-weight.bin",
+            "sha256": "88a98803e35186b1dfb41d7f748f7cee5093bb6efeb117f56953c17549792fa4"
+          },
+          {
+            "bytes": 108,
+            "path": "v3/fp16/Sortformer_v2.1.mlmodelc/model1/analytics/coremldata.bin",
+            "sha256": "5a8281049b2a65a3be541cfd9f949e84b8fe1c5251ce90e46da1626fed54e58a"
+          },
+          {
+            "bytes": 593,
+            "path": "v3/fp16/Sortformer_v2.1.mlmodelc/model1/coremldata.bin",
+            "sha256": "cdce48459008f52883a2e512d78e81fe002b41a70f7cc5ecb969271866d2c650"
+          },
+          {
+            "bytes": 1148078,
+            "path": "v3/fp16/Sortformer_v2.1.mlmodelc/model1/model.mil",
+            "sha256": "42f42882549ba1e3df7b74daee5d53f181c82e1475c551cc46aced242550ce38"
+          },
+          {
+            "bytes": 230428224,
+            "path": "v3/fp16/Sortformer_v2.1.mlmodelc/model1/weights/1-weight.bin",
+            "sha256": "19802650a3d22c513a18290d789bbff4522c80aa2869c8865e56c3dd4a5a2404"
+          }
+        ],
+        "total_bytes": 240559362
+      }
+    },
+    {
+      "adapter_id": "speech-parakeet-eou-120m-int8",
+      "role": "asr",
+      "profile_revision": "p1:9aa209ac5ffd992cf472d421545cdfbf8936b1fcb7dc48bbe40ae85f7ae668f8",
+      "framework": {
+        "dependency_lock_sha256": "aee60879806d3b495c2794a43743114016a2803e8053d97fc350fc83644c2a3f",
+        "name": "speech-swift",
+        "revision": "3f58a58a8f867a4c87b97dbf4d6050d6a88ef665",
+        "source": "https://github.com/soniqo/speech-swift"
+      },
+      "compute_units_requested": "all",
+      "settings": {
+        "chunk_ms": 320,
+        "eou_debounce_ms": 1280,
+        "mel_frames": 64,
+        "output_frames": 4,
+        "pre_cache_size": 9,
+        "sample_rate": 16000
+      },
+      "output": {
+        "eos_tail_tolerance_samples": null,
+        "projection": "recording_text_segment_assembly_one_final"
+      },
+      "model": {
+        "repository": "aufklarer/Parakeet-EOU-120M-CoreML-INT8",
+        "revision": "fca97346c39ef8cc046e7b13515972f6db48e2ee",
+        "precision": "int8 palettized encoder (card)",
+        "load_path": "aufklarer-Parakeet-EOU-120M-CoreML-INT8",
+        "licenses": [
+          "NVIDIA Open Model License (original nvidia checkpoint): nvidia/parakeet_realtime_eou_120m-v1",
+          "nvidia-open-model-license (conversion repository card)"
+        ],
+        "files": [
+          {
+            "bytes": 524,
+            "path": "aufklarer-Parakeet-EOU-120M-CoreML-INT8/config.json",
+            "sha256": "db0d95f8575e6610f4f524c87d647d5bcd5a868ed5102044e5ccdf4352d5da4b"
+          },
+          {
+            "bytes": 243,
+            "path": "aufklarer-Parakeet-EOU-120M-CoreML-INT8/decoder.mlmodelc/analytics/coremldata.bin",
+            "sha256": "b45480429c7bdb4c48e989d57ac317dd8340a563b4c3f30009a73c49c084c736"
+          },
+          {
+            "bytes": 403,
+            "path": "aufklarer-Parakeet-EOU-120M-CoreML-INT8/decoder.mlmodelc/coremldata.bin",
+            "sha256": "e2eac04f97f9b9193425bec93d1db7877f5cbb72fcb02ad7f6cd6318daed4a28"
+          },
+          {
+            "bytes": 6322,
+            "path": "aufklarer-Parakeet-EOU-120M-CoreML-INT8/decoder.mlmodelc/model.mil",
+            "sha256": "17b279bc9b64e676ea346f6aa99f0aa4cd8728d96f1def312a96a283b2f36cf0"
+          },
+          {
+            "bytes": 7873600,
+            "path": "aufklarer-Parakeet-EOU-120M-CoreML-INT8/decoder.mlmodelc/weights/weight.bin",
+            "sha256": "0b4cacecdcd9df79ab1e56de67230baf5a8664d2afe0bb8f3408eefa972cb2f4"
+          },
+          {
+            "bytes": 243,
+            "path": "aufklarer-Parakeet-EOU-120M-CoreML-INT8/encoder.mlmodelc/analytics/coremldata.bin",
+            "sha256": "d4054b2dbc35b07b45cf0644b666f2fa8ac9f0351f01dca4251f810e442baab0"
+          },
+          {
+            "bytes": 670,
+            "path": "aufklarer-Parakeet-EOU-120M-CoreML-INT8/encoder.mlmodelc/coremldata.bin",
+            "sha256": "eca911beeaaaefa5e016a73a930ea6da1562bffff618948e130f1b8e5cfba961"
+          },
+          {
+            "bytes": 703396,
+            "path": "aufklarer-Parakeet-EOU-120M-CoreML-INT8/encoder.mlmodelc/model.mil",
+            "sha256": "a7c73856dd742860847b2bb4c3de5c2e52a20a22da5a7e84d98582c6f5a3d1d3"
+          },
+          {
+            "bytes": 106694848,
+            "path": "aufklarer-Parakeet-EOU-120M-CoreML-INT8/encoder.mlmodelc/weights/weight.bin",
+            "sha256": "586fbc5437d227f1196d5f812053b47c52ac07cbc6986df1e8b1b4459875d3f6"
+          },
+          {
+            "bytes": 243,
+            "path": "aufklarer-Parakeet-EOU-120M-CoreML-INT8/joint.mlmodelc/analytics/coremldata.bin",
+            "sha256": "8757bc325c1db8f44d6241593a17e8aa2ab23cae1dcbbdcf186fe4b5d079ba66"
+          },
+          {
+            "bytes": 354,
+            "path": "aufklarer-Parakeet-EOU-120M-CoreML-INT8/joint.mlmodelc/coremldata.bin",
+            "sha256": "18778f8a7c5a5816d86af6399c2f2ca3ee4b864f144725fb39f74b9f663b9f12"
+          },
+          {
+            "bytes": 5058,
+            "path": "aufklarer-Parakeet-EOU-120M-CoreML-INT8/joint.mlmodelc/model.mil",
+            "sha256": "8c5d1360fc5227c35d256e2bfc96c0a34143db907499d058f4c71bc0233119b4"
+          },
+          {
+            "bytes": 2794182,
+            "path": "aufklarer-Parakeet-EOU-120M-CoreML-INT8/joint.mlmodelc/weights/weight.bin",
+            "sha256": "7039b2010a269153f5a96edf28637f921a86ef8822f248f2d6712f7a6bce84b4"
+          },
+          {
+            "bytes": 17437,
+            "path": "aufklarer-Parakeet-EOU-120M-CoreML-INT8/vocab.json",
+            "sha256": "83fd42ad33dae1bd3ceee6c0bb6c625f314cf0b2dc8430be441ac1e2643d5c36"
+          }
+        ],
+        "total_bytes": 118097523
+      }
+    },
+    {
+      "adapter_id": "speech-sortformer-v21-streaming",
+      "role": "diarization",
+      "profile_revision": "p1:9121de75b23a9d16a537a2e6a1367533414741fb871875cf1041481e97734e53",
+      "framework": {
+        "dependency_lock_sha256": "aee60879806d3b495c2794a43743114016a2803e8053d97fc350fc83644c2a3f",
+        "name": "speech-swift",
+        "revision": "3f58a58a8f867a4c87b97dbf4d6050d6a88ef665",
+        "source": "https://github.com/soniqo/speech-swift"
+      },
+      "compute_units_requested": "all",
+      "settings": {
+        "chunk_len": 6,
+        "fifo_len": 40,
+        "left_context": 1,
+        "mel_stride": 160,
+        "min_silence_s": 0.15,
+        "min_speech_s": 0.3,
+        "model_file": "Sortformer_streaming.mlmodelc",
+        "num_speakers": 4,
+        "offset_threshold": 0.5,
+        "onset_threshold": 0.5,
+        "preset": "streaming",
+        "right_context": 7,
+        "sample_rate": 16000,
+        "spkcache_len": 188,
+        "spkcache_update_period": 32,
+        "subsampling_factor": 8
+      },
+      "output": {
+        "eos_tail_tolerance_samples": 2560,
+        "projection": "final_timeline_at_flush"
+      },
+      "model": {
+        "repository": "aufklarer/Sortformer-Diarization-CoreML",
+        "revision": "47707a55d23633d3947f168a46ad46960a8639b9",
+        "precision": "fp16 compute, fp32 I/O (card)",
+        "load_path": "aufklarer-Sortformer-Diarization-CoreML",
+        "licenses": [
+          "NVIDIA Open Model License (original nvidia checkpoint): nvidia/diar_streaming_sortformer_4spk-v2.1",
+          "CC-BY-4.0 (conversion repository card)"
+        ],
+        "files": [
+          {
+            "bytes": 202,
+            "path": "aufklarer-Sortformer-Diarization-CoreML/Sortformer_streaming.mlmodelc/analytics/coremldata.bin",
+            "sha256": "67d10dc1e813b0586d40a1599722fa57834c69e56a864a762f128c04c5111d07"
+          },
+          {
+            "bytes": 423,
+            "path": "aufklarer-Sortformer-Diarization-CoreML/Sortformer_streaming.mlmodelc/coremldata.bin",
+            "sha256": "6af2c147181651b84d005e3346ef2320931fe25713d3d73e3413b3a461041021"
+          },
+          {
+            "bytes": 4360,
+            "path": "aufklarer-Sortformer-Diarization-CoreML/Sortformer_streaming.mlmodelc/metadata.json",
+            "sha256": "acb7c06e6c877fecfdf5c477a5e8c4cbcafa4e89b02c6e043276662b1f64eb59"
+          },
+          {
+            "bytes": 108,
+            "path": "aufklarer-Sortformer-Diarization-CoreML/Sortformer_streaming.mlmodelc/model0/analytics/coremldata.bin",
+            "sha256": "5a8281049b2a65a3be541cfd9f949e84b8fe1c5251ce90e46da1626fed54e58a"
+          },
+          {
+            "bytes": 574,
+            "path": "aufklarer-Sortformer-Diarization-CoreML/Sortformer_streaming.mlmodelc/model0/coremldata.bin",
+            "sha256": "247376e20d452f86a9403bcf44761319a86cd328d32e8299c9ec9b71532bfe50"
+          },
+          {
+            "bytes": 36347,
+            "path": "aufklarer-Sortformer-Diarization-CoreML/Sortformer_streaming.mlmodelc/model0/model.mil",
+            "sha256": "b1f261bd568794db54f12f0742e096eeefc7556e483bf204ed495eec4e6e8c00"
+          },
+          {
+            "bytes": 4474688,
+            "path": "aufklarer-Sortformer-Diarization-CoreML/Sortformer_streaming.mlmodelc/model0/weights/0-weight.bin",
+            "sha256": "232fce1518edd08b1fcb0b39add3e7307c8c3ca3e6afa170f6937c57617d38e1"
+          },
+          {
+            "bytes": 108,
+            "path": "aufklarer-Sortformer-Diarization-CoreML/Sortformer_streaming.mlmodelc/model1/analytics/coremldata.bin",
+            "sha256": "5a8281049b2a65a3be541cfd9f949e84b8fe1c5251ce90e46da1626fed54e58a"
+          },
+          {
+            "bytes": 539,
+            "path": "aufklarer-Sortformer-Diarization-CoreML/Sortformer_streaming.mlmodelc/model1/coremldata.bin",
+            "sha256": "511bfca552ef2e9bfb556f3ca467a5f989269ca12a433d35871464854dcae7a8"
+          },
+          {
+            "bytes": 1148528,
+            "path": "aufklarer-Sortformer-Diarization-CoreML/Sortformer_streaming.mlmodelc/model1/model.mil",
+            "sha256": "553294f188afee9ec90e3667e280fe561f3c2229e35a157a8fca02bf27731bc7"
+          },
+          {
+            "bytes": 230428224,
+            "path": "aufklarer-Sortformer-Diarization-CoreML/Sortformer_streaming.mlmodelc/model1/weights/1-weight.bin",
+            "sha256": "7054bfd31bc625335e00790f3972122f22963709d6eabbde32107932fa1235e4"
+          },
+          {
+            "bytes": 383,
+            "path": "aufklarer-Sortformer-Diarization-CoreML/config.json",
+            "sha256": "2a625cd4f10201e8d1d7cd4ee00d719beb116b8c6ee69890022df6167c74ddad"
+          }
+        ],
+        "total_bytes": 236094484
+      }
+    }
+  ],
+  "dataset": {
+    "source": "AMI Meeting Corpus, headset mix (CC BY 4.0); manual annotations 1.6.2",
+    "meeting": "ES2008a",
+    "item_id": "ami-ES2008a-mixheadset-0-16638080",
+    "status": "ready",
+    "source_audio": {
+      "sha256": "65fcfc924e9bdb0388cbc3242a17bda88291ebc638f486e39a9ede78e92cb1e6",
+      "rate": 16000,
+      "channels": 1,
+      "sample_width": 2,
+      "frames": 16693760,
+      "compression": "NONE"
+    },
+    "crop": {
+      "sha256": "81d6207a9a957b380423fcb5cbe010fe035ddbe5de8f59aecea9d55119bc91b0",
+      "start_sample": 0,
+      "end_sample": 16638080,
+      "end_seconds": "1039.88",
+      "end_reason": "moved_earlier_to_exclude_untimed_words",
+      "duration_samples": 16638080,
+      "extraction": "byte-exact frame copy of the 16 kHz mono headset mix prefix (Python wave); no SRC, no denoising, no trimming; harness AudioPreparer bypasses conversion at 16 kHz"
+    },
+    "annotations": {
+      "version": "1.6.2",
+      "meetings_xml_sha256": "8ab6cdcf03ed863e839418f31c7380392397a2eed892d73b9bc1b438c7ec520a",
+      "words_files_sha256": {
+        "A": "d7da4cfff0aad97c5128147d87b4b1e9aa4fe6d3be1abc92d4c53868a9f9cf91",
+        "B": "0b2a6307c44bbca2e68c3cd74a939e4f3a05739b275957ee1f60e00d11b6b841",
+        "C": "75d03ec921e0ba69fe117948bd4a9d46b3864b7a45b48ea5b07462803c64b346",
+        "D": "947ece13237710ade850422cb71e1a10776fdcb4c061dd4b4006c0a2afda27db"
+      },
+      "speaker_count": 4
+    },
+    "time_policy": {
+      "decimal_seconds_to_sample": "round_half_up(seconds * 16000)",
+      "precision": {
+        "unit": "cs",
+        "step": 1
+      }
+    },
+    "references": {
+      "transcript": {
+        "sha256": "db53b4399b4c9b50f03c5421798fed0de204743d6d7e2e2a4fba56b36631c98a",
+        "policy": "ami_nxt_recording_text_v1",
+        "words": 2496
+      },
+      "speakers": {
+        "sha256": "c2becd260b79342071cbb746e871294ce94ad12ad1e6271625f5fbc4e91eb318",
+        "policy": "derived_word_union_v1",
+        "segments": 167,
+        "speaker_count": 4
+      }
+    },
+    "nonlexical_handling": "excluded elements: ['comment', 'disfmarker', 'gap', 'nonvocalsound', 'pause', 'sil', 'vocalsound'] and <w punc=\"true\">; truncated words (trunc=\"true\") and repeats kept",
+    "overlap_speech_seconds": 28.93,
+    "acoustic_spot_check": {
+      "performed": true,
+      "method": "mix_rms_speech_vs_annotated_silence_v1",
+      "threshold_ratio": 1.5,
+      "windows": {
+        "start": {
+          "speech_rms": 0.01620405183152281,
+          "silence_rms": 0.013469119409726652,
+          "ratio": 1.2030520584605657
+        },
+        "middle": {
+          "speech_rms": 0.020680096857008046,
+          "silence_rms": 0.011296785525335586,
+          "ratio": 1.8306178169558298
+        },
+        "end": {
+          "speech_rms": 0.01301017075508275,
+          "silence_rms": 0.010113748696384515,
+          "ratio": 1.2863846181716632
+        }
+      },
+      "status": "fail",
+      "listening_check_performed": false
+    },
+    "smoke_item": {
+      "item_id": "ami-ES2008b-mixheadset-smoke-0-960000",
+      "sha256": "fbb53f32028cd346b0ee8f579cdd0e955386ff9a5da4ab8a1dc11f75f9153e39"
+    },
+    "voxconverse": "skipped_optional"
+  },
+  "runs": [
+    {
+      "run_id": "A1-rep1",
+      "row": "A1",
+      "repetition": 1,
+      "profile_revision": "p1:91f0a31ab228d275b8f7870b5d3eade6ac02b07ff9ccb765ddb1a9b0e10e2287",
+      "ledger_status": "valid",
+      "exit_code": 0,
+      "validate_exit_code": 0,
+      "retry_of": null,
+      "stopped_by_supervisor": null,
+      "network": "denied",
+      "elapsed_s": 1144.186,
+      "binary_sha256": "5f8ccfe372b246d2e64b75b23b87706ae94c7c1c71adf2ebbe3c0247261931c8",
+      "observed_peak_rss_bytes_supervisor_one_pid": 1090011136,
+      "environment_created": "2026-10-21T03:14:07.404+05:30",
+      "source_tree": {
+        "git_revision": "e29f345abbdaa68cd496955b5e00f3fed86b140d",
+        "git_dirty": false
+      },
+      "state": "completed",
+      "failure": null,
+      "mock": false,
+      "coverage": {
+        "produced_samples": 16638080,
+        "admitted_samples": 16638080,
+        "consumed_samples": 16638080,
+        "dropped_samples": 0,
+        "dropped_ranges": []
+      },
+      "data_loss": false,
+      "integrity": {
+        "spool_sha256": "b70b5688793b24f368b9d53830c6aca3da34afaf82804e8193f912f8614c9e19",
+        "spool_frames": 16638080,
+        "pre_replay_verified": true,
+        "end_of_stream_verified": true
+      },
+      "initial_validation": "pass",
+      "derived_validations": [
+        "pass"
+      ],
+      "sealed_sha256": {
+        "predictions.json": "1c4eefadae04911c1b7224cec754344559094e8de2b7802642540a1dcc516d01",
+        "metrics.json": "6aedcb6bc87ec85b682ac1fe91b45f498d03967e984e66d0917f267d5959ed0d",
+        "runtime_summary.json": "1addf188907fbddedf5a2c5547355242c61c44002e80df318d0a0388ea9d6e4f",
+        "events.jsonl": "f89bfa00e42c3c41afe04db2fb61e1036606e1e225e4f5ad20b28396d84eb63d",
+        "config.json": "a8d61bd66d5c19953ef9c5099ab465c5affc4ecd97c9e0945e46854743067c86"
+      },
+      "conditions_before": {
+        "loadavg": [
+          0.95703125,
+          1.11328125,
+          1.1298828125
+        ],
+        "memory_pressure_level": 1,
+        "ac_power": true
+      },
+      "accuracy": {
+        "wer": 0.23303504847129008,
+        "cer": 0.16480031711426024,
+        "der": null,
+        "jer": null
+      }
+    },
+    {
+      "run_id": "A1-rep2",
+      "row": "A1",
+      "repetition": 2,
+      "profile_revision": "p1:91f0a31ab228d275b8f7870b5d3eade6ac02b07ff9ccb765ddb1a9b0e10e2287",
+      "ledger_status": "valid",
+      "exit_code": 0,
+      "validate_exit_code": 0,
+      "retry_of": null,
+      "stopped_by_supervisor": null,
+      "network": "denied",
+      "elapsed_s": 1146.324,
+      "binary_sha256": "5f8ccfe372b246d2e64b75b23b87706ae94c7c1c71adf2ebbe3c0247261931c8",
+      "observed_peak_rss_bytes_supervisor_one_pid": 1090109440,
+      "environment_created": "2026-10-21T05:02:41.459+05:30",
+      "source_tree": {
+        "git_revision": "e29f345abbdaa68cd496955b5e00f3fed86b140d",
+        "git_dirty": false
+      },
+      "state": "completed",
+      "failure": null,
+      "mock": false,
+      "coverage": {
+        "produced_samples": 16638080,
+        "admitted_samples": 16638080,
+        "consumed_samples": 16638080,
+        "dropped_samples": 0,
+        "dropped_ranges": []
+      },
+      "data_loss": false,
+      "integrity": {
+        "spool_sha256": "b70b5688793b24f368b9d53830c6aca3da34afaf82804e8193f912f8614c9e19",
+        "spool_frames": 16638080,
+        "pre_replay_verified": true,
+        "end_of_stream_verified": true
+      },
+      "initial_validation": "pass",
+      "derived_validations": [
+        "pass"
+      ],
+      "sealed_sha256": {
+        "predictions.json": "aadd6c58f7d831defc263c20f77682e313d2394de3a6957827a1f79b89ca11dc",
+        "metrics.json": "7ba178ffc8e2494d017993439105a21fb2b64235dbfdc53a7853678b5643267f",
+        "runtime_summary.json": "91639aded4589073c19bbb65c776cf51001b8ddd3dc68e884c1f31f750e23b2f",
+        "events.jsonl": "55336a3d22943e23ca5c9dc007a45090d640017e794785dc9fe184d1065cea5a",
+        "config.json": "0a450de584a166bfbf366299416cf973aecf8ecd0ff82a035e63773ba8a63c28"
+      },
+      "conditions_before": {
+        "loadavg": [
+          1.27783203125,
+          1.16650390625,
+          1.15771484375
+        ],
+        "memory_pressure_level": 1,
+        "ac_power": true
+      },
+      "accuracy": {
+        "wer": 0.23303504847129008,
+        "cer": 0.16480031711426024,
+        "der": null,
+        "jer": null
+      }
+    },
+    {
+      "run_id": "A1-rep3",
+      "row": "A1",
+      "repetition": 3,
+      "profile_revision": "p1:91f0a31ab228d275b8f7870b5d3eade6ac02b07ff9ccb765ddb1a9b0e10e2287",
+      "ledger_status": "valid",
+      "exit_code": 0,
+      "validate_exit_code": 0,
+      "retry_of": null,
+      "stopped_by_supervisor": null,
+      "network": "denied",
+      "elapsed_s": 1244.865,
+      "binary_sha256": "5f8ccfe372b246d2e64b75b23b87706ae94c7c1c71adf2ebbe3c0247261931c8",
+      "observed_peak_rss_bytes_supervisor_one_pid": 1090699264,
+      "environment_created": "2026-10-21T06:07:48.314+05:30",
+      "source_tree": {
+        "git_revision": "e29f345abbdaa68cd496955b5e00f3fed86b140d",
+        "git_dirty": true
+      },
+      "state": "completed",
+      "failure": null,
+      "mock": false,
+      "coverage": {
+        "produced_samples": 16638080,
+        "admitted_samples": 16638080,
+        "consumed_samples": 16638080,
+        "dropped_samples": 0,
+        "dropped_ranges": []
+      },
+      "data_loss": false,
+      "integrity": {
+        "spool_sha256": "b70b5688793b24f368b9d53830c6aca3da34afaf82804e8193f912f8614c9e19",
+        "spool_frames": 16638080,
+        "pre_replay_verified": true,
+        "end_of_stream_verified": true
+      },
+      "initial_validation": "pass",
+      "derived_validations": [
+        "pass"
+      ],
+      "sealed_sha256": {
+        "predictions.json": "beef2655344266b3c75928e3cc6c9ee9c0165c01846b90ba3dfe353a108d441e",
+        "metrics.json": "e702cf752def20e94a9557a74e67e822dca9db9149816127ac56346222d90835",
+        "runtime_summary.json": "e8214369c39a4795d70c039c3b540ec36406f5a9cb81311eba4e639a1181fede",
+        "events.jsonl": "a1db3a48e5b1c450becfed584e9e8f986c9de0ffb67b1f11e0a0711911097d59",
+        "config.json": "93f49a6dcc50a4b34258df9d75fceedb79520c16e0657051fe06d467789f911e"
+      },
+      "conditions_before": {
+        "loadavg": [
+          0.87451171875,
+          1.28564453125,
+          1.42822265625
+        ],
+        "memory_pressure_level": 1,
+        "ac_power": true
+      },
+      "accuracy": {
+        "wer": 0.23303504847129008,
+        "cer": 0.16480031711426024,
+        "der": null,
+        "jer": null
+      }
+    },
+    {
+      "run_id": "A2-rep1",
+      "row": "A2",
+      "repetition": 1,
+      "profile_revision": "p1:9aa209ac5ffd992cf472d421545cdfbf8936b1fcb7dc48bbe40ae85f7ae668f8",
+      "ledger_status": "valid",
+      "exit_code": 0,
+      "validate_exit_code": 0,
+      "retry_of": null,
+      "stopped_by_supervisor": null,
+      "network": "denied",
+      "elapsed_s": 1148.293,
+      "binary_sha256": "5f8ccfe372b246d2e64b75b23b87706ae94c7c1c71adf2ebbe3c0247261931c8",
+      "observed_peak_rss_bytes_supervisor_one_pid": 894894080,
+      "environment_created": "2026-10-21T03:35:47.587+05:30",
+      "source_tree": {
+        "git_revision": "e29f345abbdaa68cd496955b5e00f3fed86b140d",
+        "git_dirty": false
+      },
+      "state": "completed",
+      "failure": null,
+      "mock": false,
+      "coverage": {
+        "produced_samples": 16638080,
+        "admitted_samples": 16638080,
+        "consumed_samples": 16638080,
+        "dropped_samples": 0,
+        "dropped_ranges": []
+      },
+      "data_loss": false,
+      "integrity": {
+        "spool_sha256": "b70b5688793b24f368b9d53830c6aca3da34afaf82804e8193f912f8614c9e19",
+        "spool_frames": 16638080,
+        "pre_replay_verified": true,
+        "end_of_stream_verified": true
+      },
+      "initial_validation": "pass",
+      "derived_validations": [
+        "pass"
+      ],
+      "sealed_sha256": {
+        "predictions.json": "1653cfb3931a9d7ee0940d9d9c8131b57834a153fdc8cec8a0bcbbb87c95aba5",
+        "metrics.json": "84babdd8a622171905732dfd14c5f32155b98e5b4576151e25d40cac2b0dd6eb",
+        "runtime_summary.json": "e53152ae91d30ad4a4811967c3ea3871b6e8a589c16496c69c5cb643bb2bfe74",
+        "events.jsonl": "f458f218084e6d431593a0cc3c60293df7ef55e1d14567e9ff3b23c1f2728368",
+        "config.json": "9e315412e85458dbb7f2daa11099c5744ac3d13e1845a892a3737656f0859f08"
+      },
+      "conditions_before": {
+        "loadavg": [
+          1.1240234375,
+          1.1689453125,
+          1.15087890625
+        ],
+        "memory_pressure_level": 1,
+        "ac_power": true
+      },
+      "accuracy": {
+        "wer": 0.23788217747949292,
+        "cer": 0.17252997720741253,
+        "der": null,
+        "jer": null
+      }
+    },
+    {
+      "run_id": "A2-rep2",
+      "row": "A2",
+      "repetition": 2,
+      "profile_revision": "p1:9aa209ac5ffd992cf472d421545cdfbf8936b1fcb7dc48bbe40ae85f7ae668f8",
+      "ledger_status": "valid",
+      "exit_code": 0,
+      "validate_exit_code": 0,
+      "retry_of": null,
+      "stopped_by_supervisor": null,
+      "network": "denied",
+      "elapsed_s": 1148.351,
+      "binary_sha256": "5f8ccfe372b246d2e64b75b23b87706ae94c7c1c71adf2ebbe3c0247261931c8",
+      "observed_peak_rss_bytes_supervisor_one_pid": 891551744,
+      "environment_created": "2026-10-21T04:40:55.468+05:30",
+      "source_tree": {
+        "git_revision": "e29f345abbdaa68cd496955b5e00f3fed86b140d",
+        "git_dirty": false
+      },
+      "state": "completed",
+      "failure": null,
+      "mock": false,
+      "coverage": {
+        "produced_samples": 16638080,
+        "admitted_samples": 16638080,
+        "consumed_samples": 16638080,
+        "dropped_samples": 0,
+        "dropped_ranges": []
+      },
+      "data_loss": false,
+      "integrity": {
+        "spool_sha256": "b70b5688793b24f368b9d53830c6aca3da34afaf82804e8193f912f8614c9e19",
+        "spool_frames": 16638080,
+        "pre_replay_verified": true,
+        "end_of_stream_verified": true
+      },
+      "initial_validation": "pass",
+      "derived_validations": [
+        "pass"
+      ],
+      "sealed_sha256": {
+        "predictions.json": "abd830ada42292845aeb4e20f8dfde23e2cb84386b4871ebfd1980521418bd09",
+        "metrics.json": "cdfd38c53553cce11421076d6ea13d2e73f778cd559b1bf88b5e46b902ad7480",
+        "runtime_summary.json": "3442ffdd10cf0a829ba437c78c95e9a2dceb01ced92f6359ef2f343149c0f065",
+        "events.jsonl": "2274b073b74e3314201aa3af535dbac00f3d03cc8901a076cfbd67e5a63b80b0",
+        "config.json": "290a9eeed28f4aae9cb7f7d05f7cf21ad8367e2ecf45acfc835d5f9ff51464c2"
+      },
+      "conditions_before": {
+        "loadavg": [
+          1.5634765625,
+          1.271484375,
+          1.18408203125
+        ],
+        "memory_pressure_level": 1,
+        "ac_power": true
+      },
+      "accuracy": {
+        "wer": 0.23788217747949292,
+        "cer": 0.17252997720741253,
+        "der": null,
+        "jer": null
+      }
+    },
+    {
+      "run_id": "A2-rep3",
+      "row": "A2",
+      "repetition": 3,
+      "profile_revision": "p1:9aa209ac5ffd992cf472d421545cdfbf8936b1fcb7dc48bbe40ae85f7ae668f8",
+      "ledger_status": "valid",
+      "exit_code": 0,
+      "validate_exit_code": 0,
+      "retry_of": null,
+      "stopped_by_supervisor": null,
+      "network": "denied",
+      "elapsed_s": 1243.156,
+      "binary_sha256": "5f8ccfe372b246d2e64b75b23b87706ae94c7c1c71adf2ebbe3c0247261931c8",
+      "observed_peak_rss_bytes_supervisor_one_pid": 892633088,
+      "environment_created": "2026-10-21T06:32:42.884+05:30",
+      "source_tree": {
+        "git_revision": "e29f345abbdaa68cd496955b5e00f3fed86b140d",
+        "git_dirty": true
+      },
+      "state": "completed",
+      "failure": null,
+      "mock": false,
+      "coverage": {
+        "produced_samples": 16638080,
+        "admitted_samples": 16638080,
+        "consumed_samples": 16638080,
+        "dropped_samples": 0,
+        "dropped_ranges": []
+      },
+      "data_loss": false,
+      "integrity": {
+        "spool_sha256": "b70b5688793b24f368b9d53830c6aca3da34afaf82804e8193f912f8614c9e19",
+        "spool_frames": 16638080,
+        "pre_replay_verified": true,
+        "end_of_stream_verified": true
+      },
+      "initial_validation": "pass",
+      "derived_validations": [
+        "pass"
+      ],
+      "sealed_sha256": {
+        "predictions.json": "6beafa8809b05fd95c48fb59589b9cb4f3d70576703b9f6f44597bd3b9052239",
+        "metrics.json": "247a26d06953e2d1b6483ea309a098a3ba9bfb4a126f1ef2e75bfd90bab7a2e5",
+        "runtime_summary.json": "9840ab6c77c69e0e6fa5f1e9c632c128f260b2c11ccd965c7b55816344fad6ef",
+        "events.jsonl": "e4d5ffede05bcdbd7700dc6032b9efb7b0e2dedbbf31a18b6be2d0fff668c9aa",
+        "config.json": "9e507be41a2755740532a832eb533106b36094933069c032757adb2477d49380"
+      },
+      "conditions_before": {
+        "loadavg": [
+          1.2060546875,
+          1.314453125,
+          1.26904296875
+        ],
+        "memory_pressure_level": 1,
+        "ac_power": false
+      },
+      "accuracy": {
+        "wer": 0.23788217747949292,
+        "cer": 0.17252997720741253,
+        "der": null,
+        "jer": null
+      }
+    },
+    {
+      "run_id": "D1-rep1",
+      "row": "D1",
+      "repetition": 1,
+      "profile_revision": "p1:d6976b6c080e6d02455e58896f8d4c703c4b8b0cb33e8a6abaa51f35884d09b3",
+      "ledger_status": "valid",
+      "exit_code": 0,
+      "validate_exit_code": 0,
+      "retry_of": null,
+      "stopped_by_supervisor": null,
+      "network": "denied",
+      "elapsed_s": 1144.448,
+      "binary_sha256": "5f8ccfe372b246d2e64b75b23b87706ae94c7c1c71adf2ebbe3c0247261931c8",
+      "observed_peak_rss_bytes_supervisor_one_pid": 906625024,
+      "environment_created": "2026-10-21T02:30:39.782+05:30",
+      "source_tree": {
+        "git_revision": "e29f345abbdaa68cd496955b5e00f3fed86b140d",
+        "git_dirty": false
+      },
+      "state": "completed",
+      "failure": null,
+      "mock": false,
+      "coverage": {
+        "produced_samples": 16638080,
+        "admitted_samples": 16638080,
+        "consumed_samples": 16638080,
+        "dropped_samples": 0,
+        "dropped_ranges": []
+      },
+      "data_loss": false,
+      "integrity": {
+        "spool_sha256": "b70b5688793b24f368b9d53830c6aca3da34afaf82804e8193f912f8614c9e19",
+        "spool_frames": 16638080,
+        "pre_replay_verified": true,
+        "end_of_stream_verified": true
+      },
+      "initial_validation": "pass",
+      "derived_validations": [
+        "pass"
+      ],
+      "sealed_sha256": {
+        "predictions.json": "613283c90630f5a4b1a69d5e0807147653f2b9380d884794cb9a540a6d96f999",
+        "metrics.json": "d39caaf054a779005ce53b62bdbbd6a883fa1b310e29cccc9565bc99a1fcfb37",
+        "runtime_summary.json": "45ea6a6b4ed1dd38b35b0598e861055bf0a750edea515322655c694c0cab52b6",
+        "events.jsonl": "7e5438341b132a070d3c03d41c0fe0f035a711ab4824b96971a9256d91f81326",
+        "config.json": "caa4fa1fafe6f218ae9ea0b744677412a49f91657a7c541752e6ea99a2e5db29"
+      },
+      "conditions_before": {
+        "loadavg": [
+          1.42822265625,
+          1.4052734375,
+          1.46630859375
+        ],
+        "memory_pressure_level": 1,
+        "ac_power": true
+      },
+      "accuracy": {
+        "wer": null,
+        "cer": null,
+        "der": 0.24561076758797204,
+        "jer": 0.243300034626762
+      }
+    },
+    {
+      "run_id": "D1-rep2",
+      "row": "D1",
+      "repetition": 2,
+      "profile_revision": "p1:d6976b6c080e6d02455e58896f8d4c703c4b8b0cb33e8a6abaa51f35884d09b3",
+      "ledger_status": "valid",
+      "exit_code": 0,
+      "validate_exit_code": 0,
+      "retry_of": null,
+      "stopped_by_supervisor": null,
+      "network": "denied",
+      "elapsed_s": 1144.112,
+      "binary_sha256": "5f8ccfe372b246d2e64b75b23b87706ae94c7c1c71adf2ebbe3c0247261931c8",
+      "observed_peak_rss_bytes_supervisor_one_pid": 905412608,
+      "environment_created": "2026-10-21T04:19:14.330+05:30",
+      "source_tree": {
+        "git_revision": "e29f345abbdaa68cd496955b5e00f3fed86b140d",
+        "git_dirty": false
+      },
+      "state": "completed",
+      "failure": null,
+      "mock": false,
+      "coverage": {
+        "produced_samples": 16638080,
+        "admitted_samples": 16638080,
+        "consumed_samples": 16638080,
+        "dropped_samples": 0,
+        "dropped_ranges": []
+      },
+      "data_loss": false,
+      "integrity": {
+        "spool_sha256": "b70b5688793b24f368b9d53830c6aca3da34afaf82804e8193f912f8614c9e19",
+        "spool_frames": 16638080,
+        "pre_replay_verified": true,
+        "end_of_stream_verified": true
+      },
+      "initial_validation": "pass",
+      "derived_validations": [
+        "pass"
+      ],
+      "sealed_sha256": {
+        "predictions.json": "c314df404ab921b64a4f7c7dac40e6988242853ec313f04b72fc2790e739d286",
+        "metrics.json": "622e400f1aef96899b8e05d3b991aa8ba60a446102c76e7c63c6b2bcd0a84bb1",
+        "runtime_summary.json": "ed6be1b591488988bda9b6a6defc6def3fc4d8928ffa855a024600b1ae9d8a88",
+        "events.jsonl": "d81b6cf3d7820b302896d97421422a593d7f140fc619665b9376ea670f3c0e4d",
+        "config.json": "42ba2b35566986f69bdffe92fdc3f7f1ab2aa92b11a75d5e0ad361397eb0fe07"
+      },
+      "conditions_before": {
+        "loadavg": [
+          1.27294921875,
+          1.2119140625,
+          1.15283203125
+        ],
+        "memory_pressure_level": 1,
+        "ac_power": true
+      },
+      "accuracy": {
+        "wer": null,
+        "cer": null,
+        "der": 0.24561076758797204,
+        "jer": 0.243300034626762
+      }
+    },
+    {
+      "run_id": "D1-rep3",
+      "row": "D1",
+      "repetition": 3,
+      "profile_revision": "p1:d6976b6c080e6d02455e58896f8d4c703c4b8b0cb33e8a6abaa51f35884d09b3",
+      "ledger_status": "valid",
+      "exit_code": 0,
+      "validate_exit_code": 0,
+      "retry_of": null,
+      "stopped_by_supervisor": null,
+      "network": "denied",
+      "elapsed_s": 1145.722,
+      "binary_sha256": "5f8ccfe372b246d2e64b75b23b87706ae94c7c1c71adf2ebbe3c0247261931c8",
+      "observed_peak_rss_bytes_supervisor_one_pid": 905674752,
+      "environment_created": "2026-10-21T05:24:23.341+05:30",
+      "source_tree": {
+        "git_revision": "e29f345abbdaa68cd496955b5e00f3fed86b140d",
+        "git_dirty": false
+      },
+      "state": "completed",
+      "failure": null,
+      "mock": false,
+      "coverage": {
+        "produced_samples": 16638080,
+        "admitted_samples": 16638080,
+        "consumed_samples": 16638080,
+        "dropped_samples": 0,
+        "dropped_ranges": []
+      },
+      "data_loss": false,
+      "integrity": {
+        "spool_sha256": "b70b5688793b24f368b9d53830c6aca3da34afaf82804e8193f912f8614c9e19",
+        "spool_frames": 16638080,
+        "pre_replay_verified": true,
+        "end_of_stream_verified": true
+      },
+      "initial_validation": "pass",
+      "derived_validations": [
+        "pass"
+      ],
+      "sealed_sha256": {
+        "predictions.json": "89f3c2d85cdd235c2dc6376db1907c7542cf1bf03af440ad34b309d2f45ec54d",
+        "metrics.json": "148c8d11101e64d1ed340c3f4b66faf0f95c3191fa5c23df7c23e351dfe92969",
+        "runtime_summary.json": "84e99c31be78d950a13c3a662b24c18e0b037838d7239a485589892a19aba7ed",
+        "events.jsonl": "9482d294a595cd4708a3e496e7449172e2fae8ff3bf92c42b86afe1e4edf4079",
+        "config.json": "7cbe73a483ec4a81967784d5a7f03d4606b0306d1e54b790bb1959586e45ac9f"
+      },
+      "conditions_before": {
+        "loadavg": [
+          1.2734375,
+          1.17919921875,
+          1.15576171875
+        ],
+        "memory_pressure_level": 1,
+        "ac_power": true
+      },
+      "accuracy": {
+        "wer": null,
+        "cer": null,
+        "der": 0.24561076758797204,
+        "jer": 0.243300034626762
+      }
+    },
+    {
+      "run_id": "D2-rep1",
+      "row": "D2",
+      "repetition": 1,
+      "profile_revision": "p1:9121de75b23a9d16a537a2e6a1367533414741fb871875cf1041481e97734e53",
+      "ledger_status": "valid",
+      "exit_code": 0,
+      "validate_exit_code": 0,
+      "retry_of": null,
+      "stopped_by_supervisor": null,
+      "network": "denied",
+      "elapsed_s": 1144.276,
+      "binary_sha256": "5f8ccfe372b246d2e64b75b23b87706ae94c7c1c71adf2ebbe3c0247261931c8",
+      "observed_peak_rss_bytes_supervisor_one_pid": 899645440,
+      "environment_created": "2026-10-21T02:52:25.992+05:30",
+      "source_tree": {
+        "git_revision": "e29f345abbdaa68cd496955b5e00f3fed86b140d",
+        "git_dirty": false
+      },
+      "state": "completed",
+      "failure": null,
+      "mock": false,
+      "coverage": {
+        "produced_samples": 16638080,
+        "admitted_samples": 16638080,
+        "consumed_samples": 16638080,
+        "dropped_samples": 0,
+        "dropped_ranges": []
+      },
+      "data_loss": false,
+      "integrity": {
+        "spool_sha256": "b70b5688793b24f368b9d53830c6aca3da34afaf82804e8193f912f8614c9e19",
+        "spool_frames": 16638080,
+        "pre_replay_verified": true,
+        "end_of_stream_verified": true
+      },
+      "initial_validation": "pass",
+      "derived_validations": [
+        "pass"
+      ],
+      "sealed_sha256": {
+        "predictions.json": "a06ee590639f66027b06e0ad020a3c6881029c34afe3c34c3f865dc2adfffbdd",
+        "metrics.json": "87480c244a313c57f95eaed63df674ce68028184eff4502efd2a0c62abc2c0d8",
+        "runtime_summary.json": "1ea378fa3097b2f6204263655bcbd963660adb9165641d43d982488cda2e741c",
+        "events.jsonl": "72bdb63701d232fe8202ead23e39ea6539f12e9511e8d02d346510f4885603d7",
+        "config.json": "021a360850ac93cbfcab5d011a74fa08f7fbd73fee4e43ec45d4a2f4b50f4a8b"
+      },
+      "conditions_before": {
+        "loadavg": [
+          1.125,
+          1.16259765625,
+          1.19921875
+        ],
+        "memory_pressure_level": 1,
+        "ac_power": true
+      },
+      "accuracy": {
+        "wer": null,
+        "cer": null,
+        "der": 0.2037778750403519,
+        "jer": 0.19893428035732516
+      }
+    },
+    {
+      "run_id": "D2-rep2",
+      "row": "D2",
+      "repetition": 2,
+      "profile_revision": "p1:9121de75b23a9d16a537a2e6a1367533414741fb871875cf1041481e97734e53",
+      "ledger_status": "valid",
+      "exit_code": 0,
+      "validate_exit_code": 0,
+      "retry_of": null,
+      "stopped_by_supervisor": null,
+      "network": "denied",
+      "elapsed_s": 1144.245,
+      "binary_sha256": "5f8ccfe372b246d2e64b75b23b87706ae94c7c1c71adf2ebbe3c0247261931c8",
+      "observed_peak_rss_bytes_supervisor_one_pid": 899514368,
+      "environment_created": "2026-10-21T03:57:33.379+05:30",
+      "source_tree": {
+        "git_revision": "e29f345abbdaa68cd496955b5e00f3fed86b140d",
+        "git_dirty": false
+      },
+      "state": "completed",
+      "failure": null,
+      "mock": false,
+      "coverage": {
+        "produced_samples": 16638080,
+        "admitted_samples": 16638080,
+        "consumed_samples": 16638080,
+        "dropped_samples": 0,
+        "dropped_ranges": []
+      },
+      "data_loss": false,
+      "integrity": {
+        "spool_sha256": "b70b5688793b24f368b9d53830c6aca3da34afaf82804e8193f912f8614c9e19",
+        "spool_frames": 16638080,
+        "pre_replay_verified": true,
+        "end_of_stream_verified": true
+      },
+      "initial_validation": "pass",
+      "derived_validations": [
+        "pass"
+      ],
+      "sealed_sha256": {
+        "predictions.json": "e268a0dd6de14780601aa771f82f11366cd980dd8a55c11c8e61fb1c1b736d27",
+        "metrics.json": "4f877d4154fb15da48c1962437418694898789655218d9ee493698fc93134a47",
+        "runtime_summary.json": "2c757feb740ca4d6a4333da2f11a6e7e3d091f1865d0c263f297cbecb7d012e9",
+        "events.jsonl": "1a3fe589bc0e38b9580c44fa8a09438cedb9dd1dc74caa70f81004e2342fb424",
+        "config.json": "e994ab782fc837f9a2e2dd9f72bdea0e3e05eb9e36fb9c2bc7c6d83a80f271e8"
+      },
+      "conditions_before": {
+        "loadavg": [
+          1.17333984375,
+          1.24755859375,
+          1.17626953125
+        ],
+        "memory_pressure_level": 1,
+        "ac_power": true
+      },
+      "accuracy": {
+        "wer": null,
+        "cer": null,
+        "der": 0.2037778750403519,
+        "jer": 0.19893428035732516
+      }
+    },
+    {
+      "run_id": "D2-rep3",
+      "row": "D2",
+      "repetition": 3,
+      "profile_revision": "p1:9121de75b23a9d16a537a2e6a1367533414741fb871875cf1041481e97734e53",
+      "ledger_status": "valid",
+      "exit_code": 0,
+      "validate_exit_code": 0,
+      "retry_of": null,
+      "stopped_by_supervisor": null,
+      "network": "denied",
+      "elapsed_s": 1146.455,
+      "binary_sha256": "5f8ccfe372b246d2e64b75b23b87706ae94c7c1c71adf2ebbe3c0247261931c8",
+      "observed_peak_rss_bytes_supervisor_one_pid": 463568896,
+      "environment_created": "2026-10-21T05:46:04.701+05:30",
+      "source_tree": {
+        "git_revision": "e29f345abbdaa68cd496955b5e00f3fed86b140d",
+        "git_dirty": false
+      },
+      "state": "completed",
+      "failure": null,
+      "mock": false,
+      "coverage": {
+        "produced_samples": 16638080,
+        "admitted_samples": 16638080,
+        "consumed_samples": 16638080,
+        "dropped_samples": 0,
+        "dropped_ranges": []
+      },
+      "data_loss": false,
+      "integrity": {
+        "spool_sha256": "b70b5688793b24f368b9d53830c6aca3da34afaf82804e8193f912f8614c9e19",
+        "spool_frames": 16638080,
+        "pre_replay_verified": true,
+        "end_of_stream_verified": true
+      },
+      "initial_validation": "pass",
+      "derived_validations": [
+        "pass"
+      ],
+      "sealed_sha256": {
+        "predictions.json": "ceab85ad5afa13e961f53731887a56c16201a45945cb0a786ef957449c8f008a",
+        "metrics.json": "40c43849e632127cc8ed2e68fa1f79c0fe149d33f163073bdf417d82ba28e5cb",
+        "runtime_summary.json": "b83b21d3bc3d92f598f6502714f018933bcb64c6876aace4781d833df9bc3768",
+        "events.jsonl": "7eced6d31902e65df65b3bf317f954f0206cb95dee5169d173e7fedb237daf22",
+        "config.json": "c44ed1612a8ccc38af77e15832c5749548a803b831e6826d0e89eb84017ecc78"
+      },
+      "conditions_before": {
+        "loadavg": [
+          1.05029296875,
+          1.1494140625,
+          1.14794921875
+        ],
+        "memory_pressure_level": 1,
+        "ac_power": true
+      },
+      "accuracy": {
+        "wer": null,
+        "cer": null,
+        "der": 0.2037778750403519,
+        "jer": 0.19893428035732516
+      }
+    }
+  ],
+  "checks": [
+    {
+      "kind": "smoke",
+      "row": "D1",
+      "run_id": "D1-smoke",
+      "status": "pass",
+      "exit_code": 0,
+      "elapsed_s": 68.657,
+      "network": "denied"
+    },
+    {
+      "kind": "negative_empty_assets",
+      "row": "D1",
+      "run_id": "D1-negative_empty_assets",
+      "status": "pass",
+      "exit_code": 5,
+      "elapsed_s": 2.024,
+      "network": "denied"
+    },
+    {
+      "kind": "smoke",
+      "row": "D2",
+      "run_id": "D2-smoke",
+      "status": "pass",
+      "exit_code": 0,
+      "elapsed_s": 68.626,
+      "network": "denied"
+    },
+    {
+      "kind": "negative_empty_assets",
+      "row": "D2",
+      "run_id": "D2-negative_empty_assets",
+      "status": "pass",
+      "exit_code": 5,
+      "elapsed_s": 2.018,
+      "network": "denied"
+    },
+    {
+      "kind": "smoke",
+      "row": "A1",
+      "run_id": "A1-smoke",
+      "status": "pass",
+      "exit_code": 0,
+      "elapsed_s": 68.656,
+      "network": "denied"
+    },
+    {
+      "kind": "negative_empty_assets",
+      "row": "A1",
+      "run_id": "A1-negative_empty_assets",
+      "status": "pass",
+      "exit_code": 5,
+      "elapsed_s": 2.02,
+      "network": "denied"
+    },
+    {
+      "kind": "smoke",
+      "row": "A2",
+      "run_id": "A2-smoke",
+      "status": "pass",
+      "exit_code": 0,
+      "elapsed_s": 68.603,
+      "network": "denied"
+    },
+    {
+      "kind": "negative_empty_assets",
+      "row": "A2",
+      "run_id": "A2-negative_empty_assets",
+      "status": "pass",
+      "exit_code": 5,
+      "elapsed_s": 2.024,
+      "network": "denied"
+    },
+    {
+      "kind": "mock_pacing_60s",
+      "row": null,
+      "run_id": "mock60-5f8ccfe372b2",
+      "status": "pass",
+      "exit_code": 0,
+      "elapsed_s": 74.709,
+      "network": null
+    }
+  ]
+}

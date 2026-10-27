@@ -1,0 +1,26 @@
+{
+  "status": "pass",
+  "problems": [],
+  "per_run_accuracy_checked": 48,
+  "summary_cells_compared": 84,
+  "distinct_row_repetitions": 12,
+  "method": "accuracy re-read from each sealed metrics.json; summaries re-derived with scripts/report_phase1.py summarize()/fmt() from results-per-run.csv",
+  "copies": {
+    "results-per-run.csv": {
+      "original": "report/results-per-run.csv",
+      "sha256": "51c3b9a03b7a48bff7cbfd480b784c50ae236440d98ec0cf7f71dece5c6e6599"
+    },
+    "results-summary.csv": {
+      "original": "report/results-summary.csv",
+      "sha256": "e07bb66a8698e728c17763773e5e229910ffd7ed17a7243baa3fc5afd35aa7b6"
+    },
+    "report.json": {
+      "original": "report/report.json",
+      "sha256": "d99f908be7e479977847b4a0860315cd73d63cc7bea75d1e5eb6d11b6075f56c"
+    },
+    "Package.resolved.both": {
+      "original": "build/Package.resolved.both",
+      "sha256": "aee60879806d3b495c2794a43743114016a2803e8053d97fc350fc83644c2a3f"
+    }
+  }
+}
