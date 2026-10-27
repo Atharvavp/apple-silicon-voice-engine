@@ -171,8 +171,39 @@ struct ReplayModeTests {
         }
     }
 
-    @Test func cancellationStopsRealtimeReplayPromptly() async throws {
+    /// Cancellation correctness without wall-clock assumptions: the clock's sleeps end only when the
+    /// sleeping task is cancelled, so the run can finish only if cancellation reaches the parked
+    /// producer and the consumer waiting in the queue. The watchdog only turns a hang into a failure.
+    @Test(arguments: [ReplayMode.realtime, .accelerated])
+    func cancellationReachesParkedProducerAndConsumer(mode: ReplayMode) async throws {
         let spool = try preparedSpool("mono16k_pcm16_tone440_1s")
+        let clock = CancellationOnlyClock()
+        let seen = Seen()
+        let speed = mode == .accelerated ? try ReplaySpeed(numerator: 4, denominator: 1) : nil
+        let replay = try configuration(mode, speed: speed)
+        let task = Task {
+            try await ReplayScheduler.run(spool: spool, configuration: replay, clock: clock) { chunk, context in
+                await seen.add(chunk, context)
+            }
+        }
+        var started = clock.sleepStarts.makeAsyncIterator()
+        let firstDeadline = await started.next()
+        #expect(firstDeadline == (mode == .accelerated ? 5_000_000 : 20_000_000), "parked at the first frame's deadline")
+        task.cancel()
+        let outcome = await result(of: task, watchdogSeconds: 30)
+        try #require(outcome != nil, "replay did not unwind after cancellation (hang)")
+        #expect(throws: CancellationError.self) { _ = try outcome!.get() }
+        #expect(await seen.chunks.isEmpty, "no chunk is delivered once the parked producer is cancelled")
+        #expect(clock.sleepCount == 1, "the producer did not continue to later deadlines")
+    }
+
+    /// Real-clock cancellation on a 12 s stream, cancelled after 0.1 s: an ignored cancellation would
+    /// run to the natural end (~11.9 s later) or return a trace. The 5 s gate is far from both, so host
+    /// load from the parallel suite cannot fail it. The measured latency is recorded as evidence; the
+    /// 200 ms responsiveness target is machine- and load-dependent and is asserted only when
+    /// VOICEBENCH_TIMING_CHECKS=1 (run it filtered, on an otherwise idle host: docs/development.md).
+    @Test func cancellationStopsRealtimeReplayPromptly() async throws {
+        let spool = try preparedSpool("synthetic/two-speaker-en")
         let clock = ContinuousRunClock()
         let task = Task {
             try await ReplayScheduler.run(spool: spool, configuration: try configuration(.realtime), clock: clock) { _, _ in }
@@ -180,9 +211,18 @@ struct ReplayModeTests {
         try await Task.sleep(nanoseconds: 100_000_000)
         let cancelledAt = clock.nowNS()
         task.cancel()
-        let result = await task.result
-        #expect(throws: (any Error).self) { _ = try result.get() }
-        #expect(clock.nowNS() - cancelledAt < 200_000_000, "replay must not keep sleeping after cancellation")
+        let outcome = await result(of: task, watchdogSeconds: 30)
+        let latency = clock.nowNS() - cancelledAt
+        try #require(outcome != nil, "replay did not unwind after cancellation (hang)")
+        #expect(throws: CancellationError.self) { _ = try outcome!.get() }
+        #expect(latency < 5_000_000_000, "replay kept running after cancellation (\(latency) ns)")
+        Evidence.write("replay/cancellation-latency-\(UUID().uuidString).json", .object(JSONObject([
+            ("latency_ns", .int(latency)), ("responsiveness_target_ns", .int(200_000_000)),
+            ("timing_checks_enabled", .bool(timingChecksEnabled)),
+        ])))
+        if timingChecksEnabled {
+            #expect(latency < 200_000_000, "responsiveness target: replay must not keep sleeping after cancellation")
+        }
     }
 
     /// Short real-clock run: records measured scheduling errors; the 20 ms p95

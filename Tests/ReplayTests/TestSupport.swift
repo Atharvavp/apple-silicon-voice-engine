@@ -122,3 +122,81 @@ func withTimeout<T: Sendable>(_ seconds: Double, _ label: String,
         }
     }
 }
+
+/// Opt-in for machine-dependent timing targets (`VOICEBENCH_TIMING_CHECKS=1`).
+let timingChecksEnabled = ProcessInfo.processInfo.environment["VOICEBENCH_TIMING_CHECKS"] == "1"
+
+/// Run clock whose sleeps never end on their own: each returns only when its task is cancelled
+/// (with `CancellationError`). Time stands still at zero, and `sleepStarts` yields each deadline as
+/// a sleep begins, so a test can cancel at a known point without any wall-clock timing.
+final class CancellationOnlyClock: RunClock {
+    private enum Slot: Sendable {
+        case pending
+        case waiting(CheckedContinuation<Void, Error>)
+        case cancelled
+    }
+
+    let sleepStarts: AsyncStream<Int64>
+    private let starts: AsyncStream<Int64>.Continuation
+    private let count = OSAllocatedUnfairLock(initialState: 0)
+
+    init() {
+        (sleepStarts, starts) = AsyncStream.makeStream(of: Int64.self)
+    }
+
+    var sleepCount: Int { count.withLock { $0 } }
+
+    func nowNS() -> Int64 { 0 }
+
+    func sleep(untilNS deadline: Int64) async throws {
+        try Task.checkCancellation()
+        count.withLock { $0 += 1 }
+        let slot = OSAllocatedUnfairLock(initialState: Slot.pending)
+        try await withTaskCancellationHandler {
+            try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+                let alreadyCancelled = slot.withLock { state -> Bool in
+                    if case .cancelled = state { return true }
+                    state = .waiting(continuation)
+                    return false
+                }
+                if alreadyCancelled {
+                    continuation.resume(throwing: CancellationError())
+                } else {
+                    starts.yield(deadline)
+                }
+            }
+        } onCancel: {
+            let waiting = slot.withLock { state -> CheckedContinuation<Void, Error>? in
+                defer { state = .cancelled }
+                if case .waiting(let continuation) = state { return continuation }
+                return nil
+            }
+            waiting?.resume(throwing: CancellationError())
+        }
+    }
+}
+
+/// Awaits `task` for at most `seconds` of wall time. Returns nil on timeout and leaves the task
+/// orphaned, so a lost cancellation fails the calling test instead of hanging the whole suite.
+func result<T: Sendable>(of task: Task<T, Error>, watchdogSeconds seconds: UInt64) async -> Result<T, Error>? {
+    let pending = OSAllocatedUnfairLock<CheckedContinuation<Result<T, Error>?, Never>?>(initialState: nil)
+    let resume: @Sendable (Result<T, Error>?) -> Void = { value in
+        let continuation = pending.withLock { state -> CheckedContinuation<Result<T, Error>?, Never>? in
+            defer { state = nil }
+            return state
+        }
+        continuation?.resume(returning: value)
+    }
+    return await withCheckedContinuation { continuation in
+        pending.withLock { $0 = continuation }
+        let timer = Task {
+            try? await Task.sleep(nanoseconds: seconds * 1_000_000_000)
+            if !Task.isCancelled { resume(nil) }
+        }
+        Task {
+            let value = await task.result
+            timer.cancel()
+            resume(value)
+        }
+    }
+}
