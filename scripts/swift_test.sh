@@ -16,4 +16,5 @@ if [[ "$developer_dir" == *CommandLineTools* ]]; then
   fi
   flags=(-Xswiftc "-F$fw" -Xlinker "-F$fw" -Xlinker -rpath -Xlinker "$fw" -Xlinker -rpath -Xlinker "$lib")
 fi
-exec swift test "${flags[@]}" "$@"
+# ${flags[@]+...}: an empty array is "unbound" under set -u in macOS /bin/bash 3.2 (the Xcode case).
+exec swift test ${flags[@]+"${flags[@]}"} "$@"
