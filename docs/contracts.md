@@ -1,4 +1,8 @@
-# Phase 0 contracts (as implemented through M2 hardening)
+# Contracts (as enforced by the code)
+
+Originally written during Phase 0 (through M2 hardening) and kept current where
+behavior has since been verified; see [architecture.md](architecture.md) for the
+overall data path.
 
 The approved plan (sections C and D) is the design source. This page records
 what the code enforces today and where. Schema files under `schemas/v1/` are
@@ -69,7 +73,8 @@ validation. The settings hash covers `LoadedConfig.settingsDocument()`.
 - `EventEnvelope`: D5 fields. `media_start/end` are both null or both set with
   `start ≤ end`. `monotonic_recorded_ns ≥ monotonic_emitted_ns`, same clock.
   `virtual_emitted_ns` is step-only. The type must be one of the 18 v1
-  families. Typed payload checks come in M3 (JSON Schema already checks payloads).
+  families. Every payload is also type-checked against its event family
+  (`EventPayloads.validate`, including cross-field rules JSON Schema cannot express).
 - `MetricRecord`: `ok` means a finite value and null reason; any other status
   means a null value and a non-empty reason.
 - `RunStatus`: lifecycle `created → validated → prepared → running → flushing →

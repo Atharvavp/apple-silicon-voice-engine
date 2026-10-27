@@ -8,8 +8,11 @@ or probe output, not documentation, unless marked "header".
 **Toolchain:** Apple Swift 6.3.2 (swiftlang-6.3.2.1.108), Command Line Tools only
 (`/Library/Developer/CommandLineTools`, no Xcode), SDK MacOSX26.5, macOS 26.6.2
 (25G83), arm64. Hardware read via `sysctl`: `Mac17,3`, Apple M5, 17,179,869,184
-bytes RAM. Package tools-version 6.0, Swift 6 language mode, deployment floor
-`.macOS(.v13)`. Running on macOS 13 itself is **untested**.
+bytes RAM. Package `swift-tools-version: 6.2` (needed for FluidAudio's package
+traits; the ledger's first edition said 6.0), Swift 6 language mode, deployment
+floor `.macOS(.v13)` for the default graph (14 with FluidAudio, 15 with
+speech-swift). Running on macOS 13–25 is **untested**. Entries are dated
+observations from 2026-10-20 onward and are not re-run on every change.
 
 ## Swift / Apple SDK
 

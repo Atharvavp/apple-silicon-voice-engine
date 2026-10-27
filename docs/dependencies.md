@@ -1,13 +1,34 @@
 # Dependency and license inventory
 
-Generated on 2026-10-20 from the installed, hash-locked environment with
-`phase0_analysis.doctor.installed_distributions()`. Licenses are copied from
-each package's own metadata or bundled license file, not inferred. **No project
-license has been selected** (owner decision). Before redistributing anything,
-preserve third-party notices, including the upstream libyaml notice (see
-decisions.md).
+Python inventory generated on 2026-10-20 from the installed, hash-locked
+environment with `phase0_analysis.doctor.installed_distributions()`. Licenses
+are copied from each package's own metadata or bundled license file, not
+inferred. The project is MIT-licensed ([LICENSE](../LICENSE)); what that does
+and does not cover, the optional SDK graph and the model/data terms are in
+[THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md). Before redistributing a
+binary, preserve third-party notices, including the upstream libyaml notice.
 
-## Swift (Package.resolved, SHA-256 `3da9b6ce9c6b1f4665eb85e7d0f220863f97f2b9541ad801f4b54a8647dd8afa`)
+## Lock policy
+
+| Lock | Graph | SHA-256 |
+|---|---|---|
+| `Package.resolved` (committed root) | default `PHASE1_FRAMEWORKS=none`: 2 pins | `618f25a5836f7d4e196e70b9d73de41c3f3e62c6e39eab8c4e38347cd53f590c` |
+| `docs/phase1/evidence/20261021-s2/Package.resolved.both` | historical `both` graph of campaign 20261021-s2: 41 pins | `aee60879806d3b495c2794a43743114016a2803e8053d97fc350fc83644c2a3f` |
+
+Default builds leave the committed lock unchanged. Optional builds
+(`fluid`, `speech`, `both`) rewrite `Package.resolved` for their graph; build
+them in a separate checkout (see [development.md](development.md)), starting
+from the historical `both` lock to keep its transitive pins, and do not commit
+the result. `vendor/speech-swift` is a path dependency that no lock can pin;
+authenticate it with `scripts/run_phase1.py verify-speech`. Python locks are
+regenerated only deliberately with pip-tools 7.6.2; `setup.sh` never
+regenerates them.
+
+## Swift default graph (Package.resolved)
+
+(The 2026-10-20 edition recorded root lock SHA-256
+`3da9b6ce9c6b1f4665eb85e7d0f220863f97f2b9541ad801f4b54a8647dd8afa` with the
+same two pins.)
 
 | Package | Pin | Revision | License (checkout file) |
 |---|---|---|---|

@@ -1,7 +1,9 @@
-# `voicebench` CLI (Phase 0)
+# `voicebench` CLI
 
-One experiment (one dataset item, one stream) per process. Phase 0 ships mock
-adapters only: scores validate the harness, never speech recognition.
+One experiment (one dataset item, one stream) per process. The default build
+(`PHASE1_FRAMEWORKS=none`) has mock adapters only: their scores validate the
+harness, never speech recognition. Optional builds also register the real
+Phase 1 wrappers; `voicebench --version` lists the compiled frameworks.
 
 ```text
 voicebench run --config FILE --runs-dir DIR [--run-id ID]
@@ -40,6 +42,23 @@ voicebench --help | --version
   and reason; plots carry run ID, units, sample count and the MOCK label.
 - The analysis interpreter and project root come from the run's frozen
   `config.json`, never from the ambient `python3`.
+
+## Trusted runs only
+
+`validate --run`, `compare` and `export` execute the analysis interpreter whose
+absolute path is recorded in the run's `config.json`. Use them only on runs you
+created yourself (or whose `config.json` you have inspected). Never point them
+at a run directory downloaded from someone else. To inspect copied evidence,
+run the current checkout's Python module directly with an explicit schema
+directory and an output outside the run:
+
+```sh
+PYTHONPATH="$PWD/analysis/src" .venv/bin/python -m phase0_analysis validate \
+    --run <copied-run> --schemas schemas/v1 --out <new-report.json>
+```
+
+`validate --run` also writes a new `derived/validation-<id>/` directory inside
+the run; sealed artifacts are never modified.
 
 ## Exit codes (plan G3)
 

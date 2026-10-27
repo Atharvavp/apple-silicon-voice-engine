@@ -1,8 +1,9 @@
 # Phase 1 adapter guide
 
-How to add a real ASR or diarization framework to the Phase 0 harness. It
-describes the contract as implemented (`Sources/AdapterContracts`), not a new
-design. Phase 1 work needs new owner approval; nothing here authorizes it.
+How to add a real ASR or diarization framework to the harness. It describes
+the contract as implemented (`Sources/AdapterContracts`), not a new design. The
+four Phase 1 wrappers (`Sources/FluidAudioAdapters`, `Sources/SpeechSwiftAdapters`,
+shared logic in `Sources/RealAdapterSupport`) are worked examples.
 
 ## 1. Implement one role per adapter
 
