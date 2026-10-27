@@ -1,0 +1,97 @@
+# Two scoped jobs; neither downloads, loads or runs a model or dataset.
+#   python-portable: scorer/metric arithmetic and schema corpus on Linux (no Swift, no Apple APIs).
+#   macos-mock:      default PHASE1_FRAMEWORKS=none harness: builds, Swift + Python suites, smoke.
+# Optional SDK builds and real-model runs are manual gates (docs/development.md, docs/phase1/README.md).
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PHASE1_FRAMEWORKS: none
+  MPLBACKEND: Agg
+  PYTHONDONTWRITEBYTECODE: "1"
+  LOCK: analysis/requirements-dev-macos-arm64-py312.lock
+
+jobs:
+  python-portable:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: ${{ env.LOCK }}
+      - name: Environment
+        run: |
+          uname -a
+          python --version
+          sha256sum "$LOCK"
+      - name: Install hash-locked analysis environment
+        run: |
+          python -m venv .venv
+          .venv/bin/python -m pip install --disable-pip-version-check --require-hashes -r "$LOCK"
+          .venv/bin/python -m pip check
+      - name: Portable subset (no Swift binary; VOICEBENCH_BIN points nowhere on purpose)
+        env:
+          VOICEBENCH_BIN: /nonexistent/voicebench
+        run: |
+          export PYTHONPATH="$PWD/analysis/src"
+          .venv/bin/python -m pytest -q \
+            analysis/tests/test_asr_goldens.py analysis/tests/test_diarization_goldens.py \
+            analysis/tests/test_timing_metrics.py analysis/tests/test_resource_metrics.py \
+            analysis/tests/test_doctor.py analysis/tests/test_acceptance.py \
+            analysis/tests/test_phase1_followup_audit.py analysis/tests/test_phase1_vendor.py
+      - name: Schema corpus
+        run: |
+          PYTHONPATH="$PWD/analysis/src" .venv/bin/python -m phase0_analysis schema-check \
+            --schemas schemas/v1 --fixtures testdata/schemas --out "$RUNNER_TEMP/schema-check.json"
+
+  macos-mock:
+    runs-on: macos-26
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: ${{ env.LOCK }}
+      - name: Environment
+        run: |
+          sw_vers
+          uname -m
+          xcode-select -p
+          swift --version
+          python --version
+          shasum -a 256 "$LOCK" Package.resolved
+      - name: Setup (venv, doctor, default release build)
+        run: bash scripts/setup.sh --python "$(command -v python)"
+      - name: Debug build
+        run: swift build --disable-keychain
+      - name: Swift suite (model-free)
+        run: bash scripts/swift_test.sh --disable-keychain
+      - name: Python suite (with Swift parity and CLI tests)
+        run: PYTHONPATH="$PWD/analysis/src" .venv/bin/python -m pytest analysis/tests -q
+      - name: Fixture bytes and schema corpus
+        run: |
+          export PYTHONPATH="$PWD/analysis/src"
+          .venv/bin/python scripts/generate_fixtures.py --small --out datasets/fixtures --verify
+          .venv/bin/python -m phase0_analysis schema-check --schemas schemas/v1 --fixtures testdata/schemas \
+            --out "$RUNNER_TEMP/schema-check.json"
+      - name: Beginner smoke
+        run: bash scripts/smoke.sh --out "$RUNNER_TEMP/smoke"
+      - name: Tracked files unchanged by setup, build and tests
+        run: git diff --exit-code
