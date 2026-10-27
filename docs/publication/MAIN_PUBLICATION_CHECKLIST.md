@@ -4,7 +4,7 @@
 
 Use with the [audit](REPO_PUBLICATION_AUDIT.md), [plan](REPO_PUBLICATION_PLAN.md), and implementation prompt (an internal working document, not published). Boxes are intentionally unchecked: passing checks on the local audit snapshot do not establish readiness of public `main`. Record a commit, date, environment and evidence link for every checked gate. Mark a conditional item “not applicable” with the narrower approved claim rather than silently checking it.
 
-Candidate branch/commit: `publication/readiness` (last code commit `2f482e0`), pushed; [PR #1](https://github.com/Atharvavp/apple-silicon-voice-engine/pull/1). Items marked `5cd3f18` were verified on the pre-rewrite commit with the identical tree (`2f38aef`)\
+Candidate branch/commit: `publication/readiness` (last code commit `14fec4f`), pushed; [PR #1](https://github.com/Atharvavp/apple-silicon-voice-engine/pull/1). Items marked `5cd3f18` were verified on the pre-rewrite commit with the identical tree (`2f38aef`)\
 Integrated main commit: _pending (not merged)_\
 Verification date/environment: 2026-10-27, Apple M5 / macOS 26.6.2 / Swift 6.3.2 CLT / Python 3.12.14\
 Selected publication scope: methodology-focused harness release; accuracy conditional (owner decision 2026-10-27); MIT license; evidence packet approved\
@@ -63,8 +63,8 @@ Final verification report: [REPO_PUBLICATION_VERIFICATION_REPORT.md](REPO_PUBLIC
 - [x] Full Python suite, including real Swift parity/CLI checks, passes; no missing binary silently skips mandatory checks. *(candidate `5cd3f18`: §6)*
 - [x] Doctor, shared schema corpus and supported-host fixture byte verification pass. *(candidate `5cd3f18`: §6)*
 - [x] Release e2e checks pass into a new safe output; expected negative exits are validated. *(candidate `5cd3f18`: §6)*
-- [x] Portable Python CI actually passed on its stated Linux environment/subset/dependencies; it is not described as Swift/Core ML/native-inference validation. *(runs 40590411586 @ `b94c80c` and 40592913631 @ `2f482e0`: ubuntu-24.04 x64, Python 3.12.15, hash-locked install, 70 passed, schema 133)*
-- [x] macOS CI passed on its reported architecture/toolchain for declared mock-harness scope, or an honest manual gate/runner limitation is visible without a misleading badge. *(run 40592913631 @ `2f482e0`: macos-26-arm64, Xcode 26.6, Swift 6.3.3: 212 Swift, 289 Python, fixtures 55/0, smoke, tracked files unchanged; after three test/script fixes, report §15)*
+- [x] Portable Python CI actually passed on its stated Linux environment/subset/dependencies; it is not described as Swift/Core ML/native-inference validation. *(run 40601019315 @ `14fec4f`, 3 of 3 attempts: ubuntu-24.04 x64, Python 3.12.15, hash-locked install, 70 passed, schema 133)*
+- [x] macOS CI passed on its reported architecture/toolchain for declared mock-harness scope, or an honest manual gate/runner limitation is visible without a misleading badge. *(run 40601019315 @ `14fec4f`, 3 of 3 attempts: macos-26-arm64, Xcode 26.6, Swift 6.3.3: 212 Swift, 289 Python, fixtures 55/0, smoke, tracked files unchanged; after five script/test fixes, report §15)*
 - [x] Workflow permissions, caches, timeouts, triggers and artifact uploads are proportionate; no untrusted-PR privileged self-hosted model job or private-data upload. *(candidate `5cd3f18`: ci.yml (not yet run))*
 - [x] Optional SDK build/stub tests have exact evidence before any claim that the current candidate's native SDK integration was tested. *(candidate `5cd3f18`: §6)*
 - [x] Real-model smoke/campaign status is separately recorded as executed, historical, blocked or not run; mocks/stub MLModels do not count as real inference. *(candidate `5cd3f18`: §7, §11)*

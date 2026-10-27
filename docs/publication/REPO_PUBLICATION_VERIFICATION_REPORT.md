@@ -3,7 +3,7 @@
 Prepared 2026-10-27 (Asia/Kolkata) for the owner. It records the implementation of
 [REPO_PUBLICATION_PLAN.md](REPO_PUBLICATION_PLAN.md) on a local candidate branch.
 
-**State (2026-10-28): PR OPEN, CI GREEN ON `2f482e0`, AWAITING THE OWNER'S MERGE DECISION.** The branch
+**State (2026-10-28): PR OPEN, CI GREEN ON `14fec4f` IN 3 OF 3 ATTEMPTS, AWAITING THE OWNER'S MERGE DECISION.** The branch
 `publication/readiness` is pushed and [PR #1](https://github.com/Atharvavp/apple-silicon-voice-engine/pull/1)
 targets `main`. It is not merged, and public `main` is still the two-line initial README. Sections
 1–14 record the 2026-10-27 local implementation. Commit IDs cited there are pre-rewrite IDs with
@@ -402,8 +402,11 @@ unchanged and accurate.
 
 | `26f4cd1` | 40595211556, attempts 1–3 (same commit, re-run as a stability check) | success ×3 | success, success, **failure**: attempt 3 had `stepDelayIsVirtualOnly` at 26.08 s against the 25 s bound from fix 2 |
 
-The commit that adds this row and fix 5 below changes test code. Its CI attempts are on the PR's
-checks and are recorded in the final hand-over.
+| `14fec4f` | [40601019315](https://github.com/Atharvavp/apple-silicon-voice-engine/actions/runs/40601019315), attempts 1–3 | **success ×3**: 70 passed, schema 133 | **success ×3**: doctor, 212 Swift, 289 Python, fixture bytes 55/0, schema 133, smoke, tracked files unchanged |
+
+`14fec4f` is the last commit that changes code or tests. It passed three consecutive attempts.
+The commit that adds this row changes only this report and the checklist; its CI result is on the
+PR's checks.
 
 The two fixes were reproduced and explained before changing anything:
 
