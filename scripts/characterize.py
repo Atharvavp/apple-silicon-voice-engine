@@ -23,7 +23,6 @@ import datetime as dt
 import json
 import math
 import platform
-import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -143,7 +142,7 @@ def main() -> int:
     vb = str(Path(args.voicebench).resolve())
     out = Path(args.out).resolve()
     if out.exists():
-        shutil.rmtree(out)
+        parser.error(f"{out} already exists; choose a new --out (existing output is never deleted)")
     (out / "configs").mkdir(parents=True)
     runs = out / "runs"
     for seconds in (args.realtime_seconds, args.drift_seconds, args.overhead_seconds):

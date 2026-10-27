@@ -18,7 +18,6 @@ import datetime as dt
 import hashlib
 import json
 import os
-import shutil
 import subprocess
 import sys
 import time
@@ -67,9 +66,7 @@ def sha256(path: Path) -> str:
 class Result:
     def __init__(self, vid: str, out: Path) -> None:
         self.vid, self.dir = vid, out / vid
-        if self.dir.exists():
-            shutil.rmtree(self.dir)
-        self.dir.mkdir(parents=True)
+        self.dir.mkdir(parents=True)  # refuses an existing case directory; main() checks all of them first
         self.commands: list[dict[str, Any]] = []
         self.checks: list[dict[str, Any]] = []
         self.evidence: dict[str, str] = {}
@@ -254,6 +251,9 @@ def main() -> int:
     root = Path(args.evidence_root).resolve()
     inputs = {"determinism": root / "determinism", "performance": root / "performance", "offline": root / "offline"}
     ids = sorted(TABLE) if args.gate_a else [args.only]
+    existing = [vid for vid in ids if (out / vid).exists()] + (["acceptance.json"] if args.gate_a and (out / "acceptance.json").exists() else [])
+    if existing:
+        parser.error(f"{out} already holds {', '.join(existing)}; choose a new --out (existing evidence is never deleted)")
     results = []
     for vid in ids:
         requirements, filters, pytests, extra = TABLE[vid]

@@ -17,7 +17,11 @@ vb="$(cd "$(dirname "$1")" && pwd)/$(basename "$1")"
 py="$(cd "$(dirname "$2")" && pwd)/$(basename "$2")"
 out="$3"
 case "$out" in /*) ;; *) out="$root/$out" ;; esac
-rm -rf "$out" && mkdir -p "$out"
+if [ -e "$out" ]; then
+  echo "offline_smoke: $out already exists; choose a new output directory (existing output is never deleted)" >&2
+  exit 2
+fi
+mkdir -p "$out"
 policy='(version 1)(allow default)(deny network*)'
 sandbox=/usr/bin/sandbox-exec
 fresh="$(mktemp -d "${TMPDIR:-/tmp}/voicebench-offline.XXXXXX")"

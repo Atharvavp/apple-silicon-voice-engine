@@ -12,7 +12,6 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -38,7 +37,7 @@ def main() -> int:
     args = parser.parse_args()
     out = Path(args.out).resolve()
     if out.exists():
-        shutil.rmtree(out)
+        parser.error(f"{out} already exists; choose a new --out (existing output is never deleted)")
     runs = out / "runs"
     runs.mkdir(parents=True)
     results, projections = [], []

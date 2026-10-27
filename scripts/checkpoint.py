@@ -182,6 +182,8 @@ def main() -> int:
     parser.add_argument("--out", required=True)
     args = parser.parse_args()
     out = (ROOT / args.out).resolve()
+    if out.exists() and any(out.iterdir()):
+        parser.error(f"{out} is not empty; choose a new --out (existing evidence is never overwritten)")
     logs = out / "logs"
     logs.mkdir(parents=True, exist_ok=True)
 

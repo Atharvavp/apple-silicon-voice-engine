@@ -30,7 +30,7 @@ def main() -> int:
     vb = str(Path(args.voicebench).resolve())
     out = Path(args.out).resolve()
     if out.exists():
-        shutil.rmtree(out)
+        parser.error(f"{out} already exists; choose a new --out (existing output is never deleted)")
     out.mkdir(parents=True)
     runs = out / "runs"
     steps: list[dict] = []
