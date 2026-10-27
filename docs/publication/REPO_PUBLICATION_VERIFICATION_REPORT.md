@@ -264,7 +264,9 @@ Publication blockers (owner actions):
 ## 13. PR title, body and integration plan
 
 The code and documentation that were verified are at commit `5cd3f18bb0f3a24cedfad542cd0ee1e79e57b57f`.
-The only later commit on the branch adds this report and the updated checklist (documentation only).
+The later commits on the branch add only this report, the updated checklist and a `.gitattributes`.
+The `.gitattributes` keeps the evidence packet and the patch byte-exact (no EOL normalization) and
+exempts their intentional CRLF and context whitespace from `git diff --check`.
 
 **Title:** `Publish the benchmark harness: accurate scope, tested quick start, safe scripts, provenance, CI`
 
