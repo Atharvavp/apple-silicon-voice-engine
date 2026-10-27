@@ -6,7 +6,8 @@ Subcommands (all outputs go to a NEW directory; nothing is ever overwritten or d
   snapshot   record git state and the digests of protected inputs/evidence
   verify     compare the current tree against a snapshot (protected files unchanged)
   campaign   preflight, smokes, frozen matrix, repeated fresh-process runs and per-run validation
-  vendor-speech  create the owned speech-swift copy at the pinned SHA plus the one manifest patch
+  vendor-speech  create the owned speech-swift copy at the pinned SHA plus the two-file patch
+  verify-speech  check an existing owned copy read-only (pinned HEAD, diff == patch bytes, files)
 
     .venv/bin/python scripts/run_phase1.py snapshot --out "$SESSION/snapshot-start.json"
     .venv/bin/python scripts/run_phase1.py verify --snapshot "$SESSION/snapshot-start.json" --out "$SESSION/snapshot-end.json"
@@ -142,6 +143,7 @@ def compare_snapshots(before: dict, after: dict) -> dict:
 
 SPEECH_VENDOR = ROOT / "vendor/speech-swift"
 SPEECH_PATCH = ROOT / "patches/speech-swift-3f58a58a-phase1.patch"
+SPEECH_PATCHED_FILES = ["Package.swift", "Sources/ParakeetStreamingASR/ParakeetStreamingASR.swift"]
 
 
 def vendor_speech(dest: Path) -> dict:
@@ -164,15 +166,53 @@ def vendor_speech(dest: Path) -> dict:
         raise RuntimeError(f"fetched {head}, expected {SPEECH_REVISION}")
     git_in("apply", str(SPEECH_PATCH))
     changed = git_in("diff", "--name-only").split()
-    allowed = ["Package.swift", "Sources/ParakeetStreamingASR/ParakeetStreamingASR.swift"]
-    if changed != allowed:
-        raise RuntimeError(f"patch changed {changed}; only {allowed} may change")
+    if changed != SPEECH_PATCHED_FILES:
+        raise RuntimeError(f"patch changed {changed}; only {SPEECH_PATCHED_FILES} may change")
     record = {"source": "https://github.com/soniqo/speech-swift.git", "revision": head,
               "patch": str(SPEECH_PATCH.relative_to(ROOT)), "patch_sha256": sha256_file(SPEECH_PATCH),
               "changed_files": changed, "patched_manifest_sha256": sha256_file(dest / "Package.swift"),
+              "patched_files_sha256": {name: sha256_file(dest / name) for name in changed},
               "license_sha256": sha256_file(dest / "LICENSE")}
     (dest / "PHASE1_VENDOR.json").write_text(json.dumps(record, indent=2) + "\n")
     return record
+
+
+def verify_speech(dest: Path, revision: str | None = None, patch: Path | None = None) -> dict:
+    """Read-only identity check of an existing owned copy; `Package.resolved` cannot pin a path
+    dependency, so this is the authentication of the speech-swift source. Nothing is written to `dest`.
+    Passes only if HEAD is the pinned commit, the working-tree diff is byte-identical to the owned
+    patch, exactly the two patched files differ and no other untracked file exists (the copy's own
+    PHASE1_VENDOR.json record is reported, not trusted: older records name an obsolete patch)."""
+    revision = revision or SPEECH_REVISION
+    patch = patch or SPEECH_PATCH
+    problems: list[str] = []
+    def git_in(*args: str) -> bytes:
+        return subprocess.run(["git", "-C", str(dest), *args], capture_output=True, check=True).stdout
+    if not (dest / ".git").exists():
+        return {"status": "fail", "dest": str(dest), "problems": [f"{dest} is not a git checkout"]}
+    head = git_in("rev-parse", "HEAD").decode().strip()
+    if head != revision:
+        problems.append(f"HEAD {head} is not the pinned {revision}")
+    diff = git_in("diff", "--no-color", "--no-ext-diff")
+    if diff != patch.read_bytes():
+        problems.append("working-tree diff differs from the owned patch bytes")
+    changed = git_in("diff", "--name-only").decode().split()
+    if changed != SPEECH_PATCHED_FILES:
+        problems.append(f"changed files {changed}, expected {SPEECH_PATCHED_FILES}")
+    untracked = [name for name in git_in("ls-files", "--others", "--exclude-standard").decode().split()
+                 if name != "PHASE1_VENDOR.json"]
+    if untracked:
+        problems.append(f"unexpected untracked files: {untracked[:10]}")
+    record_path = dest / "PHASE1_VENDOR.json"
+    recorded = json.loads(record_path.read_text()) if record_path.is_file() else None
+    patch_sha = sha256_file(patch)
+    return {"status": "pass" if not problems else "fail", "problems": problems, "dest": str(dest),
+            "revision": head, "expected_revision": revision, "patch": str(patch.name), "patch_sha256": patch_sha,
+            "diff_sha256": sha256_bytes(diff), "changed_files": changed,
+            "patched_files_sha256": {name: sha256_file(dest / name) for name in changed if (dest / name).is_file()},
+            "license_sha256": sha256_file(dest / "LICENSE") if (dest / "LICENSE").is_file() else None,
+            "recorded_vendor_record": recorded,
+            "recorded_vendor_record_matches_patch": bool(recorded) and recorded.get("patch_sha256") == patch_sha}
 
 
 # --- campaign -------------------------------------------------------------------------------
@@ -649,6 +689,9 @@ def main() -> int:
     ver.add_argument("--out", required=True)
     vend = sub.add_parser("vendor-speech")
     vend.add_argument("--dest", default=str(SPEECH_VENDOR))
+    check = sub.add_parser("verify-speech", help="read-only identity check of an existing owned speech-swift copy")
+    check.add_argument("--dest", default=str(SPEECH_VENDOR))
+    check.add_argument("--out", help="also write the report to this NEW file")
     camp = sub.add_parser("campaign")
     add_campaign_arguments(camp)
     args = parser.parse_args()
@@ -669,6 +712,12 @@ def main() -> int:
     if args.command == "vendor-speech":
         print(json.dumps(vendor_speech(Path(args.dest).resolve()), indent=2))
         return 0
+    if args.command == "verify-speech":
+        report = verify_speech(Path(args.dest).resolve())
+        if args.out:
+            write_new(Path(args.out), report)
+        print(json.dumps(report, indent=2))
+        return 0 if report["status"] == "pass" else 9
     return run_campaign(args)
 
 
