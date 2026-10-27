@@ -98,5 +98,7 @@ investigate. The fix is never to rewrite goldens.
   `--verify` reports 0 mismatches.
 - Outputs are never overwritten: new run IDs, new `--out` directories.
 - Keep `Package.resolved` on the default graph. Do not commit an optional-graph lock.
+- The README architecture diagram is generated: edit `docs/assets/make_architecture_svg.py`, run it
+  with `python3`, and commit both SVGs.
 - Add tests at the level of the behavior you change. The existing suites already cover decoding,
   resampling, queue races, replay, contracts, lifecycle and scoring.

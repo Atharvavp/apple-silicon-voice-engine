@@ -36,7 +36,7 @@ Final verification report: [REPO_PUBLICATION_VERIFICATION_REPORT.md](REPO_PUBLIC
 - [x] Minimal example uses committed synthetic tones/silence; success, output locations and mock scores are explained. *(candidate `5cd3f18`: README, §6)*
 - [x] Comparison examples create both input runs before comparing; repeated-run/output refusal is explained. *(candidate `5cd3f18`: §6)*
 - [x] Architecture diagram matches spool → replay → FIFO → sequential role calls → artifacts → Python scoring/validation/seal; no unsupported mic/VAD/simultaneous inference edge. *(candidate `5cd3f18`: §8 (source-checked; rendering separate))*
-- [ ] Mermaid renders correctly on GitHub and has a readable prose fallback.
+- [ ] The architecture diagram (static SVG since 2026-10-28; it replaced the planned Mermaid chart) renders correctly on GitHub in light and dark mode and has a readable prose fallback.
 - [x] Current architecture, CLI, contracts, evaluation, adapter, dependency and development documents are discoverable through relative links. *(candidate `5cd3f18`: docs/README.md)*
 - [x] Historical Phase 0 readiness, milestone logs, prior reviews and superseded results are clearly dated/labelled; useful history and report-generator inputs are preserved. *(candidate `5cd3f18`: docs/README.md)*
 - [ ] Relative paths, anchors, external source links and GitHub rendering have been checked; visitor-critical evidence references are accessible or explicitly unavailable.

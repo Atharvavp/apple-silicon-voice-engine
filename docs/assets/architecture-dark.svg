@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="560" viewBox="0 0 1100 560" role="img" aria-labelledby="t d"><title id="t">voicebench architecture</title><desc id="d">A WAV file is prepared into a hashed mono spool, replayed into a bounded queue and consumed by one worker that calls the ASR adapter, then the diarization adapter. Events and telemetry are recorded to a run directory, which Python scores and validates before the run is sealed.</desc>
+<defs><marker id="head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9198a1"/></marker></defs>
+<rect width="1100" height="560" fill="#0d1117"/>
+<rect x="16" y="16" width="1068" height="236" rx="14" fill="#151b23" stroke="#3d444d"/>
+<rect x="16" y="16" width="6" height="236" rx="3" fill="#ff922b"/>
+<text x="36" y="38" text-anchor="start" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="1.2" fill="#ff922b">SWIFT RUNTIME · ONE PROCESS, ONE STREAM</text>
+<rect x="40" y="44" width="148" height="84" rx="10" fill="#0d1117" stroke="#ff922b" stroke-width="1.5"/>
+<text x="114.0" y="70" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#e6edf3">WAV file</text>
+<text x="114.0" y="90" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#9198a1">16/24/32-bit or float</text>
+<text x="114.0" y="107" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#9198a1">mono or stereo</text>
+<rect x="216" y="44" width="148" height="84" rx="10" fill="#2b1d12" stroke="#ff922b" stroke-width="1.5"/>
+<text x="290.0" y="70" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#e6edf3">Prepare</text>
+<text x="290.0" y="90" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#9198a1">validate · decode</text>
+<text x="290.0" y="107" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#9198a1">downmix · resample</text>
+<path d="M190,86.0 L213,86.0" stroke="#9198a1" stroke-width="1.6" fill="none" marker-end="url(#head)"/>
+<rect x="392" y="44" width="148" height="84" rx="10" fill="#2b1d12" stroke="#ff922b" stroke-width="1.5"/>
+<text x="466.0" y="70" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#e6edf3">Spool</text>
+<text x="466.0" y="90" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#9198a1">mono Float32</text>
+<text x="466.0" y="107" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#9198a1">SHA-256 hashed</text>
+<path d="M366,86.0 L389,86.0" stroke="#9198a1" stroke-width="1.6" fill="none" marker-end="url(#head)"/>
+<rect x="568" y="44" width="148" height="84" rx="10" fill="#2b1d12" stroke="#ff922b" stroke-width="1.5"/>
+<text x="642.0" y="70" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#e6edf3">Replay</text>
+<text x="642.0" y="90" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#9198a1">realtime · accelerated</text>
+<text x="642.0" y="107" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#9198a1">or step (virtual clock)</text>
+<path d="M542,86.0 L565,86.0" stroke="#9198a1" stroke-width="1.6" fill="none" marker-end="url(#head)"/>
+<rect x="744" y="44" width="148" height="84" rx="10" fill="#2b1d12" stroke="#ff922b" stroke-width="1.5"/>
+<text x="818.0" y="70" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#e6edf3">Bounded queue</text>
+<text x="818.0" y="90" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#9198a1">FIFO, capacity N</text>
+<text x="818.0" y="107" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#9198a1">block or drop_newest</text>
+<path d="M718,86.0 L741,86.0" stroke="#9198a1" stroke-width="1.6" fill="none" marker-end="url(#head)"/>
+<rect x="920" y="44" width="148" height="84" rx="10" fill="#2b1d12" stroke="#ff922b" stroke-width="1.5"/>
+<text x="994.0" y="70" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#e6edf3">Worker</text>
+<text x="994.0" y="90" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#9198a1">ASR.consume, then</text>
+<text x="994.0" y="107" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#9198a1">diarization.consume</text>
+<path d="M894,86.0 L917,86.0" stroke="#9198a1" stroke-width="1.6" fill="none" marker-end="url(#head)"/>
+<text x="730.0" y="150" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" fill="#9198a1">produced = admitted + dropped · consumed = admitted</text>
+<rect x="734" y="168" width="334" height="70" rx="10" fill="#0d1117" stroke="#ff922b" stroke-width="1.5"/>
+<text x="901.0" y="194" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#e6edf3">Adapters</text>
+<text x="901.0" y="214" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#9198a1">mock ASR + diarization (default build)</text>
+<text x="901.0" y="231" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#9198a1">FluidAudio / speech-swift wrappers (optional)</text>
+<path d="M994.0,130 L994.0,165" stroke="#9198a1" stroke-width="1.6" fill="none" marker-end="url(#head)"/>
+<rect x="16" y="268" width="1068" height="120" rx="14" fill="#151b23" stroke="#3d444d"/>
+<rect x="16" y="268" width="6" height="120" rx="3" fill="#a371f7"/>
+<text x="36" y="290" text-anchor="start" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="1.2" fill="#a371f7">RECORDING</text>
+<rect x="734" y="300" width="334" height="70" rx="10" fill="#221a33" stroke="#a371f7" stroke-width="1.5"/>
+<text x="901.0" y="326" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#e6edf3">Event recorder</text>
+<text x="901.0" y="346" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#9198a1">validates · sequences · timestamps</text>
+<text x="901.0" y="363" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#9198a1">bounded write queue → events.jsonl</text>
+<path d="M994.0,240 L994.0,297" stroke="#9198a1" stroke-width="1.6" fill="none" marker-end="url(#head)"/>
+<text x="984.0" y="260" text-anchor="end" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" fill="#9198a1">events via sink</text>
+<rect x="386" y="300" width="336" height="70" rx="10" fill="#221a33" stroke="#a371f7" stroke-width="1.5"/>
+<text x="554.0" y="326" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#e6edf3">Run directory</text>
+<text x="554.0" y="346" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#9198a1">config · events · predictions</text>
+<text x="554.0" y="363" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#9198a1">runtime summary · telemetry</text>
+<path d="M732,335 L725,335" stroke="#9198a1" stroke-width="1.6" fill="none" marker-end="url(#head)"/>
+<rect x="40" y="300" width="170" height="70" rx="10" fill="#0d1117" stroke="#a371f7" stroke-width="1.5"/>
+<text x="125.0" y="326" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#e6edf3">Telemetry</text>
+<text x="125.0" y="346" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#9198a1">runner process</text>
+<text x="125.0" y="363" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#9198a1">CPU · RSS, ~1 Hz</text>
+<path d="M212,335 L383,335" stroke="#9198a1" stroke-width="1.6" fill="none" marker-end="url(#head)"/>
+<rect x="16" y="404" width="1068" height="140" rx="14" fill="#151b23" stroke="#3d444d"/>
+<rect x="16" y="404" width="6" height="140" rx="3" fill="#4493f8"/>
+<text x="1064" y="426" text-anchor="end" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="1.2" fill="#4493f8">PYTHON ANALYSIS · AFTER FLUSH AND SHUTDOWN</text>
+<rect x="40" y="436" width="220" height="76" rx="10" fill="#0f2540" stroke="#4493f8" stroke-width="1.5"/>
+<text x="150.0" y="462" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#e6edf3">Score</text>
+<text x="150.0" y="482" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#9198a1">WER · CER · DER · JER</text>
+<text x="150.0" y="499" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#9198a1">named policies</text>
+<rect x="308" y="436" width="220" height="76" rx="10" fill="#0f2540" stroke="#4493f8" stroke-width="1.5"/>
+<text x="418.0" y="462" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#e6edf3">Validate</text>
+<text x="418.0" y="482" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#9198a1">schemas · digests</text>
+<text x="418.0" y="499" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#9198a1">coverage · telemetry</text>
+<path d="M262,474 L305,474" stroke="#9198a1" stroke-width="1.6" fill="none" marker-end="url(#head)"/>
+<rect x="576" y="436" width="220" height="76" rx="10" fill="#0f2540" stroke="#4493f8" stroke-width="1.5"/>
+<text x="686.0" y="462" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#e6edf3">Seal</text>
+<text x="686.0" y="482" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#9198a1">status: completed</text>
+<text x="686.0" y="499" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#9198a1">SHA-256 of every artifact</text>
+<path d="M530,474 L573,474" stroke="#9198a1" stroke-width="1.6" fill="none" marker-end="url(#head)"/>
+<rect x="844" y="436" width="220" height="76" rx="10" fill="#0d1117" stroke="#4493f8" stroke-width="1.5"/>
+<text x="954.0" y="462" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#e6edf3">Tools</text>
+<text x="954.0" y="482" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#9198a1">validate · compare</text>
+<text x="954.0" y="499" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" fill="#9198a1">export (CSV / PNG)</text>
+<path d="M798,474 L841,474" stroke="#9198a1" stroke-width="1.6" fill="none" marker-end="url(#head)"/>
+<path d="M554.0,372 L554.0,404 L150.0,404 L150.0,433" stroke="#9198a1" stroke-width="1.6" fill="none" marker-end="url(#head)"/>
+</svg>
