@@ -265,6 +265,7 @@ Found while building the public evidence packet; no measured value changed.
 | Earlier statement | Correction | Basis |
 |---|---|---|
 | "the measured run configs record clean `e29f345`" | True for 10 of 12. A1-rep3 (started 06:07) and A2-rep3 (06:32) record `git_dirty: true` in `config.json` and `environment.json`: the working tree changed during the campaign, after 05:46. The protected-input comparison passed and the `Package.resolved` hash is unchanged; the binary was hashed at campaign start only. Their prediction content equals repetitions 1–2. | Sealed per-run `environment.json`; [`evidence/20261021-s2/`](evidence/20261021-s2/README.md) |
+| Source revision `e29f345` (this document and the sealed artifacts) | Unchanged as recorded. Before publication, commit messages were rewritten (2026-10-28) to remove a co-author trailer, with identical file trees. In the published history the same tree `d7b25936…` is commit `873e5df`. | `git rev-parse 873e5df^{tree}` |
 | Unresolved item 9: reporting changes uncommitted | The `scripts/report_phase1.py` changes are now committed on the publication branch; the generated report still records the dirty tree it was produced from. | Git history |
 
 ## Scope boundaries

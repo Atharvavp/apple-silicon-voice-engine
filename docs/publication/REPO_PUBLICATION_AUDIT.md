@@ -2,7 +2,7 @@
 
 Audit date: **2026-10-27, Asia/Kolkata**. Verdict: **NOT READY** for the proposed public open-source/LinkedIn presentation. The implementation is substantial and the mock path works; the public default branch does not contain it.
 
-This is an audit and planning deliverable. No application code, existing documents, branches, history, remote settings, or campaign evidence were changed. The companion [plan](REPO_PUBLICATION_PLAN.md), [implementation prompt](REPO_PUBLICATION_IMPLEMENTATION_PROMPT.md), and [checklist](MAIN_PUBLICATION_CHECKLIST.md) describe future work, not completed changes.
+This is an audit and planning deliverable. No application code, existing documents, branches, history, remote settings, or campaign evidence were changed. The companion [plan](REPO_PUBLICATION_PLAN.md), implementation prompt (internal working document, not published), and [checklist](MAIN_PUBLICATION_CHECKLIST.md) describe future work, not completed changes.
 
 ## 1. Executive assessment
 

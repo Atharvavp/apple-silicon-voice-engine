@@ -93,6 +93,14 @@ its own scoring and sealing), not only replay, and its cause was not investigate
 repetitions 1 and 2 of the same row. The earlier statement that "the measured run configs record
 clean `e29f345`" is true for 10 of 12 runs.
 
+**Commit identifiers after the 2026-10-28 attribution cleanup.** This packet and the sealed run
+artifacts record source revision `e29f345abbdaa68cd496955b5e00f3fed86b140d`. Before publication,
+commit messages were rewritten to remove an automated co-author trailer. Only messages changed, so
+every file tree is identical, but the commit IDs differ. In the published history, the same tree
+(`d7b259367586a9ed9855e3978debabe3cb1834d0`) is commit `873e5df01c77f40cfca26853f9e21251ccb9dab8`.
+The snapshot's `head_before` `da04cd2…` is published as `8fc46d0…`. The recorded values are left
+unchanged, because they are what the campaign saw.
+
 Smoke, negative-control and pacing checks (`provenance.json` → `checks`): one 60 s network-denied
 smoke and one empty-assets negative control per row (all pass; each negative control exits 5 at prepare
 as intended), plus one 60 s mock pacing run (pass).

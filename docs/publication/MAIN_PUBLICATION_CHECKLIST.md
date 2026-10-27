@@ -2,11 +2,11 @@
 
 **Updated 2026-10-27 from the [verification report](REPO_PUBLICATION_VERIFICATION_REPORT.md). Current verdict: NOT READY (candidate locally verified; not integrated or public).**
 
-Use with the [audit](REPO_PUBLICATION_AUDIT.md), [plan](REPO_PUBLICATION_PLAN.md), and [implementation prompt](REPO_PUBLICATION_IMPLEMENTATION_PROMPT.md). Boxes are intentionally unchecked: passing checks on the local audit snapshot do not establish readiness of public `main`. Record a commit, date, environment and evidence link for every checked gate. Mark a conditional item “not applicable” with the narrower approved claim rather than silently checking it.
+Use with the [audit](REPO_PUBLICATION_AUDIT.md), [plan](REPO_PUBLICATION_PLAN.md), and implementation prompt (an internal working document, not published). Boxes are intentionally unchecked: passing checks on the local audit snapshot do not establish readiness of public `main`. Record a commit, date, environment and evidence link for every checked gate. Mark a conditional item “not applicable” with the narrower approved claim rather than silently checking it.
 
 Candidate branch/commit: `publication/readiness` @ `5cd3f18` (verified code); local only\
 Integrated main commit: _pending (not pushed or merged)_\
-Verifier/date/environment: Claude Code, 2026-10-27, Apple M5 / macOS 26.6.2 / Swift 6.3.2 CLT / Python 3.12.14\
+Verification date/environment: 2026-10-27, Apple M5 / macOS 26.6.2 / Swift 6.3.2 CLT / Python 3.12.14\
 Selected publication scope: methodology-focused harness release; accuracy conditional (owner decision 2026-10-27); MIT license; evidence packet approved\
 Final verification report: [REPO_PUBLICATION_VERIFICATION_REPORT.md](REPO_PUBLICATION_VERIFICATION_REPORT.md)
 

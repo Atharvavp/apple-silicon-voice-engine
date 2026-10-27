@@ -10,10 +10,10 @@ not public.** Public `main` is still the two-line initial README.
 
 | | Value |
 |---|---|
-| Original checkout | `/Users/atharvapawar/workspace/content/linkedin/apple-silicon-voice-engine`, branch `imp/phase-1`, HEAD `e29f345abbdaa68cd496955b5e00f3fed86b140d`, dirty (4 modified, 9 untracked paths) |
+| Original checkout | the owner's development checkout (local path not published), branch `imp/phase-1`, HEAD `e29f345abbdaa68cd496955b5e00f3fed86b140d`, dirty (4 modified, 9 untracked paths) |
 | `main` / `origin/main` | `4a5d3abf5f5c42dfb873737b89ebbe58237b5a60` (initial commit, README only), an ancestor of the candidate, so a fast-forward is possible |
 | Remote | `https://github.com/Atharvavp/apple-silicon-voice-engine.git` (no embedded credentials) |
-| Candidate branch | `publication/readiness`, local only, in a separate worktree: `/Users/atharvapawar/workspace/content/linkedin/apple-silicon-voice-engine-publication` |
+| Candidate branch | `publication/readiness`, local only, in a separate local worktree next to the original checkout |
 | Candidate HEAD | see §13 (14 commits on top of `e29f345`; 19 commits ahead of `main`) |
 | Host used | Apple M5 (Mac17,3), macOS 26.6.2 (25G83), arm64. Swift 6.3.2 with Command Line Tools only. Python 3.12.14 (`/opt/homebrew/bin/python3.12`); ambient `python3` is 3.14.7 |
 
@@ -300,8 +300,6 @@ See `docs/publication/REPO_PUBLICATION_VERIFICATION_REPORT.md`. It covers: a fre
 
 - No real-model inference was run (mock and stub tests only). There is no throughput, latency-to-word, ANE or power data, and no accuracy headline (accuracy stays conditional).
 - CI has not run yet. GitHub rendering of the SVG diagram and callouts is unchecked. The security reporting route is pending.
-
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
 ````
 
 **Integration plan (each step requires explicit owner authorization):**
