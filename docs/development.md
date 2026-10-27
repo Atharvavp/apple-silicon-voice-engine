@@ -36,10 +36,11 @@ quietly disappear.
 ### Cancellation timing
 
 `ReplayModeTests` check cancellation in two ways. One is deterministic (a test clock whose
-sleeps end only on cancellation). The other runs on the real clock with a 5 s gate. The 200 ms
-responsiveness target depends on machine load: under the parallel suite the measured latency was
-30–491 ms over 10 runs, and in isolation it was 0.2 ms. That target is therefore opt-in, and it is
-meaningful only on an otherwise idle host:
+sleeps end only on cancellation). The other runs on the real clock and checks structure, not
+time: it must throw `CancellationError` and must stop before delivering all 600 chunks of the 12 s
+stream. Latency depends on machine load. Under the parallel suite it was 30–491 ms over 10 local
+runs, 0.2 ms in isolation, and up to 9.4 s on a 3-core GitHub runner. The 5 s and 200 ms targets
+are therefore opt-in, and they are meaningful only on an otherwise idle host:
 
 ```sh
 VOICEBENCH_TIMING_CHECKS=1 bash scripts/swift_test.sh --disable-keychain \

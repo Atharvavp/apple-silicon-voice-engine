@@ -395,6 +395,7 @@ unchanged and accurate.
 | `0d56cca` | 40566921491 | success: hash-locked install, `pip check`, 70 passed, schema 133 | **failure** in the Swift suite step: `scripts/swift_test.sh: line 19: flags[@]: unbound variable` |
 | `e4e453d` | 40568881402 | success | **failure**: 211/212. `timeoutTerminatesTheChild` measured 10.93 s against a 10 s bound |
 | `b94c80c` | [40590411586](https://github.com/Atharvavp/apple-silicon-voice-engine/actions/runs/40590411586) | **success** | **success**: doctor, 212 Swift, 289 Python, fixture bytes 55/0, schema 133, smoke, tracked files unchanged |
+| `cb1fc31` (docs only) | [40591971932](https://github.com/Atharvavp/apple-silicon-voice-engine/actions/runs/40591971932) | success | **failure**: 211/212. The real-clock `cancellationStopsRealtimeReplayPromptly` measured 9.38 s against its 5 s gate; its `CancellationError` check and the deterministic cancellation test passed |
 
 The two fixes were reproduced and explained before changing anything:
 
@@ -408,6 +409,14 @@ The two fixes were reproduced and explained before changing anything:
    and requires that the child ended by SIGTERM/SIGKILL. `stepDelayIsVirtualOnly` (15.0 s against
    its 15 s bound) now uses 25 s, which is still below the 30 s that sleeping the virtual delay
    takes. Both are test-only changes, with no production change and no skipped test.
+3. **Flaky real-clock cancellation gate (the F08 pattern on a 3-core host).** The same test passed
+   on `b94c80c` and failed on the docs-only `cb1fc31`. On 3 cores the cooperative pool took 9.4 s to
+   resume the cancelled waiters, and a run that ignores cancellation until the stream ends would
+   take only about 11.9 s, so no wall-clock gate separates the two reliably. The test now checks
+   structure: it requires `CancellationError` and that fewer than all 600 chunks are delivered (a
+   run honored only at the end delivers all 600). The latency and chunk count are recorded as
+   evidence. The 5 s and 200 ms targets moved under the opt-in `VOICEBENCH_TIMING_CHECKS=1`. The
+   deterministic propagation test remains the correctness gate. This is a test-only change.
 
 The Linux install from the macOS-named hash lock, previously NOT VERIFIED, **passed** with
 `--require-hashes` intact.
