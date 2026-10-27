@@ -59,7 +59,10 @@ struct ProcessSamplerTests {
 
     @Test func buildFactsComeFromTheCompiler() {
         #expect(BuildFacts.sdkVersion != "unavailable")
-        #expect(BuildFacts.deploymentTarget == "13.0", "Package.swift declares .macOS(.v13)")
+        // Package.swift declares macOS 13 for the default graph and raises it for the SDK graphs.
+        let graph = ProcessInfo.processInfo.environment["PHASE1_FRAMEWORKS"] ?? "none"
+        let floor = ["none": "13.0", "fluid": "14.0", "speech": "15.0", "both": "15.0"][graph]
+        #expect(BuildFacts.deploymentTarget == floor, "Package.swift platform floor for PHASE1_FRAMEWORKS=\(graph)")
         #expect(BuildFacts.swiftVersion.contains("compile-time"))
     }
 }
