@@ -83,15 +83,20 @@ struct StepDeterminismTests {
         var variant = Variant()
         variant.asrDelayMS = 50
         let (request, runDir) = try variant.request()
-        let start = Date()
         let (outcome, _) = await ExperimentRunner().runtimeOnly(request)
         #expect(outcome.failure == nil)
-        // Sleeping the delay would take >= 30 s. The bound sits below that rather than at a host-speed guess: the
-        // run includes Python launches, which took ~11 s on a fresh CI runner (15.0 s total against the old 15 s).
-        #expect(Date().timeIntervalSince(start) < 25, "600 x 50 ms = 30 s of virtual delay must not sleep")
         let events = try readEvents(runDir.appendingPathComponent("events.jsonl.partial"))
         let asrStages = events.filter { $0.type == .stageCompleted && $0.payload["stage"] == .string("asr.consume") }
+        #expect(asrStages.count == 600)
         #expect(asrStages.allSatisfy { $0.payload["virtual_duration_ns"] == .int(50_000_000) })
+        // "Must not sleep" is checked on the calls themselves, not on the whole run's wall time (which includes
+        // Python launches and reached 26 s on a loaded CI runner): a sleeping step mode would make every one of the
+        // 600 consume calls last >= 50 ms, i.e. >= 30 s in total; a non-sleeping one is far below half of that.
+        let realNS = asrStages.reduce(Int64(0)) { total, event in
+            guard case .int(let duration)? = event.payload["duration_ns"] else { return total }
+            return total + duration
+        }
+        #expect(realNS < 15_000_000_000, "600 x 50 ms = 30 s of virtual delay must not sleep (\(realNS) ns of real consume time)")
         // Virtual time runs ahead of media time; delivery happens at max(now, deadline):
         // chunk k is delivered at 20 ms + k * 50 ms (hand-derived: each consume adds 50 ms).
         let delivered = events.filter { $0.type == .audioChunkDelivered }.map { $0.payload["delivered_virtual_ns"] }

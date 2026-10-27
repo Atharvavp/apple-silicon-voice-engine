@@ -400,8 +400,10 @@ unchanged and accurate.
 
 | `607d0f1` (docs only) | [40594173886](https://github.com/Atharvavp/apple-silicon-voice-engine/actions/runs/40594173886) | success | **failure**: 210/212. `adapterFaultsFailTheRunWithRuntimeCategory`, cases asr/flush and diarization/shutdown: `status.lastEventSequence` was nil while the trace ended at sequences 3013/3017 |
 
-The commit that adds this row and fix 4 below changes test code. Its CI result is on the PR's checks
-and is recorded in the final hand-over.
+| `26f4cd1` | 40595211556, attempts 1–3 (same commit, re-run as a stability check) | success ×3 | success, success, **failure**: attempt 3 had `stepDelayIsVirtualOnly` at 26.08 s against the 25 s bound from fix 2 |
+
+The commit that adds this row and fix 5 below changes test code. Its CI attempts are on the PR's
+checks and are recorded in the final hand-over.
 
 The two fixes were reproduced and explained before changing anything:
 
@@ -431,6 +433,16 @@ The two fixes were reproduced and explained before changing anything:
    took longer than 5 s. The tests, which assert the invariants of a cleanup that finishes, then
    read the fallback status. The fixture budget is now 60 s (allowed range 1–600); the shipped
    configs keep 5 s. This is a test-only change.
+5. **`stepDelayIsVirtualOnly`, structurally.** Fix 2's 25 s wall-clock bound was still a guess, and
+   attempt 3 reached 26.08 s. The test now sums the real `duration_ns` of the 600 `asr.consume`
+   stage events. A step mode that slept the 50 ms delay makes every call last at least 50 ms, so the
+   sum is at least 30 s; the assertion is that the sum stays under 15 s. This was proven by mutation:
+   a mock that really sleeps gave 33.8 s and failed. It passes in 1.1 s locally. The whole-run
+   wall-clock assertion is gone.
+
+Residual timing risk: `ClockTests` still asserts that a sleep to an already-passed deadline returns
+within 5 ms. It has passed every CI attempt, but heavy preemption on a 3-core host could exceed it.
+It was left unchanged because no failure has been observed.
 
 **Open finding (pre-existing production behavior, not changed here).** After the cleanup budget
 expires, `Race.first` returns while the detached cleanup keeps running. That cleanup can still
