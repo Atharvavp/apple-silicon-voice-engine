@@ -19,13 +19,18 @@ struct PythonBridgeTests {
         #expect(result.stderrTail() == "boom")
     }
 
+    /// The child sleeps 120 s against a 1 s timeout. The elapsed bound is relative to that sleep, not to host
+    /// speed: a fresh, loaded CI runner spent ~11 s just launching Python (sibling tests whose child exits
+    /// immediately took as long), which a fixed 10 s bound misread as a hang. Waiting for the sleep would
+    /// take >= 120 s; the signal check shows the parent terminated the child rather than letting it finish.
     @Test func timeoutTerminatesTheChild() async throws {
         let logs = try makeScratch()
         let start = Date()
-        let result = try await bridge(timeout: 1).runRaw(["-c", "import time; time.sleep(30)"], logDirectory: logs,
+        let result = try await bridge(timeout: 1).runRaw(["-c", "import time; time.sleep(120)"], logDirectory: logs,
                                                          label: "slow")
         #expect(result.timedOut && !result.succeeded)
-        #expect(Date().timeIntervalSince(start) < 10, "the parent does not wait for the child's sleep")
+        #expect([SIGTERM, SIGKILL].contains(result.exitCode), "ended by the parent's signal, not by finishing its sleep")
+        #expect(Date().timeIntervalSince(start) < 60, "the parent does not wait for the child's 120 s sleep")
     }
 
     @Test func largeOutputCannotHangTheParent() async throws {
@@ -81,7 +86,9 @@ struct StepDeterminismTests {
         let start = Date()
         let (outcome, _) = await ExperimentRunner().runtimeOnly(request)
         #expect(outcome.failure == nil)
-        #expect(Date().timeIntervalSince(start) < 15, "600 x 50 ms = 30 s of virtual delay must not sleep")
+        // Sleeping the delay would take >= 30 s. The bound sits below that rather than at a host-speed guess: the
+        // run includes Python launches, which took ~11 s on a fresh CI runner (15.0 s total against the old 15 s).
+        #expect(Date().timeIntervalSince(start) < 25, "600 x 50 ms = 30 s of virtual delay must not sleep")
         let events = try readEvents(runDir.appendingPathComponent("events.jsonl.partial"))
         let asrStages = events.filter { $0.type == .stageCompleted && $0.payload["stage"] == .string("asr.consume") }
         #expect(asrStages.allSatisfy { $0.payload["virtual_duration_ns"] == .int(50_000_000) })
