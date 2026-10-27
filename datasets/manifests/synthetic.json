@@ -8,9 +8,9 @@
   ],
   "source_name": "project_generated",
   "source_url": null,
-  "license": "project-authored synthetic data (no project redistribution license selected)",
+  "license": "MIT (project-authored synthetic data; see LICENSE)",
   "license_verified": true,
-  "redistribution_allowed": null,
+  "redistribution_allowed": true,
   "external_root": null,
   "annotation_type": "mixed",
   "status": "ready",
@@ -41,7 +41,7 @@
         "speakers": true,
         "joint_words": false
       },
-      "rights_notes": "Project-generated synthetic fixture (tones and silence, not speech); no third-party content. No project redistribution license has been selected yet. Purpose: 16 kHz mono PCM16 (conversion bypassed); WER/CER/DER/JER with known errors."
+      "rights_notes": "Project-generated synthetic fixture (tones and silence, not speech); no third-party content. MIT License (see LICENSE). Purpose: 16 kHz mono PCM16 (conversion bypassed); WER/CER/DER/JER with known errors."
     },
     {
       "item_id": "two-speaker-hi",
@@ -68,7 +68,7 @@
         "speakers": true,
         "joint_words": false
       },
-      "rights_notes": "Project-generated synthetic fixture (tones and silence, not speech); no third-party content. No project redistribution license has been selected yet. Purpose: 48 kHz stereo PCM16: downmix + exact 3:1 SRC; Devanagari scoring; references at the source rate."
+      "rights_notes": "Project-generated synthetic fixture (tones and silence, not speech); no third-party content. MIT License (see LICENSE). Purpose: 48 kHz stereo PCM16: downmix + exact 3:1 SRC; Devanagari scoring; references at the source rate."
     },
     {
       "item_id": "endpoint-trim-en",
@@ -95,7 +95,7 @@
         "speakers": true,
         "joint_words": false
       },
-      "rights_notes": "Project-generated synthetic fixture (tones and silence, not speech); no third-party content. No project redistribution license has been selected yet. Purpose: 22,049 frames at 22.05 kHz: AVAudioConverter emits one extra frame, so allow_one_frame_v1 trims it (DEC-026 disclosure)."
+      "rights_notes": "Project-generated synthetic fixture (tones and silence, not speech); no third-party content. MIT License (see LICENSE). Purpose: 22,049 frames at 22.05 kHz: AVAudioConverter emits one extra frame, so allow_one_frame_v1 trims it (DEC-026 disclosure)."
     }
   ]
 }
