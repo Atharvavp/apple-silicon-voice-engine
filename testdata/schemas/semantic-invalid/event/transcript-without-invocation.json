@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "event_id": "two-speaker-en/mock-asr-scripted/transcript.partial/0",
+  "run_id": "example-run",
+  "stream_id": "audio-0",
+  "source_id": "two-speaker-en",
+  "sequence": 17,
+  "producer_id": "mock-asr-scripted",
+  "producer_sequence": 1,
+  "type": "transcript.partial",
+  "media_start_sample": 0,
+  "media_end_sample": 32000,
+  "sample_rate_hz": 16000,
+  "monotonic_emitted_ns": 1004500000,
+  "monotonic_recorded_ns": 1004600000,
+  "virtual_emitted_ns": 20000000,
+  "cause_chunk_index": 99,
+  "invocation_id": null,
+  "payload": {
+    "utterance_id": "u0",
+    "revision": 0,
+    "text": "hello",
+    "is_final": false
+  }
+}

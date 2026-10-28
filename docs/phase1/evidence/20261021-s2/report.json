@@ -1,0 +1,502 @@
+{
+  "status": "COMPLETE",
+  "summary": {
+    "D1": {
+      "valid_n": 3,
+      "attempts": 3,
+      "wer": null,
+      "cer": null,
+      "der": {
+        "median": 0.24561076758797204,
+        "min": 0.24561076758797204,
+        "max": 0.24561076758797204,
+        "n": 3
+      },
+      "jer": {
+        "median": 0.243300034626762,
+        "min": 0.243300034626762,
+        "max": 0.243300034626762,
+        "n": 3
+      },
+      "setup_s": {
+        "median": 0.254042833,
+        "min": 0.246676292,
+        "max": 0.26296325,
+        "n": 3
+      },
+      "active_processing_s": {
+        "median": 79.696837786,
+        "min": 79.308233555,
+        "max": 79.70002518,
+        "n": 3
+      },
+      "active_flush_s": {
+        "median": 0.004957208,
+        "min": 0.004921458,
+        "max": 0.005578833,
+        "n": 3
+      },
+      "adapter_service_rtf": {
+        "median": 0.0767026622994961,
+        "min": 0.0763305609493403,
+        "max": 0.07670745878466746,
+        "n": 3
+      },
+      "replay_rtf": {
+        "median": 1.000046349739393,
+        "min": 1.0000381996807324,
+        "max": 1.000049942942455,
+        "n": 3
+      },
+      "end_to_end_rtf": {
+        "median": 1.0005310607156594,
+        "min": 1.0005243111791746,
+        "max": 1.0005477542687617,
+        "n": 3
+      },
+      "rss_peak_sampled_mib": {
+        "median": 526.140625,
+        "min": 525.859375,
+        "max": 526.8125,
+        "n": 3
+      },
+      "footprint_peak_sampled_mib": {
+        "median": 496.9541549682617,
+        "min": 496.8135528564453,
+        "max": 496.9698028564453,
+        "n": 3
+      },
+      "cpu_percent_p50": {
+        "median": 6.016335598657737,
+        "min": 5.999597750150843,
+        "max": 6.019036982005116,
+        "n": 3
+      },
+      "cpu_percent_p95": {
+        "median": 7.042478061706776,
+        "min": 6.856531516399125,
+        "max": 7.260704618971018,
+        "n": 3
+      },
+      "active_consume_p50_ms": {
+        "median": 0.033542,
+        "min": 0.033458,
+        "max": 0.033667,
+        "n": 3
+      },
+      "active_consume_p95_ms": {
+        "median": 0.068125,
+        "min": 0.06625,
+        "max": 0.06875,
+        "n": 3
+      },
+      "event_emission_latency_p50_ms": {
+        "median": 3.515375,
+        "min": 3.485333,
+        "max": 3.901708,
+        "n": 3
+      },
+      "event_emission_latency_p95_ms": {
+        "median": 4.8255,
+        "min": 4.78475,
+        "max": 5.424583,
+        "n": 3
+      },
+      "delivery_to_output_latency_p50_ms": null,
+      "delivery_to_output_latency_p95_ms": null,
+      "processing_lag_p95_ms": {
+        "median": 23.648917,
+        "min": 23.169708,
+        "max": 23.835,
+        "n": 3
+      }
+    },
+    "D2": {
+      "valid_n": 3,
+      "attempts": 3,
+      "wer": null,
+      "cer": null,
+      "der": {
+        "median": 0.2037778750403519,
+        "min": 0.2037778750403519,
+        "max": 0.2037778750403519,
+        "n": 3
+      },
+      "jer": {
+        "median": 0.19893428035732516,
+        "min": 0.19893428035732516,
+        "max": 0.19893428035732516,
+        "n": 3
+      },
+      "setup_s": {
+        "median": 0.247034875,
+        "min": 0.246210834,
+        "max": 0.247575834,
+        "n": 3
+      },
+      "active_processing_s": {
+        "median": 89.697136062,
+        "min": 85.482661861,
+        "max": 89.775997113,
+        "n": 3
+      },
+      "active_flush_s": {
+        "median": 0.059982625,
+        "min": 0.055596583,
+        "max": 0.061846583,
+        "n": 3
+      },
+      "adapter_service_rtf": {
+        "median": 0.08632077499230681,
+        "min": 0.0822809703494634,
+        "max": 0.08639856685098281,
+        "n": 3
+      },
+      "replay_rtf": {
+        "median": 1.0001066108195176,
+        "min": 1.0000937280022695,
+        "max": 1.0001118581394006,
+        "n": 3
+      },
+      "end_to_end_rtf": {
+        "median": 1.0006000453985076,
+        "min": 1.0005933780820864,
+        "max": 1.000610681361311,
+        "n": 3
+      },
+      "rss_peak_sampled_mib": {
+        "median": 520.34375,
+        "min": 337.296875,
+        "max": 520.390625,
+        "n": 3
+      },
+      "footprint_peak_sampled_mib": {
+        "median": 490.4229278564453,
+        "min": 329.53218841552734,
+        "max": 490.4854278564453,
+        "n": 3
+      },
+      "cpu_percent_p50": {
+        "median": 7.598997457011217,
+        "min": 7.368818925159695,
+        "max": 7.612339896296183,
+        "n": 3
+      },
+      "cpu_percent_p95": {
+        "median": 8.876658089495686,
+        "min": 8.792977537212806,
+        "max": 8.931718039646299,
+        "n": 3
+      },
+      "active_consume_p50_ms": {
+        "median": 0.273833,
+        "min": 0.23475,
+        "max": 0.27425,
+        "n": 3
+      },
+      "active_consume_p95_ms": {
+        "median": 0.568,
+        "min": 0.566917,
+        "max": 0.569959,
+        "n": 3
+      },
+      "event_emission_latency_p50_ms": {
+        "median": 58.603542,
+        "min": 54.452541,
+        "max": 60.3815,
+        "n": 3
+      },
+      "event_emission_latency_p95_ms": {
+        "median": 59.815875,
+        "min": 55.445458,
+        "max": 61.687083,
+        "n": 3
+      },
+      "delivery_to_output_latency_p50_ms": null,
+      "delivery_to_output_latency_p95_ms": null,
+      "processing_lag_p95_ms": {
+        "median": 23.283333,
+        "min": 20.292917,
+        "max": 23.347583,
+        "n": 3
+      }
+    },
+    "A1": {
+      "valid_n": 3,
+      "attempts": 3,
+      "wer": {
+        "median": 0.23303504847129008,
+        "min": 0.23303504847129008,
+        "max": 0.23303504847129008,
+        "n": 3
+      },
+      "cer": {
+        "median": 0.16480031711426024,
+        "min": 0.16480031711426024,
+        "max": 0.16480031711426024,
+        "n": 3
+      },
+      "der": null,
+      "jer": null,
+      "setup_s": {
+        "median": 0.256700459,
+        "min": 0.255165584,
+        "max": 0.266109042,
+        "n": 3
+      },
+      "active_processing_s": {
+        "median": 83.883073772,
+        "min": 83.617276101,
+        "max": 85.159123869,
+        "n": 3
+      },
+      "active_flush_s": {
+        "median": 0.024011958,
+        "min": 0.02398325,
+        "max": 0.024540917,
+        "n": 3
+      },
+      "adapter_service_rtf": {
+        "median": 0.08069341634996345,
+        "min": 0.08043797282090241,
+        "max": 0.0819209836490749,
+        "n": 3
+      },
+      "replay_rtf": {
+        "median": 1.0000753953985075,
+        "min": 1.0000684061699427,
+        "max": 1.000079123713313,
+        "n": 3
+      },
+      "end_to_end_rtf": {
+        "median": 1.000577704037966,
+        "min": 1.0005652389381468,
+        "max": 1.0006092789158365,
+        "n": 3
+      },
+      "rss_peak_sampled_mib": {
+        "median": 712.0625,
+        "min": 711.84375,
+        "max": 712.609375,
+        "n": 3
+      },
+      "footprint_peak_sampled_mib": {
+        "median": 668.7980422973633,
+        "min": 668.6886672973633,
+        "max": 668.9074172973633,
+        "n": 3
+      },
+      "cpu_percent_p50": {
+        "median": 9.74429352417847,
+        "min": 9.656321178231863,
+        "max": 9.749467568726327,
+        "n": 3
+      },
+      "cpu_percent_p95": {
+        "median": 11.383511201680994,
+        "min": 11.32530571330508,
+        "max": 11.624993268621575,
+        "n": 3
+      },
+      "active_consume_p50_ms": {
+        "median": 0.037667,
+        "min": 0.035708,
+        "max": 0.039291,
+        "n": 3
+      },
+      "active_consume_p95_ms": {
+        "median": 23.143417,
+        "min": 23.093833,
+        "max": 23.471417,
+        "n": 3
+      },
+      "event_emission_latency_p50_ms": {
+        "median": 25.918583,
+        "min": 25.746333,
+        "max": 26.058709,
+        "n": 3
+      },
+      "event_emission_latency_p95_ms": {
+        "median": 33.447417,
+        "min": 33.370792,
+        "max": 33.956583,
+        "n": 3
+      },
+      "delivery_to_output_latency_p50_ms": {
+        "median": 25.937792,
+        "min": 25.769292,
+        "max": 26.084291,
+        "n": 3
+      },
+      "delivery_to_output_latency_p95_ms": {
+        "median": 33.462917,
+        "min": 33.387917,
+        "max": 33.974125,
+        "n": 3
+      },
+      "processing_lag_p95_ms": {
+        "median": 28.081084,
+        "min": 27.982208,
+        "max": 28.35825,
+        "n": 3
+      }
+    },
+    "A2": {
+      "valid_n": 3,
+      "attempts": 3,
+      "wer": {
+        "median": 0.23788217747949292,
+        "min": 0.23788217747949292,
+        "max": 0.23788217747949292,
+        "n": 3
+      },
+      "cer": {
+        "median": 0.17252997720741253,
+        "min": 0.17252997720741253,
+        "max": 0.17252997720741253,
+        "n": 3
+      },
+      "der": null,
+      "jer": null,
+      "setup_s": {
+        "median": 0.179254375,
+        "min": 0.178828209,
+        "max": 0.344858667,
+        "n": 3
+      },
+      "active_processing_s": {
+        "median": 80.661379869,
+        "min": 80.579532293,
+        "max": 80.980818194,
+        "n": 3
+      },
+      "active_flush_s": {
+        "median": 0.033267,
+        "min": 0.022583459,
+        "max": 0.034861083,
+        "n": 3
+      },
+      "adapter_service_rtf": {
+        "median": 0.07759627970727391,
+        "min": 0.07751818957572028,
+        "max": 0.07790423991518253,
+        "n": 3
+      },
+      "replay_rtf": {
+        "median": 1.0000751458899104,
+        "min": 1.0000687485171367,
+        "max": 1.0000788209139515,
+        "n": 3
+      },
+      "end_to_end_rtf": {
+        "median": 1.000510859265492,
+        "min": 1.0005062808929877,
+        "max": 1.0008864960380044,
+        "n": 3
+      },
+      "rss_peak_sampled_mib": {
+        "median": 512.828125,
+        "min": 512.421875,
+        "max": 514.90625,
+        "n": 3
+      },
+      "footprint_peak_sampled_mib": {
+        "median": 479.6885299682617,
+        "min": 479.1729278564453,
+        "max": 479.7041549682617,
+        "n": 3
+      },
+      "cpu_percent_p50": {
+        "median": 9.871419223591554,
+        "min": 9.835062899561102,
+        "max": 9.883004335647207,
+        "n": 3
+      },
+      "cpu_percent_p95": {
+        "median": 11.66532969815524,
+        "min": 11.571950861517792,
+        "max": 12.427539493064423,
+        "n": 3
+      },
+      "active_consume_p50_ms": {
+        "median": 0.003417,
+        "min": 0.003417,
+        "max": 0.003417,
+        "n": 3
+      },
+      "active_consume_p95_ms": {
+        "median": 23.179459,
+        "min": 23.1235,
+        "max": 23.199666,
+        "n": 3
+      },
+      "event_emission_latency_p50_ms": {
+        "median": 24.534042,
+        "min": 24.44075,
+        "max": 24.534167,
+        "n": 3
+      },
+      "event_emission_latency_p95_ms": {
+        "median": 29.164209,
+        "min": 28.947542,
+        "max": 32.755708,
+        "n": 3
+      },
+      "delivery_to_output_latency_p50_ms": {
+        "median": 24.553041,
+        "min": 24.457875,
+        "max": 24.553584,
+        "n": 3
+      },
+      "delivery_to_output_latency_p95_ms": {
+        "median": 29.179959,
+        "min": 28.963458,
+        "max": 32.240834,
+        "n": 3
+      },
+      "processing_lag_p95_ms": {
+        "median": 27.776291,
+        "min": 27.329417,
+        "max": 27.91225,
+        "n": 3
+      }
+    }
+  },
+  "pairs": {
+    "diarization": {
+      "rows": [
+        "D1",
+        "D2"
+      ],
+      "classification": "best_practical",
+      "matched_model_evidence": null,
+      "differences": [
+        "different CoreML conversions/repositories of the same NVIDIA checkpoint family",
+        "Fluid FP16 low-context export vs speech-swift streaming export",
+        "different post-processing (Fluid pass-through 0.5 thresholds vs speech 0.3 s minimum speech / 0.15 s gap merge)",
+        "speech-swift compacts speaker IDs in its final snapshot"
+      ]
+    },
+    "asr": {
+      "rows": [
+        "A1",
+        "A2"
+      ],
+      "classification": "best_practical",
+      "matched_model_evidence": null,
+      "differences": [
+        "Fluid 320 ms FP16-storage conversion vs speech-swift INT8-palettized encoder",
+        "same declared chunk geometry (64 mel frames, 4 output frames, 5120-sample shift) but separate mel/RNNT decoder implementations",
+        "different transcript assembly (cumulative decode vs EOU-segmented finals; speech suppresses consecutive identical finals natively)"
+      ]
+    }
+  },
+  "blocked": {},
+  "figures": [
+    "accuracy.png",
+    "service_time.png",
+    "memory.png"
+  ],
+  "runs": 12,
+  "eligible_runs": 12
+}

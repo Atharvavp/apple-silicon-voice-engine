@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "run_id": "example-run",
+  "sample_id": "t0001",
+  "phase": "running",
+  "measured_ns": 1000500000,
+  "scheduled_ns": 1000000000,
+  "interval_ns": 1000000000,
+  "collection_duration_ns": 42000,
+  "measurements": {
+    "cpu_percent": {
+      "status": "ok",
+      "value": 37.5,
+      "unit": "percent_one_core",
+      "source": "getrusage",
+      "scope": "runner_process",
+      "reason": null
+    },
+    "gpu_utilization": {
+      "status": "unsupported",
+      "value": null,
+      "unit": "percent",
+      "source": "none",
+      "scope": "machine",
+      "reason": "no public counter in v1 baseline"
+    }
+  }
+}

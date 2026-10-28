@@ -1,0 +1,517 @@
+{
+  "generator": "scripts/generate_fixtures.py",
+  "generator_version": "fixtures_v1",
+  "note": "Synthetic infrastructure fixtures; not speech. Project-generated.",
+  "valid": [
+    {
+      "name": "mono11k025_f32_len10",
+      "path": "audio/mono11k025_f32_len10.wav",
+      "sha256": "d1226fbb8eddd16e3b4614112aa632b41c422d3fdabf46982299e106fbd0cb47",
+      "byte_count": 86,
+      "sample_rate_hz": 11025,
+      "channels": 1,
+      "bits_per_sample": 32,
+      "encoding": "float32le",
+      "frames": 10,
+      "purpose": "very short input (10 frames) at a 11025 Hz source rate"
+    },
+    {
+      "name": "mono16k_ext_f32",
+      "path": "audio/mono16k_ext_f32.wav",
+      "sha256": "42508e2ae8d8796bc7bc5d9237e63952c8724722c1980cfdec2443c8312292f8",
+      "byte_count": 4068,
+      "sample_rate_hz": 16000,
+      "channels": 1,
+      "bits_per_sample": 32,
+      "encoding": "extensible_float32le",
+      "frames": 1000,
+      "purpose": "WAVE_FORMAT_EXTENSIBLE IEEE float GUID"
+    },
+    {
+      "name": "mono16k_ext_pcm16",
+      "path": "audio/mono16k_ext_pcm16.wav",
+      "sha256": "2dbb917b3a1a10cabdf94e8e8a0c194c903d83270d3a1542d86abefe03c2165c",
+      "byte_count": 2068,
+      "sample_rate_hz": 16000,
+      "channels": 1,
+      "bits_per_sample": 16,
+      "encoding": "extensible_pcm_s16le",
+      "frames": 1000,
+      "purpose": "WAVE_FORMAT_EXTENSIBLE PCM GUID"
+    },
+    {
+      "name": "mono16k_f32_impulse",
+      "path": "audio/mono16k_f32_impulse.wav",
+      "sha256": "c89442dc20926e5108ce2af7c32de745919e94af8f585efe7796e57de205bfae",
+      "byte_count": 32046,
+      "sample_rate_hz": 16000,
+      "channels": 1,
+      "bits_per_sample": 32,
+      "encoding": "float32le",
+      "frames": 8000,
+      "purpose": "same-rate float impulse (bypass exactness)"
+    },
+    {
+      "name": "mono16k_f32_outside_unit",
+      "path": "audio/mono16k_f32_outside_unit.wav",
+      "sha256": "f421c2de197cfce9d35368f1be83a27d02b1399566f4b195a0e77264b060b9f8",
+      "byte_count": 62,
+      "sample_rate_hz": 16000,
+      "channels": 1,
+      "bits_per_sample": 32,
+      "encoding": "float32le",
+      "frames": 4,
+      "purpose": "finite float samples outside [-1, 1] must not be clipped"
+    },
+    {
+      "name": "mono16k_pcm16_empty",
+      "path": "audio/mono16k_pcm16_empty.wav",
+      "sha256": "ba584a378b11d9e9c98736fd8c256fe1453a84ee4139416d24b07acff424f0fb",
+      "byte_count": 44,
+      "sample_rate_hz": 16000,
+      "channels": 1,
+      "bits_per_sample": 16,
+      "encoding": "pcm_s16le",
+      "frames": 0,
+      "purpose": "structurally valid zero-frame WAV"
+    },
+    {
+      "name": "mono16k_pcm16_final_partial",
+      "path": "audio/mono16k_pcm16_final_partial.wav",
+      "sha256": "d399dfd186557222e1beecc30cf27960b8ccfc4570264526ddbde17647827a5a",
+      "byte_count": 32244,
+      "sample_rate_hz": 16000,
+      "channels": 1,
+      "bits_per_sample": 16,
+      "encoding": "pcm_s16le",
+      "frames": 16100,
+      "purpose": "16100 frames: 50 full 20 ms chunks + one 100-sample final partial"
+    },
+    {
+      "name": "mono16k_pcm16_fullscale",
+      "path": "audio/mono16k_pcm16_fullscale.wav",
+      "sha256": "912e4c26d4489d5fbbca9d874dfe05d34fcbe357f1f11a138d556d29b4fbd01d",
+      "byte_count": 58,
+      "sample_rate_hz": 16000,
+      "channels": 1,
+      "bits_per_sample": 16,
+      "encoding": "pcm_s16le",
+      "frames": 7,
+      "purpose": "PCM16 scaling codes"
+    },
+    {
+      "name": "mono16k_pcm16_one_sample",
+      "path": "audio/mono16k_pcm16_one_sample.wav",
+      "sha256": "b8cd1adddb107ece863520c99f249a0b8c5600a6695b7c189ba58c4db2809a75",
+      "byte_count": 46,
+      "sample_rate_hz": 16000,
+      "channels": 1,
+      "bits_per_sample": 16,
+      "encoding": "pcm_s16le",
+      "frames": 1,
+      "purpose": "single-frame clip"
+    },
+    {
+      "name": "mono16k_pcm16_short_319",
+      "path": "audio/mono16k_pcm16_short_319.wav",
+      "sha256": "052e7b1b7f01ecdbff0f9cb2d6871a4111fd6ee4980745098d25e636bfe792c4",
+      "byte_count": 682,
+      "sample_rate_hz": 16000,
+      "channels": 1,
+      "bits_per_sample": 16,
+      "encoding": "pcm_s16le",
+      "frames": 319,
+      "purpose": "shorter than one 20 ms frame"
+    },
+    {
+      "name": "mono16k_pcm16_silence_0p5s",
+      "path": "audio/mono16k_pcm16_silence_0p5s.wav",
+      "sha256": "358c6dcef4442790decb0a5c03fb320154f9d1dd5b4618e301f9e6661a413cb5",
+      "byte_count": 16044,
+      "sample_rate_hz": 16000,
+      "channels": 1,
+      "bits_per_sample": 16,
+      "encoding": "pcm_s16le",
+      "frames": 8000,
+      "purpose": "silence"
+    },
+    {
+      "name": "mono16k_pcm16_tone440_1s",
+      "path": "audio/mono16k_pcm16_tone440_1s.wav",
+      "sha256": "e7a99a4230789672defb45a442fe2b56ad504549d9400ce9173e77e225a052b2",
+      "byte_count": 32044,
+      "sample_rate_hz": 16000,
+      "channels": 1,
+      "bits_per_sample": 16,
+      "encoding": "pcm_s16le",
+      "frames": 16000,
+      "purpose": "canonical-rate PCM16 tone"
+    },
+    {
+      "name": "mono16k_pcm24_fullscale",
+      "path": "audio/mono16k_pcm24_fullscale.wav",
+      "sha256": "8cbed600a95b4d9d2f27911c977d0b786ab9a9905df288a3679cdb28a881b41c",
+      "byte_count": 66,
+      "sample_rate_hz": 16000,
+      "channels": 1,
+      "bits_per_sample": 24,
+      "encoding": "pcm_s24le",
+      "frames": 7,
+      "purpose": "PCM24 scaling codes"
+    },
+    {
+      "name": "mono16k_pcm32_fullscale",
+      "path": "audio/mono16k_pcm32_fullscale.wav",
+      "sha256": "1f23cd59d1ad93035d44ccb2a0ed60ec4be01788ac7a1277dc93e219d5740e52",
+      "byte_count": 72,
+      "sample_rate_hz": 16000,
+      "channels": 1,
+      "bits_per_sample": 32,
+      "encoding": "pcm_s32le",
+      "frames": 7,
+      "purpose": "PCM32 scaling codes"
+    },
+    {
+      "name": "mono22k05_f32_len2",
+      "path": "audio/mono22k05_f32_len2.wav",
+      "sha256": "fce89405573ad5ae8a0334614add736290845aaae5c7fe7f67675a311f6be33a",
+      "byte_count": 54,
+      "sample_rate_hz": 22050,
+      "channels": 1,
+      "bits_per_sample": 32,
+      "encoding": "float32le",
+      "frames": 2,
+      "purpose": "very short input (2 frames) at a 22050 Hz source rate"
+    },
+    {
+      "name": "mono22k05_pcm16_ramp",
+      "path": "audio/mono22k05_pcm16_ramp.wav",
+      "sha256": "520b41f94af036bb3e855d3abb4ac5c4f0fde1585e9ab7bd125e2506e46d58bd",
+      "byte_count": 44144,
+      "sample_rate_hz": 22050,
+      "channels": 1,
+      "bits_per_sample": 16,
+      "encoding": "pcm_s16le",
+      "frames": 22050,
+      "purpose": "22.05 kHz input (10 ms not integral at source rate)"
+    },
+    {
+      "name": "mono44k1_f32_len1",
+      "path": "audio/mono44k1_f32_len1.wav",
+      "sha256": "81536d5028558d476b68fbdf8ec16f7ac70bbd30d7762f44264c63b8a368d0b6",
+      "byte_count": 50,
+      "sample_rate_hz": 44100,
+      "channels": 1,
+      "bits_per_sample": 32,
+      "encoding": "float32le",
+      "frames": 1,
+      "purpose": "very short input (1 frames) at a 44100 Hz source rate"
+    },
+    {
+      "name": "mono44k1_f32_len7",
+      "path": "audio/mono44k1_f32_len7.wav",
+      "sha256": "f5d49c2a8c0335b82e5c89b693d02d8087fa4a9dfd726a6b6dfba40c6442c2ee",
+      "byte_count": 74,
+      "sample_rate_hz": 44100,
+      "channels": 1,
+      "bits_per_sample": 32,
+      "encoding": "float32le",
+      "frames": 7,
+      "purpose": "very short input (7 frames) at a 44100 Hz source rate"
+    },
+    {
+      "name": "mono44k1_pcm16_odd",
+      "path": "audio/mono44k1_pcm16_odd.wav",
+      "sha256": "25f8f82918e93b0fabc1c38b099f8931ed15f4a878bee440d94af62cc8e84c9f",
+      "byte_count": 88246,
+      "sample_rate_hz": 44100,
+      "channels": 1,
+      "bits_per_sample": 16,
+      "encoding": "pcm_s16le",
+      "frames": 44101,
+      "purpose": "44.1 kHz odd length (endpoint rounding)"
+    },
+    {
+      "name": "mono44k1_pcm16_tone1k",
+      "path": "audio/mono44k1_pcm16_tone1k.wav",
+      "sha256": "e8f90d84b4bae66095c04d9c2aa003b95bc29c8d54ce8185e460ded38155ac4b",
+      "byte_count": 88244,
+      "sample_rate_hz": 44100,
+      "channels": 1,
+      "bits_per_sample": 16,
+      "encoding": "pcm_s16le",
+      "frames": 44100,
+      "purpose": "noncanonical 44.1 kHz input"
+    },
+    {
+      "name": "mono48k_f32_dc",
+      "path": "audio/mono48k_f32_dc.wav",
+      "sha256": "19cb02226ec166313e85e65ea07585987acdb7aff10923210f5829f9c413ff65",
+      "byte_count": 192046,
+      "sample_rate_hz": 48000,
+      "channels": 1,
+      "bits_per_sample": 32,
+      "encoding": "float32le",
+      "frames": 48000,
+      "purpose": "DC preservation"
+    },
+    {
+      "name": "mono48k_f32_impulse",
+      "path": "audio/mono48k_f32_impulse.wav",
+      "sha256": "48852194ded0e1fc531b5e7b8504998af21b3f13238e3105457152817ba5fdda",
+      "byte_count": 192046,
+      "sample_rate_hz": 48000,
+      "channels": 1,
+      "bits_per_sample": 32,
+      "encoding": "float32le",
+      "frames": 48000,
+      "purpose": "SRC alignment probe"
+    },
+    {
+      "name": "mono48k_f32_len5",
+      "path": "audio/mono48k_f32_len5.wav",
+      "sha256": "fe0e197d09362eb73a22a410b87f5440b87545a3580c5abdb7399fde66b44032",
+      "byte_count": 66,
+      "sample_rate_hz": 48000,
+      "channels": 1,
+      "bits_per_sample": 32,
+      "encoding": "float32le",
+      "frames": 5,
+      "purpose": "very short input (5 frames) at a 48000 Hz source rate"
+    },
+    {
+      "name": "mono48k_f32_tone12k",
+      "path": "audio/mono48k_f32_tone12k.wav",
+      "sha256": "854a90d00b07a2670ac3be639d20de3aa291bc99a0bc2467e4d368933c597f9c",
+      "byte_count": 192046,
+      "sample_rate_hz": 48000,
+      "channels": 1,
+      "bits_per_sample": 32,
+      "encoding": "float32le",
+      "frames": 48000,
+      "purpose": "above 16 kHz Nyquist: must be attenuated"
+    },
+    {
+      "name": "mono48k_f32_tone1k",
+      "path": "audio/mono48k_f32_tone1k.wav",
+      "sha256": "ce9eaf1a7f627675a71e8b4086fbc3f63db485cc13be69c068f3e40f5c28f3f1",
+      "byte_count": 192046,
+      "sample_rate_hz": 48000,
+      "channels": 1,
+      "bits_per_sample": 32,
+      "encoding": "float32le",
+      "frames": 48000,
+      "purpose": "in-band RMS preservation"
+    },
+    {
+      "name": "mono96k_f32_len3",
+      "path": "audio/mono96k_f32_len3.wav",
+      "sha256": "aceb1db1fc2ffd227d56df552aa1371d9803ce5788d9d65bbf88aa558b8fb185",
+      "byte_count": 58,
+      "sample_rate_hz": 96000,
+      "channels": 1,
+      "bits_per_sample": 32,
+      "encoding": "float32le",
+      "frames": 3,
+      "purpose": "very short input (3 frames) at a 96000 Hz source rate"
+    },
+    {
+      "name": "stereo16k_f32_dc",
+      "path": "audio/stereo16k_f32_dc.wav",
+      "sha256": "94e9f0bea539c1b31e09c06213148d392301231557aed9ff5f91037df026a2de",
+      "byte_count": 32046,
+      "sample_rate_hz": 16000,
+      "channels": 2,
+      "bits_per_sample": 32,
+      "encoding": "float32le",
+      "frames": 4000,
+      "purpose": "L=0.25, R=0.75: mean is 0.5"
+    },
+    {
+      "name": "stereo16k_pcm16_cancel",
+      "path": "audio/stereo16k_pcm16_cancel.wav",
+      "sha256": "f02a52419014c1f77a9ae3d4f098dcaae1699551e938f28dad56278af3936ec8",
+      "byte_count": 16044,
+      "sample_rate_hz": 16000,
+      "channels": 2,
+      "bits_per_sample": 16,
+      "encoding": "pcm_s16le",
+      "frames": 4000,
+      "purpose": "L = -R: arithmetic mean downmix cancels"
+    },
+    {
+      "name": "stereo48k_pcm24_tone1k",
+      "path": "audio/stereo48k_pcm24_tone1k.wav",
+      "sha256": "a1bc76be785f6e294bc9ae31a39d32c9bb616eed1a85be2104c4abe475d139a6",
+      "byte_count": 288044,
+      "sample_rate_hz": 48000,
+      "channels": 2,
+      "bits_per_sample": 24,
+      "encoding": "pcm_s24le",
+      "frames": 48000,
+      "purpose": "stereo 48 kHz PCM24 in-band tone"
+    }
+  ],
+  "malformed": [
+    {
+      "name": "bad_block_align",
+      "path": "audio/malformed/bad_block_align.wav",
+      "sha256": "571f5ebace07b6ed518446f9421b79b3d996f0a5294ff296592a92f957ff3574",
+      "byte_count": 244,
+      "expected_error": "invalidFormat",
+      "purpose": "block align inconsistent with channels*bits"
+    },
+    {
+      "name": "bad_byte_rate",
+      "path": "audio/malformed/bad_byte_rate.wav",
+      "sha256": "99d96fca1b3fcd3fb73a985b5765fd81b81b25caa22f774c445aed8fd02ccdc8",
+      "byte_count": 244,
+      "expected_error": "invalidFormat",
+      "purpose": "byte rate inconsistent"
+    },
+    {
+      "name": "compressed_adpcm",
+      "path": "audio/malformed/compressed_adpcm.wav",
+      "sha256": "19cce7787c4fd8195e2a8323b6cc3a0819285b55222e728f99186ec7001c514b",
+      "byte_count": 300,
+      "expected_error": "unsupportedEncoding",
+      "purpose": "MS ADPCM"
+    },
+    {
+      "name": "data_not_frame_aligned",
+      "path": "audio/malformed/data_not_frame_aligned.wav",
+      "sha256": "4013106e327ac8221b41f19f22aa9da4ade0142ebcf67f84138920401b1774db",
+      "byte_count": 48,
+      "expected_error": "invalidFormat",
+      "purpose": "data length not a multiple of block align"
+    },
+    {
+      "name": "extensible_unknown_guid",
+      "path": "audio/malformed/extensible_unknown_guid.wav",
+      "sha256": "9555c16bb9591a7e6a8697aaee678f9a0bb4740606dd1a8d80a2a20f82f07b46",
+      "byte_count": 268,
+      "expected_error": "unsupportedEncoding",
+      "purpose": "unknown extensible subformat"
+    },
+    {
+      "name": "float64",
+      "path": "audio/malformed/float64.wav",
+      "sha256": "d46f01e4fd3391f8295342135ae5a2d54fc02d2813383b5f52665c938f7f5f4a",
+      "byte_count": 110,
+      "expected_error": "unsupportedEncoding",
+      "purpose": "64-bit float is outside the v1 matrix"
+    },
+    {
+      "name": "float_inf",
+      "path": "audio/malformed/float_inf.wav",
+      "sha256": "138b3013deb4f74ab23338dff7dd6f267aa24e1e4dd161186c84dfc43e4bf79c",
+      "byte_count": 54,
+      "expected_error": "nonFiniteSample",
+      "purpose": "Inf sample in float WAV"
+    },
+    {
+      "name": "float_nan",
+      "path": "audio/malformed/float_nan.wav",
+      "sha256": "7b95ff9767ef5af9b6c3e3ad3157e10cf4459b235f80507004a1432cacea24fd",
+      "byte_count": 58,
+      "expected_error": "nonFiniteSample",
+      "purpose": "NaN sample in float WAV"
+    },
+    {
+      "name": "missing_data",
+      "path": "audio/malformed/missing_data.wav",
+      "sha256": "04d9bddab64a8da67151c234322d72fb7e2207301cdafe8487e30dbcfeb9a332",
+      "byte_count": 36,
+      "expected_error": "missingDataChunk",
+      "purpose": "no data chunk"
+    },
+    {
+      "name": "missing_fmt",
+      "path": "audio/malformed/missing_fmt.wav",
+      "sha256": "9ff78c5506ae68c911b2ef3285fe268a4607ff843790b0db22b90effd9ecf192",
+      "byte_count": 220,
+      "expected_error": "missingFormatChunk",
+      "purpose": "no fmt chunk"
+    },
+    {
+      "name": "mulaw",
+      "path": "audio/malformed/mulaw.wav",
+      "sha256": "23c03dab6e29fa95cb37a90d6813d7855b92c0c8445444942cf75db97fa8dbc9",
+      "byte_count": 144,
+      "expected_error": "unsupportedEncoding",
+      "purpose": "mu-law"
+    },
+    {
+      "name": "not_riff",
+      "path": "audio/malformed/not_riff.wav",
+      "sha256": "e31a77be128c3b10b65942e901508328ad08a47b8b92ec2f60ea2442c798c531",
+      "byte_count": 44,
+      "expected_error": "notRIFF",
+      "purpose": "renamed non-WAV"
+    },
+    {
+      "name": "pcm8_unsigned",
+      "path": "audio/malformed/pcm8_unsigned.wav",
+      "sha256": "50b3b584bbdcb4cdc771ed68b804067414facd44e9bad0fe020bdd277ea365f7",
+      "byte_count": 144,
+      "expected_error": "unsupportedEncoding",
+      "purpose": "8-bit PCM is outside the v1 matrix"
+    },
+    {
+      "name": "rf64",
+      "path": "audio/malformed/rf64.wav",
+      "sha256": "9e646afca0e991af5e6a9c8edfbbd8c53eb32f3ed7bfcd7e7c1a55e4140c5254",
+      "byte_count": 244,
+      "expected_error": "unsupportedContainer",
+      "purpose": "RF64 container"
+    },
+    {
+      "name": "riff_not_wave",
+      "path": "audio/malformed/riff_not_wave.wav",
+      "sha256": "f09bc60c282322a281e5752d1d4c62ded18823edc076d8d9ab3f064878584ca5",
+      "byte_count": 244,
+      "expected_error": "notWAVE",
+      "purpose": "RIFF form is not WAVE"
+    },
+    {
+      "name": "three_channels",
+      "path": "audio/malformed/three_channels.wav",
+      "sha256": "78b6f1b620d2701dcadc92accd30a7457593e1cfa077a286ea98f2b395de559e",
+      "byte_count": 104,
+      "expected_error": "unsupportedChannelCount",
+      "purpose": "more than two channels"
+    },
+    {
+      "name": "truncated_data",
+      "path": "audio/malformed/truncated_data.wav",
+      "sha256": "6fdeec9e1a3688b20071cfcbd2e815334efde42f7294e1bc9921b2d12d3260e0",
+      "byte_count": 204,
+      "expected_error": "truncated",
+      "purpose": "data chunk cut short"
+    },
+    {
+      "name": "truncated_header",
+      "path": "audio/malformed/truncated_header.wav",
+      "sha256": "1962ea90b0da1fcc26f9702fe18d520bb5d3876e2df9ebcc1eaca37d6e89303e",
+      "byte_count": 20,
+      "expected_error": "truncated",
+      "purpose": "file ends inside fmt chunk"
+    },
+    {
+      "name": "zero_channels",
+      "path": "audio/malformed/zero_channels.wav",
+      "sha256": "b693e3795c9e2e5392c15abebbf67366952204a15cac11cbd65cee7d64ff5724",
+      "byte_count": 44,
+      "expected_error": "invalidFormat",
+      "purpose": "zero channels"
+    },
+    {
+      "name": "zero_sample_rate",
+      "path": "audio/malformed/zero_sample_rate.wav",
+      "sha256": "b6cc6c2789dd79a1a67f62f2a5e20bdbb2e069130e57442d786b2c0a244f745c",
+      "byte_count": 244,
+      "expected_error": "invalidFormat",
+      "purpose": "zero rate"
+    }
+  ]
+}

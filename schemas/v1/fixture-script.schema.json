@@ -1,0 +1,212 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.voicebench.invalid/v1/fixture-script.schema.json",
+  "title": "Mock adapter fixture prediction script",
+  "description": "Independently authored outputs for the scripted mock adapters (test infrastructure only). Causality (trigger_sample >= end_sample) and ordinal order are semantic checks.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "$ref": "common.schema.json#/$defs/schema_version"
+    },
+    "kind": {
+      "const": "mock_fixture_script"
+    },
+    "source_id": {
+      "$ref": "common.schema.json#/$defs/stable_id"
+    },
+    "sample_rate_hz": {
+      "$ref": "common.schema.json#/$defs/sample_rate_hz"
+    },
+    "duration_samples": {
+      "$ref": "common.schema.json#/$defs/nonneg_int64"
+    },
+    "perturbation": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "algorithm": {
+              "const": "splitmix64_v1"
+            },
+            "speaker_boundary_jitter_samples": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            }
+          },
+          "required": [
+            "algorithm",
+            "speaker_boundary_jitter_samples"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "faults": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "role": {
+            "enum": [
+              "asr",
+              "diarization"
+            ]
+          },
+          "stage": {
+            "enum": [
+              "prepare",
+              "consume",
+              "flush",
+              "shutdown"
+            ]
+          },
+          "chunk_index": {
+            "anyOf": [
+              {
+                "$ref": "common.schema.json#/$defs/nonneg_int64"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "chunk_index",
+          "role",
+          "stage"
+        ],
+        "if": {
+          "properties": {
+            "stage": {
+              "const": "consume"
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "chunk_index": {
+              "$ref": "common.schema.json#/$defs/nonneg_int64"
+            }
+          }
+        },
+        "else": {
+          "properties": {
+            "chunk_index": {
+              "type": "null"
+            }
+          }
+        }
+      }
+    },
+    "asr": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "ordinal": {
+            "$ref": "common.schema.json#/$defs/nonneg_int64"
+          },
+          "trigger_sample": {
+            "anyOf": [
+              {
+                "$ref": "common.schema.json#/$defs/nonneg_int64"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "utterance_id": {
+            "$ref": "common.schema.json#/$defs/stable_id"
+          },
+          "revision": {
+            "$ref": "common.schema.json#/$defs/nonneg_int64"
+          },
+          "text": {
+            "type": "string"
+          },
+          "is_final": {
+            "type": "boolean"
+          },
+          "start_sample": {
+            "$ref": "common.schema.json#/$defs/nonneg_int64"
+          },
+          "end_sample": {
+            "$ref": "common.schema.json#/$defs/nonneg_int64"
+          }
+        },
+        "required": [
+          "end_sample",
+          "is_final",
+          "ordinal",
+          "revision",
+          "start_sample",
+          "text",
+          "trigger_sample",
+          "utterance_id"
+        ]
+      }
+    },
+    "diarization": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "ordinal": {
+            "$ref": "common.schema.json#/$defs/nonneg_int64"
+          },
+          "trigger_sample": {
+            "anyOf": [
+              {
+                "$ref": "common.schema.json#/$defs/nonneg_int64"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "segment_id": {
+            "$ref": "common.schema.json#/$defs/stable_id"
+          },
+          "speaker_id": {
+            "$ref": "common.schema.json#/$defs/stable_id"
+          },
+          "start_sample": {
+            "$ref": "common.schema.json#/$defs/nonneg_int64"
+          },
+          "end_sample": {
+            "$ref": "common.schema.json#/$defs/nonneg_int64"
+          }
+        },
+        "required": [
+          "end_sample",
+          "ordinal",
+          "segment_id",
+          "speaker_id",
+          "start_sample",
+          "trigger_sample"
+        ]
+      }
+    }
+  },
+  "required": [
+    "asr",
+    "diarization",
+    "duration_samples",
+    "faults",
+    "kind",
+    "perturbation",
+    "sample_rate_hz",
+    "schema_version",
+    "source_id"
+  ]
+}

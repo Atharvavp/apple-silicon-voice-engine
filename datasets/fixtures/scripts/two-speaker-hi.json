@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "kind": "mock_fixture_script",
+  "source_id": "two-speaker-hi",
+  "sample_rate_hz": 16000,
+  "duration_samples": 128000,
+  "perturbation": null,
+  "faults": [],
+  "asr": [
+    {
+      "ordinal": 0,
+      "trigger_sample": 64000,
+      "utterance_id": "u0",
+      "revision": 0,
+      "text": "नमस्ते भारत",
+      "is_final": true,
+      "start_sample": 0,
+      "end_sample": 64000
+    },
+    {
+      "ordinal": 1,
+      "trigger_sample": 96000,
+      "utterance_id": "u1",
+      "revision": 0,
+      "text": "की",
+      "is_final": true,
+      "start_sample": 64000,
+      "end_sample": 96000
+    }
+  ],
+  "diarization": [
+    {
+      "ordinal": 0,
+      "trigger_sample": 64000,
+      "segment_id": "hyp-y0",
+      "speaker_id": "Y",
+      "start_sample": 0,
+      "end_sample": 64000
+    },
+    {
+      "ordinal": 1,
+      "trigger_sample": 128000,
+      "segment_id": "hyp-x0",
+      "speaker_id": "X",
+      "start_sample": 64000,
+      "end_sample": 128000
+    }
+  ]
+}

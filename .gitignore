@@ -1,0 +1,22 @@
+.build/
+.swiftpm/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+# Run outputs and checkpoint evidence are retained locally for owner delivery.
+# Root evidence/ only: the curated public packet lives under docs/phase1/evidence/.
+runs/
+/evidence/
+# Default output locations used in README/docs examples.
+/exports/
+/comparisons/
+# Private Phase 1 inputs (model/data roots, license acceptance notes) and local work files.
+/phase1-inputs.json
+/diff.txt
+# Generated large/temporary audio (long-run fixtures, spools).
+datasets/fixtures/generated-large/
+scratch/
+# Owned copy of pinned speech-swift (recreate with scripts/run_phase1.py vendor-speech).
+vendor/

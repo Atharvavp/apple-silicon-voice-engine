@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "dataset_id": "public-hi-pending",
+  "version": "pending",
+  "languages": ["hi-IN"],
+  "source_name": "Unselected Hindi source",
+  "source_url": null,
+  "license": null,
+  "license_verified": false,
+  "redistribution_allowed": null,
+  "external_root": null,
+  "annotation_type": null,
+  "status": "pending",
+  "provenance_notes": "Gate B: select primary source, verify rights and transcript/speaker coverage before acquisition.",
+  "items": []
+}

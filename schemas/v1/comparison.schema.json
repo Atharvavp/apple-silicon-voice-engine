@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.voicebench.invalid/v1/comparison.schema.json",
+  "title": "Run comparison report",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "$ref": "common.schema.json#/$defs/schema_version"
+    },
+    "comparison_id": {
+      "$ref": "common.schema.json#/$defs/stable_id"
+    },
+    "created_wall_time": {
+      "$ref": "common.schema.json#/$defs/wall_time"
+    },
+    "profile": {
+      "enum": [
+        "accuracy",
+        "latency",
+        "resources"
+      ]
+    },
+    "runs": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "$ref": "common.schema.json#/$defs/run_id"
+      }
+    },
+    "compatible": {
+      "type": "boolean"
+    },
+    "allow_noncomparable": {
+      "type": "boolean"
+    },
+    "reasons": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "field": {
+            "type": "string",
+            "minLength": 1
+          },
+          "values": {
+            "type": "array"
+          },
+          "effect": {
+            "enum": [
+              "blocks_ranking",
+              "disclosed"
+            ]
+          }
+        },
+        "required": [
+          "effect",
+          "field",
+          "values"
+        ]
+      }
+    },
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "run_id": {
+            "$ref": "common.schema.json#/$defs/run_id"
+          },
+          "metric": {
+            "type": "string",
+            "minLength": 1
+          },
+          "metric_record": {
+            "$ref": "common.schema.json#/$defs/metric_record"
+          }
+        },
+        "required": [
+          "metric",
+          "metric_record",
+          "run_id"
+        ]
+      }
+    },
+    "ranking": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/run_id"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "allow_noncomparable",
+    "comparison_id",
+    "compatible",
+    "created_wall_time",
+    "profile",
+    "ranking",
+    "reasons",
+    "rows",
+    "runs",
+    "schema_version"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "compatible": {
+            "const": false
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "ranking": {
+            "type": "null"
+          }
+        }
+      }
+    }
+  ]
+}

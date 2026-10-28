@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "event_id": "two-speaker-en/mock-asr-scripted/adapter.started/0",
+  "run_id": "example-run",
+  "stream_id": "audio-0",
+  "source_id": "two-speaker-en",
+  "sequence": 17,
+  "producer_id": "mock-asr-scripted",
+  "producer_sequence": 1,
+  "type": "adapter.started",
+  "media_start_sample": null,
+  "media_end_sample": null,
+  "sample_rate_hz": 16000,
+  "monotonic_emitted_ns": 1004500000,
+  "monotonic_recorded_ns": 1004600000,
+  "virtual_emitted_ns": null,
+  "cause_chunk_index": null,
+  "invocation_id": null,
+  "payload": {
+    "role": "asr",
+    "adapter_id": "mock-asr-scripted",
+    "revision": "1",
+    "capabilities": {
+      "role": "asr",
+      "revision": "1",
+      "sample_rates_hz": [
+        16000
+      ],
+      "channels": 1,
+      "frame_multiple_samples": null,
+      "incremental": true,
+      "emits_partials": true,
+      "emits_finals": true,
+      "transcript_granularity": "utterances",
+      "requested_placement": "cpu",
+      "observed_placement": {
+        "status": "unavailable",
+        "value": null,
+        "source": "mock_adapter",
+        "reason": "no_backend_execution_probe"
+      }
+    }
+  }
+}

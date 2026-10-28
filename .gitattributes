@@ -1,0 +1,4 @@
+# Byte-exact files: no end-of-line normalization (published SHA-256 values must keep matching)
+# and no whitespace checks (CRLF rows from Python's csv writer; upstream context lines in the patch).
+docs/phase1/evidence/** -text -whitespace
+patches/*.patch -text -whitespace

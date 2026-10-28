@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "run_id": "example-run",
+  "state": "failed",
+  "updated_wall_time": "2026-10-20T00:00:00+05:30",
+  "failure": {
+    "category": "analysis",
+    "stage": "scoring",
+    "message": "scorer exited with status 7"
+  },
+  "last_event_sequence": 12,
+  "artifacts": null
+}

@@ -1,0 +1,1173 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.voicebench.invalid/v1/event.schema.json",
+  "title": "Event JSONL record",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "$ref": "common.schema.json#/$defs/schema_version"
+    },
+    "event_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "run_id": {
+      "$ref": "common.schema.json#/$defs/run_id"
+    },
+    "stream_id": {
+      "$ref": "common.schema.json#/$defs/stable_id"
+    },
+    "source_id": {
+      "$ref": "common.schema.json#/$defs/stable_id"
+    },
+    "sequence": {
+      "$ref": "common.schema.json#/$defs/nonneg_int64"
+    },
+    "producer_id": {
+      "$ref": "common.schema.json#/$defs/stable_id"
+    },
+    "producer_sequence": {
+      "$ref": "common.schema.json#/$defs/nonneg_int64"
+    },
+    "type": {
+      "enum": [
+        "adapter.diagnostic",
+        "adapter.failed",
+        "adapter.started",
+        "adapter.stopped",
+        "audio.chunk_consumed",
+        "audio.chunk_delivered",
+        "audio.chunk_scheduled",
+        "audio.queue_backpressure",
+        "audio.queue_overflow",
+        "experiment.cancelled",
+        "experiment.completed",
+        "experiment.failed",
+        "experiment.runtime_completed",
+        "experiment.started",
+        "speaker.segment",
+        "stage.completed",
+        "telemetry.sample",
+        "transcript.final",
+        "transcript.partial"
+      ]
+    },
+    "media_start_sample": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "media_end_sample": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "sample_rate_hz": {
+      "$ref": "common.schema.json#/$defs/sample_rate_hz"
+    },
+    "monotonic_emitted_ns": {
+      "$ref": "common.schema.json#/$defs/nonneg_int64"
+    },
+    "monotonic_recorded_ns": {
+      "$ref": "common.schema.json#/$defs/nonneg_int64"
+    },
+    "virtual_emitted_ns": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "cause_chunk_index": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "invocation_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "payload": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "cause_chunk_index",
+    "event_id",
+    "invocation_id",
+    "media_end_sample",
+    "media_start_sample",
+    "monotonic_emitted_ns",
+    "monotonic_recorded_ns",
+    "payload",
+    "producer_id",
+    "producer_sequence",
+    "run_id",
+    "sample_rate_hz",
+    "schema_version",
+    "sequence",
+    "source_id",
+    "stream_id",
+    "type",
+    "virtual_emitted_ns"
+  ],
+  "$defs": {
+    "payload.experiment_started": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "mode": {
+          "enum": [
+            "realtime",
+            "accelerated",
+            "step"
+          ]
+        },
+        "settings_sha256": {
+          "$ref": "common.schema.json#/$defs/sha256"
+        },
+        "manifest_sha256": {
+          "$ref": "common.schema.json#/$defs/sha256"
+        },
+        "audio_sha256": {
+          "$ref": "common.schema.json#/$defs/sha256"
+        },
+        "schema_bundle_sha256": {
+          "$ref": "common.schema.json#/$defs/sha256"
+        }
+      },
+      "required": [
+        "audio_sha256",
+        "manifest_sha256",
+        "mode",
+        "schema_bundle_sha256",
+        "settings_sha256"
+      ]
+    },
+    "payload.experiment_runtime_completed": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "produced_samples": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "admitted_samples": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "consumed_samples": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "dropped_samples": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "dropped_ranges": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/sample_interval"
+          }
+        },
+        "last_media_sample": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "replay_elapsed_ns": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        }
+      },
+      "required": [
+        "admitted_samples",
+        "consumed_samples",
+        "dropped_ranges",
+        "dropped_samples",
+        "last_media_sample",
+        "produced_samples",
+        "replay_elapsed_ns"
+      ]
+    },
+    "payload.experiment_completed": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "artifacts": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/artifact_digest"
+          }
+        }
+      },
+      "required": [
+        "artifacts"
+      ]
+    },
+    "payload.experiment_failed": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "failure": {
+          "$ref": "common.schema.json#/$defs/failure"
+        },
+        "last_valid_sequence": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/nonneg_int64"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "failure",
+        "last_valid_sequence"
+      ]
+    },
+    "payload.experiment_cancelled": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "failure": {
+          "$ref": "common.schema.json#/$defs/failure"
+        },
+        "last_valid_sequence": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/nonneg_int64"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "failure",
+        "last_valid_sequence"
+      ]
+    },
+    "payload.audio_chunk_scheduled": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "chunk_index": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "start_sample": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "end_sample": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "deadline_convention": {
+          "const": "end_of_frame_v1"
+        },
+        "planned_deadline_ns": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/nonneg_int64"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "media_deadline_virtual_ns": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/nonneg_int64"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "chunk_index",
+        "deadline_convention",
+        "end_sample",
+        "media_deadline_virtual_ns",
+        "planned_deadline_ns",
+        "start_sample"
+      ]
+    },
+    "payload.audio_chunk_delivered": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "chunk_index": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "offer_ns": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "entry_ns": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "wake_error_ns": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/int64"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "deadline_error_ns": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/int64"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "queue_depth": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "delivered_virtual_ns": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/nonneg_int64"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "chunk_index",
+        "deadline_error_ns",
+        "delivered_virtual_ns",
+        "entry_ns",
+        "offer_ns",
+        "queue_depth",
+        "wake_error_ns"
+      ]
+    },
+    "payload.audio_chunk_consumed": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "chunk_index": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "start_sample": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "end_sample": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "dequeue_ns": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "finish_ns": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "invocation_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "queue_depth": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        }
+      },
+      "required": [
+        "chunk_index",
+        "dequeue_ns",
+        "end_sample",
+        "finish_ns",
+        "invocation_ids",
+        "queue_depth",
+        "start_sample"
+      ]
+    },
+    "payload.audio_queue_backpressure": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "chunk_index": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "blocked_ns": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "capacity": {
+          "$ref": "common.schema.json#/$defs/pos_int64"
+        },
+        "policy": {
+          "const": "block"
+        }
+      },
+      "required": [
+        "blocked_ns",
+        "capacity",
+        "chunk_index",
+        "policy"
+      ]
+    },
+    "payload.audio_queue_overflow": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "chunk_index": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "policy": {
+          "const": "drop_newest"
+        },
+        "start_sample": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "end_sample": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "lost_samples": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "cumulative_lost_samples": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        }
+      },
+      "required": [
+        "chunk_index",
+        "cumulative_lost_samples",
+        "end_sample",
+        "lost_samples",
+        "policy",
+        "start_sample"
+      ]
+    },
+    "payload.adapter_started": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "role": {
+          "enum": [
+            "asr",
+            "diarization"
+          ]
+        },
+        "adapter_id": {
+          "$ref": "common.schema.json#/$defs/stable_id"
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "capabilities": {
+          "$ref": "#/$defs/capabilities"
+        }
+      },
+      "required": [
+        "adapter_id",
+        "capabilities",
+        "revision",
+        "role"
+      ]
+    },
+    "payload.adapter_failed": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "role": {
+          "enum": [
+            "asr",
+            "diarization"
+          ]
+        },
+        "adapter_id": {
+          "$ref": "common.schema.json#/$defs/stable_id"
+        },
+        "stage": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "adapter_id",
+        "message",
+        "role",
+        "stage"
+      ]
+    },
+    "payload.adapter_stopped": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "role": {
+          "enum": [
+            "asr",
+            "diarization"
+          ]
+        },
+        "adapter_id": {
+          "$ref": "common.schema.json#/$defs/stable_id"
+        },
+        "shutdown": {
+          "$ref": "#/$defs/shutdown_report"
+        }
+      },
+      "required": [
+        "adapter_id",
+        "role",
+        "shutdown"
+      ]
+    },
+    "payload.transcript_partial": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "utterance_id": {
+          "$ref": "common.schema.json#/$defs/stable_id"
+        },
+        "revision": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "text": {
+          "type": "string"
+        },
+        "is_final": {
+          "const": false
+        }
+      },
+      "required": [
+        "is_final",
+        "revision",
+        "text",
+        "utterance_id"
+      ]
+    },
+    "payload.transcript_final": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "utterance_id": {
+          "$ref": "common.schema.json#/$defs/stable_id"
+        },
+        "revision": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "text": {
+          "type": "string"
+        },
+        "is_final": {
+          "const": true
+        }
+      },
+      "required": [
+        "is_final",
+        "revision",
+        "text",
+        "utterance_id"
+      ]
+    },
+    "payload.speaker_segment": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "segment_id": {
+          "$ref": "common.schema.json#/$defs/stable_id"
+        },
+        "speaker_id": {
+          "$ref": "common.schema.json#/$defs/stable_id"
+        },
+        "is_final": {
+          "const": true
+        }
+      },
+      "required": [
+        "is_final",
+        "segment_id",
+        "speaker_id"
+      ]
+    },
+    "payload.stage_completed": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "stage": {
+          "type": "string",
+          "minLength": 1
+        },
+        "start_ns": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "end_ns": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "duration_ns": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "virtual_duration_ns": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/nonneg_int64"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "duration_ns",
+        "end_ns",
+        "stage",
+        "start_ns",
+        "virtual_duration_ns"
+      ]
+    },
+    "payload.telemetry_sample": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "sample_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "phase": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "phase",
+        "sample_id"
+      ]
+    },
+    "capabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Adapter capabilities reported by prepare (plan D1).",
+      "properties": {
+        "role": {
+          "enum": [
+            "asr",
+            "diarization"
+          ]
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sample_rates_hz": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "common.schema.json#/$defs/sample_rate_hz"
+          }
+        },
+        "channels": {
+          "type": "integer",
+          "const": 1
+        },
+        "frame_multiple_samples": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/pos_int64"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "incremental": {
+          "type": "boolean"
+        },
+        "emits_partials": {
+          "type": "boolean"
+        },
+        "emits_finals": {
+          "type": "boolean"
+        },
+        "transcript_granularity": {
+          "anyOf": [
+            {
+              "enum": [
+                "utterances",
+                "words",
+                "recording"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "requested_placement": {
+          "enum": [
+            "cpu",
+            "gpu",
+            "ane",
+            "unspecified"
+          ]
+        },
+        "observed_placement": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "status": {
+              "$ref": "common.schema.json#/$defs/metric_status"
+            },
+            "value": {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "null"
+              ]
+            },
+            "source": {
+              "type": "string",
+              "minLength": 1
+            },
+            "reason": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "reason",
+            "source",
+            "status",
+            "value"
+          ]
+        }
+      },
+      "required": [
+        "channels",
+        "emits_finals",
+        "emits_partials",
+        "frame_multiple_samples",
+        "incremental",
+        "observed_placement",
+        "requested_placement",
+        "revision",
+        "role",
+        "sample_rates_hz",
+        "transcript_granularity"
+      ]
+    },
+    "shutdown_report": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "enum": [
+            "ok",
+            "error"
+          ]
+        },
+        "message": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pending_tasks": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        }
+      },
+      "required": [
+        "message",
+        "pending_tasks",
+        "status"
+      ]
+    },
+    "payload.adapter_diagnostic": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "role": {
+          "enum": [
+            "asr",
+            "diarization"
+          ]
+        },
+        "adapter_id": {
+          "$ref": "common.schema.json#/$defs/stable_id"
+        },
+        "code": {
+          "$ref": "common.schema.json#/$defs/stable_id"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "required_range": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/sample_interval"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "missing_ranges": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/sample_interval"
+          }
+        }
+      },
+      "required": [
+        "adapter_id",
+        "code",
+        "message",
+        "missing_ranges",
+        "required_range",
+        "role"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "adapter.diagnostic"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload.adapter_diagnostic"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "adapter.failed"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload.adapter_failed"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "adapter.started"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload.adapter_started"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "adapter.stopped"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload.adapter_stopped"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "audio.chunk_consumed"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload.audio_chunk_consumed"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "audio.chunk_delivered"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload.audio_chunk_delivered"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "audio.chunk_scheduled"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload.audio_chunk_scheduled"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "audio.queue_backpressure"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload.audio_queue_backpressure"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "audio.queue_overflow"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload.audio_queue_overflow"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "experiment.cancelled"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload.experiment_cancelled"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "experiment.completed"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload.experiment_completed"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "experiment.failed"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload.experiment_failed"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "experiment.runtime_completed"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload.experiment_runtime_completed"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "experiment.started"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload.experiment_started"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "speaker.segment"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload.speaker_segment"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "stage.completed"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload.stage_completed"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "telemetry.sample"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload.telemetry_sample"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "transcript.final"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload.transcript_final"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "transcript.partial"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "#/$defs/payload.transcript_partial"
+          }
+        }
+      }
+    }
+  ]
+}

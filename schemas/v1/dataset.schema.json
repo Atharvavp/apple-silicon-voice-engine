@@ -1,0 +1,332 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.voicebench.invalid/v1/dataset.schema.json",
+  "title": "Dataset manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "$ref": "common.schema.json#/$defs/schema_version"
+    },
+    "dataset_id": {
+      "$ref": "common.schema.json#/$defs/stable_id"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "languages": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "common.schema.json#/$defs/language_tag"
+      }
+    },
+    "source_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_url": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "license": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "license_verified": {
+      "type": "boolean"
+    },
+    "redistribution_allowed": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "external_root": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "annotation_type": {
+      "anyOf": [
+        {
+          "enum": [
+            "words",
+            "utterances",
+            "speaker_segments",
+            "mixed"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "status": {
+      "enum": [
+        "pending",
+        "ready"
+      ]
+    },
+    "provenance_notes": {
+      "type": "string",
+      "minLength": 1
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/item"
+      }
+    }
+  },
+  "required": [
+    "annotation_type",
+    "dataset_id",
+    "external_root",
+    "items",
+    "languages",
+    "license",
+    "license_verified",
+    "provenance_notes",
+    "redistribution_allowed",
+    "schema_version",
+    "source_name",
+    "source_url",
+    "status",
+    "version"
+  ],
+  "$defs": {
+    "item": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "item_id": {
+          "$ref": "common.schema.json#/$defs/stable_id"
+        },
+        "languages": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "common.schema.json#/$defs/language_tag"
+          }
+        },
+        "split": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "ready"
+          ]
+        },
+        "audio_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "audio_sha256": {
+          "$ref": "common.schema.json#/$defs/sha256"
+        },
+        "sample_rate_hz": {
+          "$ref": "common.schema.json#/$defs/sample_rate_hz"
+        },
+        "channels": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2
+        },
+        "duration_samples": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "reference_text_path": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reference_text_sha256": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "speaker_segments_path": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "speaker_segments_sha256": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reference_sha256": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fixture_script_path": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fixture_script_sha256": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "annotation_type": {
+          "enum": [
+            "words",
+            "utterances",
+            "speaker_segments",
+            "mixed"
+          ]
+        },
+        "coverage": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "transcript": {
+              "type": "boolean"
+            },
+            "speakers": {
+              "type": "boolean"
+            },
+            "joint_words": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "joint_words",
+            "speakers",
+            "transcript"
+          ]
+        },
+        "rights_notes": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "annotation_type",
+        "audio_path",
+        "audio_sha256",
+        "channels",
+        "coverage",
+        "duration_samples",
+        "fixture_script_path",
+        "fixture_script_sha256",
+        "item_id",
+        "languages",
+        "reference_sha256",
+        "reference_text_path",
+        "reference_text_sha256",
+        "rights_notes",
+        "sample_rate_hz",
+        "speaker_segments_path",
+        "speaker_segments_sha256",
+        "split",
+        "status"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "ready"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "items": {
+            "minItems": 1
+          },
+          "license": {
+            "type": "string",
+            "minLength": 1
+          },
+          "license_verified": {
+            "const": true
+          },
+          "annotation_type": {
+            "type": "string"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "items": {
+            "items": {
+              "properties": {
+                "status": {
+                  "const": "pending"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

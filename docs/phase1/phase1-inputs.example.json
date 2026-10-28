@@ -1,0 +1,91 @@
+{
+  "inputs_version": 1,
+  "owner_authorization": {
+    "statement": "",
+    "date": ""
+  },
+  "developer_dir": null,
+  "acquisition": {
+    "mode": "local-only",
+    "allowed_sources": [],
+    "max_download_bytes": 0
+  },
+  "models": {
+    "fluid-sortformer-v21-lowctx": {
+      "root": "/ABSOLUTE/PATH/TO/voicebench-assets/models/fluid-sortformer-v21-lowctx",
+      "repository": "FluidInference/diar-streaming-sortformer-coreml",
+      "revision": "ae9a27ab45dc0aa3abede7d2d6bad2b7a69aa6d1",
+      "load_path": "v3/fp16/Sortformer_v2.1.mlmodelc",
+      "precision": "fp16 (FluidAudio v3/fp16 BNNS-fixed export)",
+      "licenses": [
+        "NVIDIA Open Model License (original nvidia checkpoint): nvidia/diar_streaming_sortformer_4spk-v2.1",
+        "CC-BY-4.0 (conversion repository card)"
+      ],
+      "license_acceptance": {
+        "accepted": false,
+        "evidence": ""
+      }
+    },
+    "speech-sortformer-v21-streaming": {
+      "root": "/ABSOLUTE/PATH/TO/voicebench-assets/models/speech-sortformer-v21-streaming",
+      "repository": "aufklarer/Sortformer-Diarization-CoreML",
+      "revision": "47707a55d23633d3947f168a46ad46960a8639b9",
+      "load_path": "aufklarer-Sortformer-Diarization-CoreML",
+      "precision": "fp16 compute, fp32 I/O (card)",
+      "licenses": [
+        "NVIDIA Open Model License (original nvidia checkpoint): nvidia/diar_streaming_sortformer_4spk-v2.1",
+        "CC-BY-4.0 (conversion repository card)"
+      ],
+      "license_acceptance": {
+        "accepted": false,
+        "evidence": ""
+      }
+    },
+    "fluid-parakeet-eou-120m-320ms": {
+      "root": "/ABSOLUTE/PATH/TO/voicebench-assets/models/fluid-parakeet-eou-120m-320ms",
+      "repository": "FluidInference/parakeet-realtime-eou-120m-coreml",
+      "revision": "40a23f4c0b333aa17ad8c0f2ea47ec2347f2f355",
+      "load_path": "320ms",
+      "precision": "fp16 storage (encoder metadata)",
+      "licenses": [
+        "NVIDIA Open Model License (original nvidia checkpoint): nvidia/parakeet_realtime_eou_120m-v1",
+        "nvidia-open-model-license (conversion repository card)"
+      ],
+      "license_acceptance": {
+        "accepted": false,
+        "evidence": ""
+      }
+    },
+    "speech-parakeet-eou-120m-int8": {
+      "root": "/ABSOLUTE/PATH/TO/voicebench-assets/models/speech-parakeet-eou-120m-int8",
+      "repository": "aufklarer/Parakeet-EOU-120M-CoreML-INT8",
+      "revision": "fca97346c39ef8cc046e7b13515972f6db48e2ee",
+      "load_path": "aufklarer-Parakeet-EOU-120M-CoreML-INT8",
+      "precision": "int8 palettized encoder (card)",
+      "licenses": [
+        "NVIDIA Open Model License (original nvidia checkpoint): nvidia/parakeet_realtime_eou_120m-v1",
+        "nvidia-open-model-license (conversion repository card)"
+      ],
+      "license_acceptance": {
+        "accepted": false,
+        "evidence": ""
+      }
+    }
+  },
+  "datasets": {
+    "ami": {
+      "audio_root": "/ABSOLUTE/PATH/TO/voicebench-assets/data/ami/amicorpus",
+      "annotations_root": "/ABSOLUTE/PATH/TO/voicebench-assets/data/ami/annotations",
+      "annotations_version": "1.6.2",
+      "source_url": "https://groups.inf.ed.ac.uk/ami/download/",
+      "license": "CC-BY-4.0",
+      "license_evidence": "",
+      "redistribution_allowed": null,
+      "meeting_inventory": [
+        "ES2008a"
+      ],
+      "smoke_meeting": "ES2008b"
+    },
+    "voxconverse": null
+  }
+}

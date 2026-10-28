@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "validation_id": "validation-0001",
+  "created_wall_time": "2026-10-20T00:00:00+05:30",
+  "target": {
+    "kind": "dataset",
+    "path": "x.json"
+  },
+  "status": "pass",
+  "checks": [
+    {
+      "check_id": "schema",
+      "status": "skipped",
+      "message": "",
+      "evidence": null
+    }
+  ],
+  "stage": "sealed",
+  "disclosures": [
+    {
+      "code": "endpoint_correction",
+      "message": "trimmed_one_frame: native 16000, intended 15999"
+    }
+  ]
+}

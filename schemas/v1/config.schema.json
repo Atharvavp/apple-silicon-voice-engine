@@ -1,0 +1,910 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.voicebench.invalid/v1/config.schema.json",
+  "title": "Frozen resolved run configuration (config.json)",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "$ref": "common.schema.json#/$defs/schema_version"
+    },
+    "run_id": {
+      "$ref": "common.schema.json#/$defs/run_id"
+    },
+    "created_wall_time": {
+      "$ref": "common.schema.json#/$defs/wall_time"
+    },
+    "config_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "$ref": "common.schema.json#/$defs/sha256"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ]
+    },
+    "settings": {
+      "$ref": "#/$defs/settings"
+    },
+    "settings_sha256": {
+      "$ref": "common.schema.json#/$defs/sha256"
+    },
+    "resolved_paths": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "manifest": {
+          "type": "string",
+          "minLength": 1
+        },
+        "python_executable": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_root": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "manifest",
+        "project_root",
+        "python_executable"
+      ]
+    },
+    "inputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "dataset_id": {
+          "$ref": "common.schema.json#/$defs/stable_id"
+        },
+        "manifest_sha256": {
+          "$ref": "common.schema.json#/$defs/sha256"
+        },
+        "item_id": {
+          "$ref": "common.schema.json#/$defs/stable_id"
+        },
+        "audio_sha256": {
+          "$ref": "common.schema.json#/$defs/sha256"
+        },
+        "reference_sha256": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fixture_script_sha256": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "audio_sha256",
+        "dataset_id",
+        "fixture_script_sha256",
+        "item_id",
+        "manifest_sha256",
+        "reference_sha256"
+      ]
+    },
+    "replay_resolved": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "frame_samples": {
+          "$ref": "common.schema.json#/$defs/pos_int64"
+        },
+        "speed": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/speed"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "deadline_convention": {
+          "const": "end_of_frame_v1"
+        }
+      },
+      "required": [
+        "deadline_convention",
+        "frame_samples",
+        "speed"
+      ]
+    },
+    "schema_versions": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "common.schema.json#/$defs/schema_version"
+      },
+      "minProperties": 1
+    },
+    "policy_ids": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "downmix": {
+          "type": "string",
+          "minLength": 1
+        },
+        "conversion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "diarization": {
+          "type": "string",
+          "minLength": 1
+        },
+        "endpoint": {
+          "enum": [
+            "allow_one_frame_v1",
+            "strict"
+          ]
+        }
+      },
+      "required": [
+        "conversion",
+        "diarization",
+        "downmix",
+        "endpoint",
+        "text"
+      ]
+    },
+    "build": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "voicebench_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "git_revision": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "git_dirty": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "build_configuration": {
+          "enum": [
+            "debug",
+            "release"
+          ]
+        },
+        "package_resolved_sha256": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "build_configuration",
+        "git_dirty",
+        "git_revision",
+        "package_resolved_sha256",
+        "voicebench_version"
+      ]
+    },
+    "analysis_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "requested_placement": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "asr": {
+          "enum": [
+            "cpu",
+            "gpu",
+            "ane",
+            "unspecified"
+          ]
+        },
+        "diarization": {
+          "enum": [
+            "cpu",
+            "gpu",
+            "ane",
+            "unspecified"
+          ]
+        }
+      },
+      "required": [
+        "asr",
+        "diarization"
+      ]
+    },
+    "schema_bundle": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Digest of the bundled schemas/v1 files (DEC-008/DEC-050); frozen=true when it equals the committed freeze record.",
+      "properties": {
+        "sha256": {
+          "$ref": "common.schema.json#/$defs/sha256"
+        },
+        "file_count": {
+          "$ref": "common.schema.json#/$defs/pos_int64"
+        },
+        "frozen": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "file_count",
+        "frozen",
+        "sha256"
+      ]
+    }
+  },
+  "required": [
+    "analysis_version",
+    "build",
+    "config_source",
+    "created_wall_time",
+    "inputs",
+    "policy_ids",
+    "replay_resolved",
+    "requested_placement",
+    "resolved_paths",
+    "run_id",
+    "schema_bundle",
+    "schema_version",
+    "schema_versions",
+    "settings",
+    "settings_sha256"
+  ],
+  "$defs": {
+    "authored": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "$ref": "common.schema.json#/$defs/schema_version"
+        },
+        "experiment_name": {
+          "$ref": "common.schema.json#/$defs/stable_id"
+        },
+        "dataset": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "manifest_path": {
+              "type": "string",
+              "minLength": 1
+            },
+            "item_id": {
+              "$ref": "common.schema.json#/$defs/stable_id"
+            }
+          },
+          "required": [
+            "item_id",
+            "manifest_path"
+          ]
+        },
+        "audio": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "target_sample_rate_hz": {
+              "$ref": "common.schema.json#/$defs/sample_rate_hz"
+            },
+            "downmix_policy": {
+              "const": "arithmetic_mean_v1"
+            },
+            "conversion_policy": {
+              "const": "apple_normal_max_half_up_v1"
+            },
+            "endpoint_policy": {
+              "enum": [
+                "allow_one_frame_v1",
+                "strict"
+              ]
+            }
+          },
+          "required": [
+            "conversion_policy",
+            "downmix_policy",
+            "endpoint_policy",
+            "target_sample_rate_hz"
+          ]
+        },
+        "replay": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "mode": {
+              "enum": [
+                "realtime",
+                "accelerated",
+                "step"
+              ]
+            },
+            "frame_ms": {
+              "type": "integer",
+              "enum": [
+                10,
+                20,
+                40,
+                80
+              ]
+            },
+            "speed": {
+              "anyOf": [
+                {
+                  "$ref": "common.schema.json#/$defs/speed"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "queue_capacity": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 4096
+            },
+            "overflow": {
+              "enum": [
+                "block",
+                "drop_newest"
+              ]
+            }
+          },
+          "required": [
+            "frame_ms",
+            "mode",
+            "overflow",
+            "queue_capacity",
+            "speed"
+          ]
+        },
+        "adapters": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "asr": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "$ref": "common.schema.json#/$defs/stable_id"
+                },
+                "revision": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "delay_ms": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 600000
+                }
+              },
+              "required": [
+                "delay_ms",
+                "id",
+                "revision"
+              ]
+            },
+            "diarization": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "$ref": "common.schema.json#/$defs/stable_id"
+                },
+                "revision": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "delay_ms": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 600000
+                }
+              },
+              "required": [
+                "delay_ms",
+                "id",
+                "revision"
+              ]
+            }
+          },
+          "required": [
+            "asr",
+            "diarization"
+          ]
+        },
+        "seed": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "scoring": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "references": {
+              "enum": [
+                "required",
+                "optional"
+              ]
+            },
+            "text_policy": {
+              "const": "nfc_casefold_punct_space_cp_v1"
+            },
+            "diarization_policy": {
+              "const": "pyannote_c0_overlap_uem_v1"
+            }
+          },
+          "required": [
+            "diarization_policy",
+            "references",
+            "text_policy"
+          ]
+        },
+        "telemetry": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "interval_ms": {
+              "type": "integer",
+              "minimum": 100,
+              "maximum": 60000
+            }
+          },
+          "required": [
+            "enabled",
+            "interval_ms"
+          ]
+        },
+        "runtime": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "python_executable": {
+              "type": "string",
+              "minLength": 1
+            },
+            "cleanup_timeout_s": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 600
+            },
+            "analysis_timeout_s": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 3600
+            },
+            "max_output_bytes": {
+              "type": "integer",
+              "minimum": 1048576,
+              "maximum": 1099511627776
+            }
+          },
+          "required": [
+            "analysis_timeout_s",
+            "cleanup_timeout_s",
+            "max_output_bytes",
+            "python_executable"
+          ]
+        },
+        "notes": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "warm_state": {
+              "type": "string"
+            },
+            "background_load": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "background_load",
+            "warm_state"
+          ]
+        }
+      },
+      "required": [
+        "adapters",
+        "audio",
+        "dataset",
+        "experiment_name",
+        "notes",
+        "replay",
+        "runtime",
+        "schema_version",
+        "scoring",
+        "seed",
+        "telemetry"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "replay": {
+                "properties": {
+                  "mode": {
+                    "const": "accelerated"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "replay": {
+                "properties": {
+                  "speed": {
+                    "$ref": "common.schema.json#/$defs/speed"
+                  }
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "replay": {
+                "properties": {
+                  "speed": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "settings": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "$ref": "common.schema.json#/$defs/schema_version"
+        },
+        "experiment_name": {
+          "$ref": "common.schema.json#/$defs/stable_id"
+        },
+        "dataset": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "manifest_path": {
+              "type": "string",
+              "minLength": 1
+            },
+            "item_id": {
+              "$ref": "common.schema.json#/$defs/stable_id"
+            }
+          },
+          "required": [
+            "item_id",
+            "manifest_path"
+          ]
+        },
+        "audio": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "target_sample_rate_hz": {
+              "$ref": "common.schema.json#/$defs/sample_rate_hz"
+            },
+            "downmix_policy": {
+              "const": "arithmetic_mean_v1"
+            },
+            "conversion_policy": {
+              "const": "apple_normal_max_half_up_v1"
+            },
+            "endpoint_policy": {
+              "enum": [
+                "allow_one_frame_v1",
+                "strict"
+              ]
+            }
+          },
+          "required": [
+            "conversion_policy",
+            "downmix_policy",
+            "endpoint_policy",
+            "target_sample_rate_hz"
+          ]
+        },
+        "replay": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "mode": {
+              "enum": [
+                "realtime",
+                "accelerated",
+                "step"
+              ]
+            },
+            "frame_ms": {
+              "type": "integer",
+              "enum": [
+                10,
+                20,
+                40,
+                80
+              ]
+            },
+            "speed": {
+              "anyOf": [
+                {
+                  "$ref": "common.schema.json#/$defs/speed"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "queue_capacity": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 4096
+            },
+            "overflow": {
+              "enum": [
+                "block",
+                "drop_newest"
+              ]
+            }
+          },
+          "required": [
+            "frame_ms",
+            "mode",
+            "overflow",
+            "queue_capacity",
+            "speed"
+          ]
+        },
+        "adapters": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "asr": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "$ref": "common.schema.json#/$defs/stable_id"
+                },
+                "revision": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "delay_ms": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 600000
+                }
+              },
+              "required": [
+                "delay_ms",
+                "id",
+                "revision"
+              ]
+            },
+            "diarization": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "$ref": "common.schema.json#/$defs/stable_id"
+                },
+                "revision": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "delay_ms": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 600000
+                }
+              },
+              "required": [
+                "delay_ms",
+                "id",
+                "revision"
+              ]
+            }
+          },
+          "required": [
+            "asr",
+            "diarization"
+          ]
+        },
+        "seed": {
+          "$ref": "common.schema.json#/$defs/nonneg_int64"
+        },
+        "scoring": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "references": {
+              "enum": [
+                "required",
+                "optional"
+              ]
+            },
+            "text_policy": {
+              "const": "nfc_casefold_punct_space_cp_v1"
+            },
+            "diarization_policy": {
+              "const": "pyannote_c0_overlap_uem_v1"
+            }
+          },
+          "required": [
+            "diarization_policy",
+            "references",
+            "text_policy"
+          ]
+        },
+        "telemetry": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "interval_ms": {
+              "type": "integer",
+              "minimum": 100,
+              "maximum": 60000
+            }
+          },
+          "required": [
+            "enabled",
+            "interval_ms"
+          ]
+        },
+        "runtime": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "python_executable": {
+              "type": "string",
+              "minLength": 1
+            },
+            "cleanup_timeout_s": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 600
+            },
+            "analysis_timeout_s": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 3600
+            },
+            "max_output_bytes": {
+              "type": "integer",
+              "minimum": 1048576,
+              "maximum": 1099511627776
+            }
+          },
+          "required": [
+            "analysis_timeout_s",
+            "cleanup_timeout_s",
+            "max_output_bytes",
+            "python_executable"
+          ]
+        },
+        "notes": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "warm_state": {
+              "type": "string"
+            },
+            "background_load": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "background_load",
+            "warm_state"
+          ]
+        },
+        "settings_encoding": {
+          "const": "settings_json_v1"
+        }
+      },
+      "required": [
+        "adapters",
+        "audio",
+        "dataset",
+        "experiment_name",
+        "notes",
+        "replay",
+        "runtime",
+        "schema_version",
+        "scoring",
+        "seed",
+        "settings_encoding",
+        "telemetry"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "replay": {
+                "properties": {
+                  "mode": {
+                    "const": "accelerated"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "replay": {
+                "properties": {
+                  "speed": {
+                    "$ref": "common.schema.json#/$defs/speed"
+                  }
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "replay": {
+                "properties": {
+                  "speed": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "description": "Exact config_settings.json hash preimage (settings_json_v1 bytes)."
+    }
+  }
+}

@@ -1,0 +1,4 @@
+# Development environment = runtime + tests + the verified lock compiler.
+-r requirements.in
+pytest>=8,<10
+pip-tools==7.6.2

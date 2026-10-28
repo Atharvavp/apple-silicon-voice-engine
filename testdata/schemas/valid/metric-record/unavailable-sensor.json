@@ -1,0 +1,10 @@
+{
+  "status": "unavailable",
+  "value": null,
+  "unit": "bytes",
+  "definition_id": "physical_footprint_v1",
+  "sample_count": 0,
+  "clock_domain": "none",
+  "reason": "task_info count did not cover field",
+  "components": {}
+}

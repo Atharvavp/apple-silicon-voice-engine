@@ -1,0 +1,1 @@
+cc647ac939b23f7721b5ca739b27538c3701702c7c691ffb3b9f2560a8918407  schemas/v1/*.schema.json (14 files). Schema 1.0 frozen 2026-10-20 at the end of M6, before the first sealed benchmark run (DEC-008). Changing any schema file now requires a new schema version and an updated record.

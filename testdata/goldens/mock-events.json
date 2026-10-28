@@ -1,0 +1,22 @@
+{
+  "description": "Hand-derived expected adapter outputs for datasets/fixtures/scripts/two-speaker-en.json replayed in 320-sample chunks (20 ms at 16 kHz, 600 chunks). An entry with trigger T is released while consuming the first chunk whose end_sample >= T, i.e. chunk T/320 - 1; a null trigger is released at flush. Derived from the script semantics, not from running the mocks.",
+  "item_id": "two-speaker-en",
+  "frame_samples": 320,
+  "chunks": 600,
+  "asr": [
+    {"type": "transcript.partial", "cause_chunk_index": 99, "invocation_id": "asr/consume/99", "media": [0, 32000],
+     "utterance_id": "u0", "revision": 0, "text": "hello"},
+    {"type": "transcript.final", "cause_chunk_index": 199, "invocation_id": "asr/consume/199", "media": [0, 64000],
+     "utterance_id": "u0", "revision": 1, "text": "hello world"},
+    {"type": "transcript.partial", "cause_chunk_index": 299, "invocation_id": "asr/consume/299", "media": [64000, 96000],
+     "utterance_id": "u1", "revision": 0, "text": "a x"},
+    {"type": "transcript.final", "cause_chunk_index": null, "invocation_id": "asr/flush", "media": [64000, 128000],
+     "utterance_id": "u1", "revision": 1, "text": "a x c d"}
+  ],
+  "diarization": [
+    {"type": "speaker.segment", "cause_chunk_index": 399, "invocation_id": "diarization/consume/399",
+     "media": [96000, 128000], "segment_id": "hyp-y0", "speaker_id": "Y"},
+    {"type": "speaker.segment", "cause_chunk_index": null, "invocation_id": "diarization/flush",
+     "media": [0, 96000], "segment_id": "hyp-x0", "speaker_id": "X"}
+  ]
+}

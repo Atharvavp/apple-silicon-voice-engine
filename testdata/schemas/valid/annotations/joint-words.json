@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "source_id": "two-speaker-en",
+  "languages": [
+    "en"
+  ],
+  "timebase": {
+    "unit": "samples",
+    "sample_rate_hz": 16000
+  },
+  "duration_samples": 192000,
+  "original_precision": {
+    "unit": "samples",
+    "step": 1
+  },
+  "coverage": [
+    {
+      "start_sample": 0,
+      "end_sample": 192000
+    }
+  ],
+  "kind": "joint_words",
+  "granularity": "words",
+  "words": [
+    {
+      "word_id": "w0",
+      "start_sample": 0,
+      "end_sample": 8000,
+      "text": "hello",
+      "speaker_id": "A"
+    },
+    {
+      "word_id": "w1",
+      "start_sample": 8000,
+      "end_sample": 16000,
+      "text": "world",
+      "speaker_id": null
+    }
+  ]
+}

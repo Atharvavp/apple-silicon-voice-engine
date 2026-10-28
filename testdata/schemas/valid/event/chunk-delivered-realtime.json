@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "event_id": "two-speaker-en/runner/audio.chunk_delivered/0",
+  "run_id": "example-run",
+  "stream_id": "audio-0",
+  "source_id": "two-speaker-en",
+  "sequence": 17,
+  "producer_id": "runner",
+  "producer_sequence": 1,
+  "type": "audio.chunk_delivered",
+  "media_start_sample": null,
+  "media_end_sample": null,
+  "sample_rate_hz": 16000,
+  "monotonic_emitted_ns": 1004500000,
+  "monotonic_recorded_ns": 1004600000,
+  "virtual_emitted_ns": null,
+  "cause_chunk_index": 0,
+  "invocation_id": null,
+  "payload": {
+    "chunk_index": 0,
+    "offer_ns": 21000000,
+    "entry_ns": 21000100,
+    "wake_error_ns": 1000000,
+    "deadline_error_ns": 1000100,
+    "queue_depth": 1,
+    "delivered_virtual_ns": null
+  }
+}

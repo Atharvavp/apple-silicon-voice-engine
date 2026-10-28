@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "source_id": "hindi-unicode",
+  "languages": [
+    "hi-IN"
+  ],
+  "timebase": {
+    "unit": "samples",
+    "sample_rate_hz": 16000
+  },
+  "duration_samples": 192000,
+  "original_precision": {
+    "unit": "ms",
+    "step": 10
+  },
+  "coverage": [
+    {
+      "start_sample": 0,
+      "end_sample": 192000
+    }
+  ],
+  "kind": "transcript",
+  "granularity": "utterances",
+  "recording_text": null,
+  "segments": [
+    {
+      "segment_id": "h0",
+      "start_sample": 0,
+      "end_sample": 32000,
+      "text": "नमस्ते, भारत!"
+    },
+    {
+      "segment_id": "h1",
+      "start_sample": 32000,
+      "end_sample": 48000,
+      "text": "क़ ‍ की"
+    }
+  ]
+}

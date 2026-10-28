@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "event_id": "two-speaker-en/audio.queue_overflow/0",
+  "run_id": "example-run",
+  "stream_id": "audio-0",
+  "source_id": "two-speaker-en",
+  "sequence": 17,
+  "producer_id": "replay",
+  "producer_sequence": 1,
+  "type": "audio.queue_overflow",
+  "media_start_sample": 1600,
+  "media_end_sample": 1920,
+  "sample_rate_hz": 16000,
+  "monotonic_emitted_ns": 1004500000,
+  "monotonic_recorded_ns": 1004600000,
+  "virtual_emitted_ns": null,
+  "cause_chunk_index": 5,
+  "invocation_id": null,
+  "payload": {
+    "chunk_index": 5,
+    "policy": "drop_newest",
+    "start_sample": 1600,
+    "end_sample": 1920,
+    "lost_samples": 320,
+    "cumulative_lost_samples": 320
+  }
+}

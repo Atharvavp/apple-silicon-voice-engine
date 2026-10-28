@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "source_id": "two-speaker-en",
+  "languages": [
+    "en"
+  ],
+  "timebase": {
+    "unit": "samples",
+    "sample_rate_hz": 16000
+  },
+  "duration_samples": 192000,
+  "original_precision": {
+    "unit": "samples",
+    "step": 1
+  },
+  "coverage": [
+    {
+      "start_sample": 0,
+      "end_sample": 1000
+    }
+  ],
+  "kind": "transcript",
+  "granularity": "recording",
+  "segments": [],
+  "recording_text": "x"
+}

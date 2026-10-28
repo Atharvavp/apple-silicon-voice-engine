@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "experiment_name": "phase0-synthetic-en",
+  "dataset": {
+    "manifest_path": "../datasets/manifests/synthetic.json",
+    "item_id": "two-speaker-en"
+  },
+  "audio": {
+    "target_sample_rate_hz": 22050,
+    "downmix_policy": "arithmetic_mean_v1",
+    "conversion_policy": "apple_normal_max_half_up_v1",
+    "endpoint_policy": "allow_one_frame_v1"
+  },
+  "replay": {
+    "mode": "step",
+    "frame_ms": 10,
+    "speed": null,
+    "queue_capacity": 32,
+    "overflow": "block"
+  },
+  "adapters": {
+    "asr": {
+      "id": "mock-asr-scripted",
+      "revision": "1",
+      "delay_ms": 0
+    },
+    "diarization": {
+      "id": "mock-diar-scripted",
+      "revision": "1",
+      "delay_ms": 0
+    }
+  },
+  "seed": 42,
+  "scoring": {
+    "references": "required",
+    "text_policy": "nfc_casefold_punct_space_cp_v1",
+    "diarization_policy": "pyannote_c0_overlap_uem_v1"
+  },
+  "telemetry": {
+    "enabled": true,
+    "interval_ms": 1000
+  },
+  "runtime": {
+    "python_executable": "../.venv/bin/python",
+    "cleanup_timeout_s": 5,
+    "analysis_timeout_s": 120,
+    "max_output_bytes": 1073741824
+  },
+  "notes": {
+    "warm_state": "not_applicable_mock",
+    "background_load": "record-before-measured-runs"
+  }
+}

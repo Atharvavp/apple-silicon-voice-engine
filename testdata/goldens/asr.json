@@ -1,0 +1,451 @@
+{
+  "description": "Hand-derived WER/CER expectations for policy nfc_casefold_punct_space_cp_v1 (plan E1 table plus edge cases). Counts are exact; ratios compare at abs tol 1e-9. Derivations are written per case; none were produced by running the scorer.",
+  "cases": [
+    {
+      "id": "W-perfect",
+      "reference": "Hello, WORLD!",
+      "hypothesis": "hello world",
+      "wer": {
+        "S": 0,
+        "D": 0,
+        "I": 0,
+        "N": 2,
+        "value": 0.0
+      },
+      "cer": {
+        "S": 0,
+        "D": 0,
+        "I": 0,
+        "N": 10,
+        "value": 0.0
+      },
+      "derivation": "punctuation -> space, casefold: both 'hello world'; 10 code points without the space"
+    },
+    {
+      "id": "W-sub-insert",
+      "reference": "a b c",
+      "hypothesis": "a x c d",
+      "wer": {
+        "S": 1,
+        "D": 0,
+        "I": 1,
+        "N": 3,
+        "value": 0.6666666666666666
+      },
+      "cer": {
+        "S": 1,
+        "D": 0,
+        "I": 1,
+        "N": 3,
+        "value": 0.6666666666666666
+      },
+      "derivation": "b->x substitution, d inserted; code points abc vs axcd likewise"
+    },
+    {
+      "id": "W-delete",
+      "reference": "a b c",
+      "hypothesis": "a c",
+      "wer": {
+        "S": 0,
+        "D": 1,
+        "I": 0,
+        "N": 3,
+        "value": 0.3333333333333333
+      },
+      "cer": {
+        "S": 0,
+        "D": 1,
+        "I": 0,
+        "N": 3,
+        "value": 0.3333333333333333
+      },
+      "derivation": "b deleted"
+    },
+    {
+      "id": "C-insert",
+      "reference": "ab",
+      "hypothesis": "acb",
+      "wer": {
+        "S": 1,
+        "D": 0,
+        "I": 0,
+        "N": 1,
+        "value": 1.0
+      },
+      "cer": {
+        "S": 0,
+        "D": 0,
+        "I": 1,
+        "N": 2,
+        "value": 0.5
+      },
+      "derivation": "one token each (substitution); code points: c inserted"
+    },
+    {
+      "id": "H-punctuation",
+      "reference": "नमस्ते, भारत!",
+      "hypothesis": "नमस्ते भारत",
+      "wer": {
+        "S": 0,
+        "D": 0,
+        "I": 0,
+        "N": 2,
+        "value": 0.0
+      },
+      "cer": {
+        "S": 0,
+        "D": 0,
+        "I": 0,
+        "N": 10,
+        "value": 0.0
+      },
+      "derivation": "comma and ! are P*; नमस्ते = 6 code points (न म स ् त े), भारत = 4"
+    },
+    {
+      "id": "H-canonical",
+      "reference": "क़",
+      "hypothesis": "क़",
+      "wer": {
+        "S": 0,
+        "D": 0,
+        "I": 0,
+        "N": 1,
+        "value": 0.0
+      },
+      "cer": {
+        "S": 0,
+        "D": 0,
+        "I": 0,
+        "N": 2,
+        "value": 0.0
+      },
+      "derivation": "U+0958 is a composition exclusion, so NFC gives U+0915 U+093C for both; nukta preserved (2 code points)"
+    },
+    {
+      "id": "H-vowel",
+      "reference": "कि",
+      "hypothesis": "की",
+      "wer": {
+        "S": 1,
+        "D": 0,
+        "I": 0,
+        "N": 1,
+        "value": 1.0
+      },
+      "cer": {
+        "S": 1,
+        "D": 0,
+        "I": 0,
+        "N": 2,
+        "value": 0.5
+      },
+      "derivation": "vowel sign U+093F vs U+0940: one code-point substitution; one token differs"
+    },
+    {
+      "id": "empty-hypothesis",
+      "reference": "a b",
+      "hypothesis": "",
+      "wer": {
+        "S": 0,
+        "D": 2,
+        "I": 0,
+        "N": 2,
+        "value": 1.0
+      },
+      "cer": {
+        "S": 0,
+        "D": 2,
+        "I": 0,
+        "N": 2,
+        "value": 1.0
+      },
+      "derivation": "everything deleted"
+    },
+    {
+      "id": "empty-reference",
+      "reference": "",
+      "hypothesis": "a b",
+      "wer": {
+        "S": 0,
+        "D": 0,
+        "I": 2,
+        "N": 0,
+        "value": null,
+        "reason": "zero_reference_tokens"
+      },
+      "cer": {
+        "S": 0,
+        "D": 0,
+        "I": 2,
+        "N": 0,
+        "value": null,
+        "reason": "zero_reference_characters"
+      },
+      "derivation": "zero denominator: not computable; insertions kept (jiwer 4.0.0 alone would report 2.0)"
+    },
+    {
+      "id": "both-empty",
+      "reference": "",
+      "hypothesis": "",
+      "wer": {
+        "S": 0,
+        "D": 0,
+        "I": 0,
+        "N": 0,
+        "value": null,
+        "reason": "zero_reference_tokens"
+      },
+      "cer": {
+        "S": 0,
+        "D": 0,
+        "I": 0,
+        "N": 0,
+        "value": null,
+        "reason": "zero_reference_characters"
+      },
+      "derivation": "not computable, never 'perfect' (jiwer 4.0.0 alone would report 0.0)"
+    },
+    {
+      "id": "punctuation-only-reference",
+      "reference": "!!! ...",
+      "hypothesis": "a",
+      "wer": {
+        "S": 0,
+        "D": 0,
+        "I": 1,
+        "N": 0,
+        "value": null,
+        "reason": "zero_reference_tokens"
+      },
+      "cer": {
+        "S": 0,
+        "D": 0,
+        "I": 1,
+        "N": 0,
+        "value": null,
+        "reason": "zero_reference_characters"
+      },
+      "derivation": "the reference normalizes to the empty string"
+    },
+    {
+      "id": "apostrophe-splits",
+      "reference": "don't",
+      "hypothesis": "dont",
+      "wer": {
+        "S": 1,
+        "D": 1,
+        "I": 0,
+        "N": 2,
+        "value": 1.0
+      },
+      "cer": {
+        "S": 0,
+        "D": 0,
+        "I": 0,
+        "N": 4,
+        "value": 0.0
+      },
+      "derivation": "apostrophe U+0027 is Po -> 'don t' (2 tokens) vs 'dont'; code points identical"
+    },
+    {
+      "id": "digits-not-folded",
+      "reference": "१०१",
+      "hypothesis": "101",
+      "wer": {
+        "S": 1,
+        "D": 0,
+        "I": 0,
+        "N": 1,
+        "value": 1.0
+      },
+      "cer": {
+        "S": 3,
+        "D": 0,
+        "I": 0,
+        "N": 3,
+        "value": 1.0
+      },
+      "derivation": "Devanagari digits are never folded to Latin digits"
+    },
+    {
+      "id": "latin-digits",
+      "reference": "Room 101",
+      "hypothesis": "room 101",
+      "wer": {
+        "S": 0,
+        "D": 0,
+        "I": 0,
+        "N": 2,
+        "value": 0.0
+      },
+      "cer": {
+        "S": 0,
+        "D": 0,
+        "I": 0,
+        "N": 7,
+        "value": 0.0
+      },
+      "derivation": "casefold only"
+    },
+    {
+      "id": "zwj-preserved",
+      "reference": "क्‍ष",
+      "hypothesis": "क्ष",
+      "wer": {
+        "S": 1,
+        "D": 0,
+        "I": 0,
+        "N": 1,
+        "value": 1.0
+      },
+      "cer": {
+        "S": 0,
+        "D": 1,
+        "I": 0,
+        "N": 4,
+        "value": 0.25
+      },
+      "derivation": "ZWJ U+200D is Cf (kept, not whitespace): 4 vs 3 code points"
+    },
+    {
+      "id": "code-switching",
+      "reference": "Hello नमस्ते",
+      "hypothesis": "hello नमस्ते",
+      "wer": {
+        "S": 0,
+        "D": 0,
+        "I": 0,
+        "N": 2,
+        "value": 0.0
+      },
+      "cer": {
+        "S": 0,
+        "D": 0,
+        "I": 0,
+        "N": 11,
+        "value": 0.0
+      },
+      "derivation": "scripts kept as-is; 5 + 6 code points"
+    },
+    {
+      "id": "casefold-sharp-s",
+      "reference": "Straße",
+      "hypothesis": "STRASSE",
+      "wer": {
+        "S": 0,
+        "D": 0,
+        "I": 0,
+        "N": 1,
+        "value": 0.0
+      },
+      "cer": {
+        "S": 0,
+        "D": 0,
+        "I": 0,
+        "N": 7,
+        "value": 0.0
+      },
+      "derivation": "casefold maps ß to ss and S to s"
+    },
+    {
+      "id": "danda",
+      "reference": "भारत।",
+      "hypothesis": "भारत",
+      "wer": {
+        "S": 0,
+        "D": 0,
+        "I": 0,
+        "N": 1,
+        "value": 0.0
+      },
+      "cer": {
+        "S": 0,
+        "D": 0,
+        "I": 0,
+        "N": 4,
+        "value": 0.0
+      },
+      "derivation": "Devanagari danda U+0964 is Po"
+    },
+    {
+      "id": "unicode-whitespace",
+      "reference": "a  b\n",
+      "hypothesis": "a b",
+      "wer": {
+        "S": 0,
+        "D": 0,
+        "I": 0,
+        "N": 2,
+        "value": 0.0
+      },
+      "cer": {
+        "S": 0,
+        "D": 0,
+        "I": 0,
+        "N": 2,
+        "value": 0.0
+      },
+      "derivation": "NBSP, EM SPACE and newline collapse to one space"
+    }
+  ],
+  "pipeline_items": {
+    "description": "Expected scores of the synthetic Gate A items scored end to end (references vs independently authored mock scripts), hand-derived.",
+    "two-speaker-en": {
+      "wer": {
+        "S": 1,
+        "D": 0,
+        "I": 1,
+        "N": 5,
+        "value": 0.4
+      },
+      "cer": {
+        "S": 1,
+        "D": 0,
+        "I": 1,
+        "N": 13,
+        "value": 0.15384615384615385
+      },
+      "der": 0.25,
+      "jer": 0.4166666666666667,
+      "derivation": "ref 'Hello, WORLD! a b c' -> hello world a b c; hyp finals 'hello world' + 'a x c d': b->x, d inserted. Speakers: ref A[0,4s) B[4,8s); hyp X[0,6s) Y[6,8s): confusion 2 s / 8 s; JER (1/3 + 1/2)/2"
+    },
+    "two-speaker-hi": {
+      "wer": {
+        "S": 1,
+        "D": 0,
+        "I": 0,
+        "N": 3,
+        "value": 0.3333333333333333
+      },
+      "cer": {
+        "S": 1,
+        "D": 0,
+        "I": 0,
+        "N": 12,
+        "value": 0.08333333333333333
+      },
+      "der": 0.0,
+      "jer": 0.0,
+      "derivation": "ref नमस्ते भारत कि (6+4+2 code points); hyp की: one vowel-sign substitution. Speakers are a pure label permutation after exact 48k->16k mapping"
+    },
+    "endpoint-trim-en": {
+      "wer": {
+        "S": 0,
+        "D": 0,
+        "I": 0,
+        "N": 2,
+        "value": 0.0
+      },
+      "cer": {
+        "S": 0,
+        "D": 0,
+        "I": 0,
+        "N": 7,
+        "value": 0.0
+      },
+      "der": 0.0,
+      "jer": 0.0,
+      "derivation": "recording-level 'Test one.' vs 'test one'; reference speaker [0,22049)@22.05k maps to [0,15999)@16k, exactly the hypothesis"
+    }
+  }
+}
